@@ -1,0 +1,57 @@
+{
+  "name": "nextjs",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint \"./**/*.{js,jsx,ts,tsx}\"",
+    "test": "jest",
+    "lint:fix": "npm run lint -- --fix",
+    "format": "prettier --write \"./**/*.+(ts|tsx|js|jsx|json|yml|yaml|md|mdx)\"",
+    "format:write": "npm run format -- --write",
+    "validate:format": "npm run format -- --check",
+    "validate:build": "tsc --noEmit",
+    "validate": "npm run lint && npm run validate:format && npm run validate:build",
+    "e2e": "npx cypress open"
+  },
+  "dependencies": {
+    "axios": "^1.9.0",
+    "next": "14.1.0",
+    "next-intl": "^3.5.2",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-hook-form": "^7.49.3",
+    "usehooks-ts": "^2.10.0"
+  },
+  "devDependencies": {
+    "@cypress-audit/lighthouse": "^1.4.2",
+    "@svgr/webpack": "^8.1.0",
+    "@testing-library/jest-dom": "^6.3.0",
+    "@testing-library/react": "^14.1.2",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "commitizen": "^4.3.1",
+    "cypress": "^14.3.2",
+    "cypress-axe": "^1.6.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^9.25.1",
+    "eslint-config-next": "14.1.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "postcss": "^8",
+    "prettier": "^3.5.3",
+    "tailwindcss": "^3.3.0",
+    "ts-jest": "^29.1.2",
+    "typescript": "^5"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  }
+}
