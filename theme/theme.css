@@ -1,0 +1,17 @@
+.light,
+.dark .reverse {
+  --primary: #C5D46D;
+  --primary-100: #D5E96520;
+  --bg: #D7D1E9;
+  --text: #080024;
+  --text-light: #86809C;
+}
+
+.dark,
+.light .reverse {
+  --primary: #C5D46D;
+  --primary-100: #D5E96520;
+  --bg: #080024;
+  --text: #D7D1E9;
+  --text-light: #86809C;
+}

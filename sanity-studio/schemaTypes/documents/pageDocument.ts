@@ -23,16 +23,27 @@ export const pageDocument = defineField({
       validation: (rule) => rule.required(),
     },
     {
-      name: 'textTitle',
-      type: 'string',
-    },
-    {
-      name: 'subTextTitle',
-      type: 'richText',
-    },
-    {
-      name: 'subText',
-      type: 'richText',
+      name: 'homeBanner',
+      type: 'object',
+      options: {
+        collapsible: true,
+      },
+      fields: [
+        {
+          name: 'title',
+          type: 'string',
+          validation: (rule) => rule.required(),
+        },
+        {
+          name: 'textTitle',
+          type: 'richText',
+          validation: (rule) => rule.required(),
+        },
+        {
+          name: 'subText',
+          type: 'richText',
+        },
+      ],
     },
     {
       name: 'pageBlocks',
@@ -61,6 +72,10 @@ export const pageDocument = defineField({
         {
           name: 'iconsSwiper',
           type: 'iconsSwiper',
+        },
+        {
+          name: 'contactForm',
+          type: 'contactForm',
         },
       ],
     },

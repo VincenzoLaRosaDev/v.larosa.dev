@@ -7,3 +7,15 @@
     text-wrap: balance;
   }
 }
+
+body {
+  position: relative;
+  z-index: 1;
+}
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  scroll-margin-top: 60px;
+}

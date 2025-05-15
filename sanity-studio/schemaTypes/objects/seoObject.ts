@@ -1,4 +1,4 @@
-import {defineField, SlugValidationContext} from 'sanity'
+import {defineField} from 'sanity'
 
 export const seoObject = defineField({
   name: 'seo',

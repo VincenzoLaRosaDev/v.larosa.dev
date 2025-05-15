@@ -1,5 +1,6 @@
 import {defineField} from 'sanity'
 import {ImagesIcon} from '@sanity/icons'
+import {paddingBlock} from '../atoms'
 
 const iconItem = defineField({
   name: 'icons',
@@ -12,13 +13,30 @@ export const iconsSwiperObject = defineField({
   type: 'object',
   icon: ImagesIcon,
   preview: {
-    prepare: () => {
+    select: {
+      title: 'title',
+      paddingTop: 'paddingBlock.paddingTop.value',
+      paddingBottom: 'paddingBlock.paddingBottom.value',
+    },
+    prepare: ({title, paddingTop, paddingBottom}) => {
       return {
-        title: 'Images Swiper',
+        title: title,
+        subtitle: `padding top: ${paddingTop} - padding bottom: ${paddingBottom}`,
       }
     },
   },
   fields: [
+    {
+      name: 'id',
+      type: 'string',
+      validation: (rule) => rule.required(),
+    },
+    {
+      name: 'title',
+      type: 'string',
+      validation: (rule) => rule.required(),
+    },
+    paddingBlock,
     {
       name: 'icons',
       type: 'array',

@@ -1,19 +1,37 @@
 import {defineField} from 'sanity'
 import {BlockElementIcon} from '@sanity/icons'
 import {InlineElementIcon} from '@sanity/icons'
+import {paddingBlock} from '../atoms'
 
 export const contentsBlockObject = defineField({
   name: 'contentsBlock',
   type: 'object',
   icon: BlockElementIcon,
   preview: {
-    prepare: () => {
+    select: {
+      title: 'title',
+      paddingTop: 'paddingBlock.paddingTop.value',
+      paddingBottom: 'paddingBlock.paddingBottom.value',
+    },
+    prepare: ({title, paddingTop, paddingBottom}) => {
       return {
-        title: 'Contents Block',
+        title: title,
+        subtitle: `padding top: ${paddingTop} - padding bottom: ${paddingBottom}`,
       }
     },
   },
   fields: [
+    {
+      name: 'id',
+      type: 'string',
+      validation: (rule) => rule.required(),
+    },
+    {
+      name: 'title',
+      type: 'string',
+      validation: (rule) => rule.required(),
+    },
+    paddingBlock,
     {
       name: 'items',
       type: 'array',

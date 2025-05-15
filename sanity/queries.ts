@@ -1,27 +1,34 @@
 import { defineQuery } from 'groq';
 import { client } from './client';
-import {
-  PageQueryResult,
-  PagesQueryResult,
-} from './types';
+import { Page } from './types';
+import { localesType } from '@/i18n/routing';
 
 // Pages Query
 
 const pagesQuery = defineQuery(`*[_type == "page"]`);
 
-export const getPages = (): Promise<PagesQueryResult> => {
+export const getPages = (): Promise<Page[]> => {
   return client.fetch(pagesQuery);
 };
 
-
-const pageQueryBuild = (slug: string) => {
+const localizeHomePageQuery = (locale: localesType) => {
   return defineQuery(
-    `*[_type == 'page' && seo.seoSlug == '${slug}']{
-    
+    `*[_type == "page" && language == "${locale}" && seo.seoSlug == "/"]{
+      ...,
+      pageBlocks[] {
+        ...,
+        items[] {
+          ...,
+          link {
+            ...,
+            internalLink->
+          }
+        }
+      }
     }`,
   );
 };
 
-export const getPage = (slug: string): Promise<PageQueryResult> => {
-  return client.fetch(pageQueryBuild(slug));
+export const getLocalizeHomePage = (locale: localesType): Promise<Page[]> => {
+  return client.fetch(localizeHomePageQuery(locale));
 };

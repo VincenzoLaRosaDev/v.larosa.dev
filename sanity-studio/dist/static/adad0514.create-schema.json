@@ -127,9 +127,7 @@
       },
       {
         "options": {
-          "list": [
-            "page"
-          ]
+          "list": ["page"]
         },
         "description": "Optional: Used to filter the reference fields above so all translations share the same types.",
         "of": [
@@ -170,16 +168,47 @@
         "type": "string"
       },
       {
-        "name": "textTitle",
-        "type": "string"
-      },
-      {
-        "name": "subTextTitle",
-        "type": "richText"
-      },
-      {
-        "name": "subText",
-        "type": "richText"
+        "options": {
+          "collapsible": true
+        },
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "presence",
+                    "constraint": "required"
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "presence",
+                    "constraint": "required"
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "textTitle",
+            "type": "richText"
+          },
+          {
+            "name": "subText",
+            "type": "richText"
+          }
+        ],
+        "name": "homeBanner",
+        "type": "object"
       },
       {
         "of": [
@@ -200,6 +229,9 @@
           },
           {
             "type": "iconsSwiper"
+          },
+          {
+            "type": "contactForm"
           }
         ],
         "name": "pageBlocks",
@@ -270,10 +302,7 @@
                     "flag": "uri",
                     "constraint": {
                       "options": {
-                        "scheme": [
-                          "/^http$/",
-                          "/^https$/"
-                        ],
+                        "scheme": ["/^http$/", "/^https$/"],
                         "allowRelative": false,
                         "relativeOnly": false,
                         "allowCredentials": false
@@ -374,6 +403,59 @@
   {
     "fields": [
       {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "collapsible": true
+        },
+        "fields": [
+          {
+            "options": {
+              "collapsible": false
+            },
+            "name": "paddingTop",
+            "type": "padding"
+          },
+          {
+            "options": {
+              "collapsible": false
+            },
+            "name": "paddingBottom",
+            "type": "padding"
+          }
+        ],
+        "name": "paddingBlock",
+        "type": "object"
+      },
+      {
         "name": "value",
         "type": "richText"
       }
@@ -384,6 +466,59 @@
   },
   {
     "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "collapsible": true
+        },
+        "fields": [
+          {
+            "options": {
+              "collapsible": false
+            },
+            "name": "paddingTop",
+            "type": "padding"
+          },
+          {
+            "options": {
+              "collapsible": false
+            },
+            "name": "paddingBottom",
+            "type": "padding"
+          }
+        ],
+        "name": "paddingBlock",
+        "type": "object"
+      },
       {
         "validation": [
           {
@@ -493,6 +628,59 @@
             "level": "error"
           }
         ],
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "collapsible": true
+        },
+        "fields": [
+          {
+            "options": {
+              "collapsible": false
+            },
+            "name": "paddingTop",
+            "type": "padding"
+          },
+          {
+            "options": {
+              "collapsible": false
+            },
+            "name": "paddingBottom",
+            "type": "padding"
+          }
+        ],
+        "name": "paddingBlock",
+        "type": "object"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
         "of": [
           {
             "fields": [
@@ -561,10 +749,7 @@
                             "flag": "uri",
                             "constraint": {
                               "options": {
-                                "scheme": [
-                                  "/^http$/",
-                                  "/^https$/"
-                                ],
+                                "scheme": ["/^http$/", "/^https$/"],
                                 "allowRelative": false,
                                 "relativeOnly": false,
                                 "allowCredentials": false
@@ -608,10 +793,7 @@
                                 "flag": "uri",
                                 "constraint": {
                                   "options": {
-                                    "scheme": [
-                                      "/^http$/",
-                                      "/^https$/"
-                                    ],
+                                    "scheme": ["/^http$/", "/^https$/"],
                                     "allowRelative": false,
                                     "relativeOnly": false,
                                     "allowCredentials": false
@@ -691,60 +873,65 @@
             "level": "error"
           }
         ],
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "collapsible": true
+        },
+        "fields": [
+          {
+            "options": {
+              "collapsible": false
+            },
+            "name": "paddingTop",
+            "type": "padding"
+          },
+          {
+            "options": {
+              "collapsible": false
+            },
+            "name": "paddingBottom",
+            "type": "padding"
+          }
+        ],
+        "name": "paddingBlock",
+        "type": "object"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
         "of": [
           {
             "fields": [
               {
-                "validation": [
-                  {
-                    "rules": [
-                      {
-                        "flag": "presence",
-                        "constraint": "required"
-                      }
-                    ],
-                    "level": "error"
-                  }
-                ],
-                "fields": [
-                  {
-                    "validation": [
-                      {
-                        "rules": [
-                          {
-                            "flag": "uri",
-                            "constraint": {
-                              "options": {
-                                "scheme": [
-                                  "/^http$/",
-                                  "/^https$/"
-                                ],
-                                "allowRelative": false,
-                                "relativeOnly": false,
-                                "allowCredentials": false
-                              }
-                            }
-                          },
-                          {
-                            "flag": "presence",
-                            "constraint": "required"
-                          }
-                        ],
-                        "level": "error"
-                      }
-                    ],
-                    "name": "href",
-                    "type": "url",
-                    "title": "URL"
-                  },
-                  {
-                    "name": "blank",
-                    "type": "boolean",
-                    "title": "Open in new tab"
-                  }
-                ],
                 "name": "link",
-                "type": "object"
+                "type": "ctaLink"
               },
               {
                 "options": {
@@ -826,6 +1013,59 @@
   },
   {
     "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "collapsible": true
+        },
+        "fields": [
+          {
+            "options": {
+              "collapsible": false
+            },
+            "name": "paddingTop",
+            "type": "padding"
+          },
+          {
+            "options": {
+              "collapsible": false
+            },
+            "name": "paddingBottom",
+            "type": "padding"
+          }
+        ],
+        "name": "paddingBlock",
+        "type": "object"
+      },
       {
         "validation": [
           {
@@ -937,6 +1177,59 @@
             "level": "error"
           }
         ],
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "collapsible": true
+        },
+        "fields": [
+          {
+            "options": {
+              "collapsible": false
+            },
+            "name": "paddingTop",
+            "type": "padding"
+          },
+          {
+            "options": {
+              "collapsible": false
+            },
+            "name": "paddingBottom",
+            "type": "padding"
+          }
+        ],
+        "name": "paddingBlock",
+        "type": "object"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
         "of": [
           {
             "validation": [
@@ -960,6 +1253,60 @@
       }
     ],
     "name": "iconsSwiper",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "options": {
+          "collapsible": true
+        },
+        "fields": [
+          {
+            "options": {
+              "collapsible": false
+            },
+            "name": "paddingTop",
+            "type": "padding"
+          },
+          {
+            "options": {
+              "collapsible": false
+            },
+            "name": "paddingBottom",
+            "type": "padding"
+          }
+        ],
+        "name": "paddingBlock",
+        "type": "object"
+      },
+      {
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "presence",
+                    "constraint": "required"
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "ctaLabel",
+            "type": "string"
+          },
+          {
+            "name": "ctaLink",
+            "type": "ctaLink"
+          }
+        ],
+        "name": "cta",
+        "type": "object"
+      }
+    ],
+    "name": "contactForm",
     "type": "object"
   },
   {
@@ -997,10 +1344,7 @@
                 "flag": "uri",
                 "constraint": {
                   "options": {
-                    "scheme": [
-                      "/^http$/",
-                      "/^https$/"
-                    ],
+                    "scheme": ["/^http$/", "/^https$/"],
                     "allowRelative": false,
                     "relativeOnly": false,
                     "allowCredentials": false
@@ -1062,10 +1406,7 @@
                     "flag": "uri",
                     "constraint": {
                       "options": {
-                        "scheme": [
-                          "/^http$/",
-                          "/^https$/"
-                        ],
+                        "scheme": ["/^http$/", "/^https$/"],
                         "allowRelative": false,
                         "relativeOnly": false,
                         "allowCredentials": false
@@ -1153,12 +1494,7 @@
                           "flag": "uri",
                           "constraint": {
                             "options": {
-                              "scheme": [
-                                "/^http$/",
-                                "/^https$/",
-                                "/^tel$/",
-                                "/^mailto$/"
-                              ],
+                              "scheme": ["/^http$/", "/^https$/", "/^tel$/", "/^mailto$/"],
                               "allowRelative": true,
                               "relativeOnly": false,
                               "allowCredentials": false
@@ -1266,5 +1602,63 @@
     ],
     "name": "richText",
     "type": "array"
+  },
+  {
+    "options": {
+      "collapsible": false
+    },
+    "fields": [
+      {
+        "options": {
+          "list": [
+            {
+              "title": "None",
+              "value": "0"
+            },
+            {
+              "title": "Small",
+              "value": "S"
+            },
+            {
+              "title": "Medium",
+              "value": "M"
+            },
+            {
+              "title": "Large",
+              "value": "L"
+            }
+          ],
+          "layout": "radio",
+          "direction": "horizontal"
+        },
+        "name": "value",
+        "type": "string"
+      }
+    ],
+    "name": "padding",
+    "type": "object"
+  },
+  {
+    "options": {
+      "collapsible": true
+    },
+    "fields": [
+      {
+        "options": {
+          "collapsible": false
+        },
+        "name": "paddingTop",
+        "type": "padding"
+      },
+      {
+        "options": {
+          "collapsible": false
+        },
+        "name": "paddingBottom",
+        "type": "padding"
+      }
+    ],
+    "name": "paddingBlock",
+    "type": "object"
   }
 ]
