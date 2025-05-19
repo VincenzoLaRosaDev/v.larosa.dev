@@ -57,7 +57,7 @@ export const MouseCursor = () => {
             : 'radial-gradient(circle, #D7D1E930 0%, #D7D1E900 60%)',
         mixBlendMode: 'overlay',
         pointerEvents: 'none',
-        zIndex: 50,
+        zIndex: 60,
         x: springX,
         y: springY,
       }}
