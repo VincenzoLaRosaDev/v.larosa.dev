@@ -6,6 +6,8 @@ import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
 export const ScrollTitleAnimation = () => {
   useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) return;
+
     gsap.registerPlugin(ScrollTrigger);
 
     const elements = document.querySelectorAll<HTMLElement>('#transitionTitle');
