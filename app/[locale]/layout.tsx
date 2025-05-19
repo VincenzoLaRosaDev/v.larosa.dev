@@ -81,8 +81,6 @@ export default async function HomeLayout({
               </div>
               <div className="fixed top-0 left-0 right-0 bottom-0 bg-bg z-[-1]" />
               <MouseCursor />
-              <div className="hidden lg:fixed z-50 left-0 top-0 h-10 lg:h-20 w-full bg-gradient-to-b from-bg"></div>
-              <div className="fixed z-50 left-0 bottom-0 h-10 lg:h-20 w-full bg-gradient-to-t from-bg"></div>
             </ThemeProviders>
           </NextIntlClientProvider>
         </main>
