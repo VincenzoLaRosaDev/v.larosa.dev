@@ -94,7 +94,7 @@ export const SwiperRow = ({
 
   return (
     <div
-      className={`relative h-[48px] lg:h-[64px] ${!reverse ? 'mb-[100px]' : ''}`}
+      className={`relative h-[64px] ${!reverse ? 'mb-[100px]' : ''}`}
     >
       <div
         className={`absolute flex min-w-max will-change-transform ${reverse ? 'right-0' : 'left-0'}`}
