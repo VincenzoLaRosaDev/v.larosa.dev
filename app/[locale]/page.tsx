@@ -36,7 +36,7 @@ export async function generateMetadata({
       title: `${data[0].seo?.seoTitle}`,
       description: `${data[0].seo?.seoDescription}`,
       images: {
-        url: '/image-preview.jpg',
+        url: `${(data[0].seo?.seoImage?.asset as any)?.url}`,
       },
     },
   };

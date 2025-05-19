@@ -24,6 +24,13 @@ const localizeHomePageQuery = (locale: localesType) => {
             internalLink->
           }
         }
+      },
+      seo {
+        ...,
+        seoImage {
+          ...,
+          asset ->
+        }
       }
     }`,
   );
