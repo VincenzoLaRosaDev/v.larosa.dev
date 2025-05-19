@@ -21,15 +21,15 @@ export async function generateMetadata({
     title: `${data[0].seo?.seoTitle}`,
     description: `${data[0].seo?.seoDescription}`,
     alternates: {
-      canonical: `${process.env.SITE_URL}/${locale}/`,
+      canonical: `${process.env.SITE_URL}/${locale}`,
     },
     openGraph: {
       title: `${data[0].seo?.seoTitle}`,
       description: `${data[0].seo?.seoDescription}`,
-      siteName: "A'Cunziria",
+      siteName: `${data[0].seo?.seoTitle}`,
       type: 'website',
       images: {
-        url: '/image-preview.jpg',
+        url: `${(data[0].seo?.seoImage?.asset as any)?.url}`,
       },
     },
     twitter: {
