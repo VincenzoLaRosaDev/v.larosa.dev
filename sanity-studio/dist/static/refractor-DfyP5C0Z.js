@@ -1,5 +1,5 @@
 import {jsxs as c, Fragment as u, jsx as p} from 'react/jsx-runtime'
-import {d, R as m} from './sanity-B-gZMcDG.js'
+import {d, R as m} from './sanity-BUTTqP3f.js'
 import 'sanity'
 import '@sanity/vision'
 import 'react'

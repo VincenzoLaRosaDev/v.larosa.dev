@@ -1,5 +1,6 @@
 import {
   Blogs,
+  ContactForm,
   ContentsBlock,
   Experiences,
   IconsSwiper,
@@ -14,6 +15,7 @@ export const blocks: any = {
   iconsSwiper: IconsSwiper,
   blogs: Blogs,
   projects: Projects,
+  contactForm: ContactForm,
 };
 
 export const HELLO_ARRAY: { label: string }[] = [

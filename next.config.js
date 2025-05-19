@@ -5,9 +5,6 @@ const withNextIntl = createNextIntlPlugin();
 const { version } = require('./package.json');
 
 const nextConfig = {
-  output: 'export',
-  trailingSlash: true,
-  swcMinify: true,
   publicRuntimeConfig: {
     version,
   },

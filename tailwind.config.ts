@@ -19,7 +19,8 @@ const config: Config = {
       },
       colors: {
         primary: 'var(--primary)',
-        'primary-100': 'var(--primary-100)',
+        'primary/10': 'var(--primary-100)',
+        'primary/90': 'var(--primary-900)',
         bg: 'var(--bg)',
         text: 'var(--text)',
         'text-light': 'var(--text-light)',

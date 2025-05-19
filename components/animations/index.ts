@@ -1,1 +1,1 @@
-export * from './scrollTitle'
+export * from './scrollTitle';

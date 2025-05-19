@@ -19,5 +19,18 @@ export const contactFormObject = defineField({
       }
     },
   },
-  fields: [paddingBlock, ctaObject],
+  fields: [
+    {
+      name: 'id',
+      type: 'string',
+      validation: (rule) => rule.required(),
+    },
+    {
+      name: 'title',
+      type: 'string',
+      validation: (rule) => rule.required(),
+    },
+    paddingBlock,
+    ctaObject,
+  ],
 })

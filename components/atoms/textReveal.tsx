@@ -2,16 +2,21 @@
 
 import { WithChildren } from '@/types';
 import { useInView } from 'motion/react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export interface TextRevealProps
   extends WithChildren,
     React.HTMLAttributes<HTMLDivElement> {
   text: string;
+  renew?: boolean;
 }
 
-export const TextReveal = ({ className, text, ...rest }: TextRevealProps) => {
-  // const animationChars = "█▓▒░█▓▒░█▓▒░▙▚▛▜▞";
+export const TextReveal = ({
+  className,
+  text,
+  renew = false,
+  ...rest
+}: TextRevealProps) => {
   const animationChars =
     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789§$%&';
   const minInterval = 100;
@@ -20,17 +25,23 @@ export const TextReveal = ({ className, text, ...rest }: TextRevealProps) => {
   const minSteps = 5;
 
   const textEl = useRef<HTMLDivElement>(null);
+  const textSpansRef = useRef<HTMLSpanElement[]>([]);
+  const [hasAnimated, setHasAnimated] = useState(false);
 
   const textLetters = Array.from(text);
-  const textSpans: unknown[] = [];
-
   const inView = useInView(textEl);
-  // Class to animate letter a random number of times until correct value is shown
-  const AnimatedLetter = (
-    textSpans: Array<{ textContent: string }>,
-    originalValue: string[],
-  ) => {
-    textSpans.forEach((span: { textContent: string }, i: number) => {
+
+  // Funzione per inizializzare i caratteri random
+  const InitialAnimatedLetter = () => {
+    textSpansRef.current.forEach((span) => {
+      span.textContent =
+        animationChars[Math.floor(Math.random() * animationChars.length)];
+    });
+  };
+
+  // Funzione per animare i caratteri fino alla lettera corretta
+  const AnimatedLetter = () => {
+    textSpansRef.current.forEach((span, i) => {
       const animationSteps = Math.floor(
         Math.random() * (maxSteps - minSteps) + minSteps,
       );
@@ -39,66 +50,58 @@ export const TextReveal = ({ className, text, ...rest }: TextRevealProps) => {
       );
       let stepsCount = 0;
 
-      function _toggleChar() {
+      const _toggleChar = () => {
         if (stepsCount < animationSteps) {
           span.textContent =
             animationChars[Math.floor(Math.random() * animationChars.length)];
         } else {
-          span.textContent = originalValue[i];
+          span.textContent = textLetters[i];
         }
-      }
+      };
 
-      function animate() {
+      const animate = () => {
         if (stepsCount <= animationSteps) {
           _toggleChar();
           stepsCount++;
-          setTimeout(() => animate(), animationInterval);
+          setTimeout(animate, animationInterval);
         }
-      }
+      };
 
       animate();
     });
   };
 
-  const InitialAnimatedLetter = (textSpans: Array<{ textContent: string }>) => {
-    textSpans.forEach((span: { textContent: string }) => {
-      span.textContent =
-        animationChars[Math.floor(Math.random() * animationChars.length)];
-    });
-  };
-
-  // Wrap each letter on a span and add them to the textSpans array.
-  // Replace original content with the spans
-  function wrapLetters() {
-    textLetters.forEach((letter) => {
-      const span = document.createElement('span');
-      span.classList.add('letter');
-      span.textContent = letter;
-      textSpans.push(span);
-    });
-
+  useEffect(() => {
     if (textEl.current) {
       textEl.current.innerHTML = '';
-      textSpans.forEach((span) => {
-        textEl.current?.appendChild(span as unknown as Node);
+      textSpansRef.current = [];
+
+      textLetters.forEach((letter) => {
+        const span = document.createElement('span');
+        span.classList.add('letter');
+        span.textContent = letter;
+        textEl.current?.appendChild(span);
+        textSpansRef.current.push(span);
       });
+
+      InitialAnimatedLetter();
     }
-  }
+  }, [text]);
 
-  // Wrap letters and create class instance for each letter
-
-  // Initialize demo
   useEffect(() => {
-    wrapLetters();
-    InitialAnimatedLetter(textSpans as Array<{ textContent: string }>);
-    if (inView) {
-      AnimatedLetter(textSpans as Array<{ textContent: string }>, textLetters);
+    if (inView && !hasAnimated) {
+      AnimatedLetter();
+      setHasAnimated(true);
     }
-  }, [inView]);
+    if (inView && renew) {
+      AnimatedLetter();
+      setHasAnimated(true);
+    }
+  }, [inView, hasAnimated]);
 
   return (
-    <div {...rest} ref={textEl} className={className ?? ''}>
+    <span {...rest} ref={textEl} className={`inline-block ${className ?? ''}`}>
       {text}
-    </div>
+    </span>
   );
 };

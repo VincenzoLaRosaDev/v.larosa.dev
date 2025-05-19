@@ -1,2 +1,2 @@
 export * from './pageDocument'
-export * from './socialLinkDocument'
+export * from './linkDocument'

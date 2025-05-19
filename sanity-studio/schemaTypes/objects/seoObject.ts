@@ -25,5 +25,11 @@ export const seoObject = defineField({
       type: 'text',
       validation: (rule) => rule.required(),
     },
+    {
+      name: 'seoImage',
+      type: 'image',
+      options: {hotspot: true},
+      validation: (rule) => rule.required(),
+    },
   ],
 })

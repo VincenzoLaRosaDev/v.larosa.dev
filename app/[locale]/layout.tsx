@@ -26,14 +26,19 @@ export async function generateMetadata() {
       {
         rel: 'icon',
         type: 'image/png',
-        sizes: '48x48',
-        url: '/icon/favicon-48x48.png',
+        url: '/icon/apple-touch-icon.png',
       },
       {
         rel: 'icon',
         type: 'image/png',
-        sizes: '96x96',
-        url: '/icon/favicon-96x96.png',
+        sizes: '192x192',
+        url: '/icon/android-chrome-192x192.png',
+      },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '512x512',
+        url: '/icon/android-chrome-512x512.png',
       },
     ],
   };
@@ -51,13 +56,14 @@ async function getMessages(locale: string) {
   }
 }
 
-export default async function RootLayout({
+export default async function HomeLayout({
   children,
-  params: { locale },
-}: Readonly<{
+  params,
+}: {
   children: React.ReactNode;
-  params: { locale: string };
-}>) {
+  params: Promise<any>;
+}) {
+  const locale = (await Promise.resolve(params)).locale;
   if (!locales.includes(locale)) {
     notFound();
   }
@@ -65,14 +71,15 @@ export default async function RootLayout({
   const messages = await getMessages(locale);
 
   return (
-    <html className="bg-bg" lang={locale}>
-      <body className="bg-bg">
+    <html lang={locale} suppressHydrationWarning>
+      <body>
         <main>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <ThemeProviders>
-              <div className="bg-bg text-text archivo max-w-7xl mx-auto">
-                <div className="px-3 lg:px-9">{children}</div>
+              <div className="text-text archivo max-w-7xl mx-auto">
+                <div className="lg:px-9">{children}</div>
               </div>
+              <div className="fixed top-0 left-0 right-0 bottom-0 bg-bg z-[-1]" />
               <MouseCursor />
             </ThemeProviders>
           </NextIntlClientProvider>

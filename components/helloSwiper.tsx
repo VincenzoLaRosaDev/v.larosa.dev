@@ -4,27 +4,27 @@ import { HELLO_ARRAY } from '@/constants';
 import 'swiper/css';
 import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Cursor, TextReveal } from '@/components';
 import { TailwindProps } from '@/types';
+import { Cursor, TextReveal } from './atoms';
 
 export interface HelloSwiperProps extends TailwindProps {}
 
 export const HelloSwiper = ({ className }: HelloSwiperProps) => {
   return (
-    <div className="w-full flex items-center justify-between">
+    <div className="w-full flex items-center justify-between gap-8">
       <img
         src="/vincenzo-la-rosa-purple.jpg"
         alt="Vincenzo La Rosa"
         width={80}
         height={80}
-        className="z-50 h-20 w-20 rounded-full overflow-hidden"
+        className="z-10 h-20 w-20 min-h-20 min-w-20 rounded-full overflow-hidden"
       />
 
       <div
         className={`w-full lg:max-w-[230px] text-reverse ${className ?? ''}`}
       >
         <Swiper
-          className={`pointer-events-none h-16 rounded-xl lg:h-20 bg-light-grey/5 !mb-0`}
+          className={`pointer-events-none rounded-xl h-20 bg-grey/5 border-t border-light/20 !mb-0`}
           style={{
             margin: 0,
             marginBottom: '20px',
@@ -40,21 +40,21 @@ export const HelloSwiper = ({ className }: HelloSwiperProps) => {
           loop
           modules={[Autoplay]}
         >
-          <div className="absolute left-4 top-1/2 translate-y-[-50%] text-2xl font-bold lg:text-3xl text-text">
+          <div className="absolute left-4 top-1/2 translate-y-[-50%] font-bold text-3xl text-text">
             {'>'}
           </div>
           <Cursor className="absolute right-4 top-1/2 translate-y-[-50%]" />
           {HELLO_ARRAY.map((item) => (
             <SwiperSlide
               key={item.label}
-              className="text-2xl font-bold lg:text-3xl"
+              className="font-bold text-3xl"
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
             >
-              <TextReveal text={`${item.label}!`} />
+              <TextReveal text={`${item.label}!`} renew />
             </SwiperSlide>
           ))}
         </Swiper>

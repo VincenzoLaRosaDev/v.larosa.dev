@@ -1,5 +1,5 @@
 import {padding, paddingBlock, richText} from './atoms'
-import {pageDocument, socialLinksDocument} from './documents'
+import {pageDocument, linksDocument} from './documents'
 import {
   blogsObject,
   contactFormObject,
@@ -16,7 +16,7 @@ import {
 
 export const schemaTypes = [
   pageDocument,
-  socialLinksDocument,
+  linksDocument,
 
   seoObject,
   richTextObject,

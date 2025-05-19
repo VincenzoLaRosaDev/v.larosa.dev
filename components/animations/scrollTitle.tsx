@@ -8,50 +8,81 @@ export const ScrollTitleAnimation = () => {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    const elements = document.querySelectorAll('#transitionTitle');
+    const elements = document.querySelectorAll<HTMLElement>('#transitionTitle');
     const containers = document.querySelectorAll('#transitionContainer');
+    const sideHeader = document.querySelector('#side-header');
 
     let space = 0;
     let totalSpace = 0;
+    let sideHeaderHeight = sideHeader?.clientHeight
+      ? sideHeader.clientHeight + 168
+      : 0;
 
     elements.forEach((item) => {
-      totalSpace += item.children[0].clientHeight;
+      totalSpace += item.clientHeight;
     });
 
     elements.forEach((item, i) => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: item,
-          endTrigger: containers[containers.length - 1],
-          start: `top top+=${120 + space}px`,
-          end: `bottom top+=${120 + totalSpace}`,
-          pin: true,
-          pinSpacing: false,
-          scrub: true,
-          markers: true,
+      const pinTrigger = ScrollTrigger.create({
+        trigger: item,
+        endTrigger: containers[containers.length - 1],
+        start: `top top+=${sideHeaderHeight + space}px`,
+        end: `bottom top`,
+        pin: true,
+        pinSpacing: false,
+        scrub: true,
+        onEnter: () => {
+          item.classList.add('!text-sm');
+          item.classList.remove('!opacity-30');
+        },
+        onLeave: () => {
+          item.classList.remove('!text-sm');
+          item.classList.add('!opacity-30');
+        },
+        onEnterBack: () => {
+          item.classList.add('!text-sm');
+          item.classList.remove('!opacity-30');
+        },
+        onLeaveBack: () => {
+          item.classList.remove('!text-sm');
+          item.classList.add('!opacity-30');
         },
       });
 
-      space += item.children[0].clientHeight;
+      space += item.clientHeight;
 
       if (i < elements.length - 1) {
-        const tl2 = gsap.timeline({
+        ScrollTrigger.create({
+          trigger: elements[i + 1],
+          endTrigger: containers[containers.length - 1],
+          start: `top top+=${sideHeaderHeight + space}px`,
+          end: `bottom top+=${sideHeaderHeight + totalSpace}`,
+          toggleActions: 'play none none reverse',
+          onEnter: () => {
+            item.classList.remove('!text-sm');
+            item.classList.add('!opacity-30');
+          },
+          onLeaveBack: () => {
+            item.classList.add('!text-sm');
+            item.classList.remove('!opacity-30');
+          },
+        });
+
+        gsap.to(item, {
           scrollTrigger: {
             trigger: elements[i + 1],
             endTrigger: containers[containers.length - 1],
-            start: `top top+=${120 + space}px`,
-            end: `bottom top+=${120 + totalSpace}`,
-            toggleActions: 'play none none reverse',
+            start: `top top+=${sideHeaderHeight + space}px`,
+            end: `bottom top+=${sideHeaderHeight + totalSpace}`,
+            scrub: true,
           },
-        });
-        tl2.to(item, {
-          opacity: 0.5,
+          // opacity: 0.3,
         });
       }
     });
 
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
 

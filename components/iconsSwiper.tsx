@@ -4,10 +4,12 @@ import { IconsSwiper as IconsSwiperSanity } from '@/sanity/types';
 import { TailwindProps } from '@/types';
 import { PaddingContainer } from './atoms';
 import { useRef } from 'react';
-import { useAnimationFrame } from 'motion/react';
+import { motion, useAnimationFrame } from 'motion/react';
+import { ScrollTitleContainer } from './scrollTitleContainer';
 
 export interface IconsSwiperProps extends TailwindProps {
   id: IconsSwiperSanity['id'];
+  title: IconsSwiperSanity['title'];
   paddingBlock: IconsSwiperSanity['paddingBlock'];
   icons: IconsSwiperSanity['icons'];
   speed?: number;
@@ -16,6 +18,7 @@ export interface IconsSwiperProps extends TailwindProps {
 export const IconsSwiper = ({
   className,
   id,
+  title,
   paddingBlock,
   icons,
   speed = 50,
@@ -25,14 +28,28 @@ export const IconsSwiper = ({
       <PaddingContainer
         id={id}
         padding={{ _type: 'paddingBlock', ...paddingBlock }}
-        className={`relative w-full overflow-hidden py-8 bg-bg ${className}`}
+        className={`relative w-full py-8 bg-bg ${className}`}
       >
-        <div className="pointer-events-none absolute top-0 left-0 h-full w-32 bg-gradient-to-r from-bg to-transparent z-10" />
-        <div className="pointer-events-none absolute top-0 right-0 h-full w-32 bg-gradient-to-l from-bg to-transparent z-10" />
+        <ScrollTitleContainer id={id} title={title ?? ''}>
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+              transition: { duration: 0.6, ease: 'easeOut' },
+            }}
+            viewport={{ once: true, amount: 0.3 }}
+          >
+            <div className="overflow-hidden h-full relative">
+              <div className="pointer-events-none absolute top-0 left-0 h-full w-32 bg-gradient-to-r from-bg to-transparent z-10" />
+              <div className="pointer-events-none absolute top-0 right-0 h-full w-32 bg-gradient-to-l from-bg to-transparent z-10" />
 
-        <SwiperRow icons={icons} speed={speed} reverse={false} />
-        <div className="h-4 lg:h-8" />
-        <SwiperRow icons={icons} speed={speed} reverse={true} />
+              <SwiperRow icons={icons} speed={speed} reverse={false} />
+              <div className="h-4 lg:h-8" />
+              <SwiperRow icons={icons} speed={speed} reverse={true} />
+            </div>
+          </motion.div>
+        </ScrollTitleContainer>
       </PaddingContainer>
     )
   );
@@ -88,6 +105,7 @@ export const SwiperRow = ({
             key={`swiper-${index}`}
             className="[&>*]:h-[64px] [&>*]:w-[64px] flex-shrink-0 px-10"
             dangerouslySetInnerHTML={{ __html: icon ?? '' }}
+            suppressHydrationWarning
           />
         ))}
       </div>

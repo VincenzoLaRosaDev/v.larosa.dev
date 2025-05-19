@@ -1,3 +1,5 @@
+'use client';
+
 import { TailwindProps } from '@/types';
 
 export const Cursor = ({ className }: TailwindProps) => {

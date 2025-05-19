@@ -123,6 +123,8 @@ export type Cta = {
 
 export type ContactForm = {
   _type: 'contactForm';
+  id?: string;
+  title?: string;
   paddingBlock?: {
     paddingTop?: Padding;
     paddingBottom?: Padding;
@@ -267,18 +269,15 @@ export type RichTextObj = {
   value?: RichText;
 };
 
-export type SocialLink = {
+export type Link = {
   _id: string;
-  _type: 'socialLink';
+  _type: 'link';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   title?: string;
-  socialLinkIcon?: string;
-  externalLink?: {
-    href?: string;
-    blank?: boolean;
-  };
+  linkIcon?: string;
+  link?: CtaLink;
 };
 
 export type TranslationMetadata = {
@@ -470,7 +469,7 @@ export type AllSanitySchemaTypes =
   | Experiences
   | ContentsBlock
   | RichTextObj
-  | SocialLink
+  | Link
   | TranslationMetadata
   | InternationalizedArrayReferenceValue
   | Page

@@ -289,49 +289,15 @@
             "level": "error"
           }
         ],
-        "name": "socialLinkIcon",
+        "name": "linkIcon",
         "type": "inlineSvg"
       },
       {
-        "fields": [
-          {
-            "validation": [
-              {
-                "rules": [
-                  {
-                    "flag": "uri",
-                    "constraint": {
-                      "options": {
-                        "scheme": ["/^http$/", "/^https$/"],
-                        "allowRelative": false,
-                        "relativeOnly": false,
-                        "allowCredentials": false
-                      }
-                    }
-                  },
-                  {
-                    "flag": "presence",
-                    "constraint": "required"
-                  }
-                ],
-                "level": "error"
-              }
-            ],
-            "name": "href",
-            "type": "url",
-            "title": "URL"
-          },
-          {
-            "name": "blank",
-            "type": "boolean",
-            "title": "Open in new tab"
-          }
-        ],
-        "name": "externalLink",
-        "type": "object"
+        "name": "link",
+        "type": "ctaLink"
       }
     ],
-    "name": "socialLink",
+    "name": "link",
     "type": "document"
   },
   {
@@ -395,6 +361,24 @@
         ],
         "name": "seoDescription",
         "type": "text"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "seoImage",
+        "type": "image"
       }
     ],
     "name": "seo",
@@ -1257,6 +1241,36 @@
   },
   {
     "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
       {
         "options": {
           "collapsible": true

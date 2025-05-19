@@ -4,6 +4,10 @@ import { createNavigation } from 'next-intl/navigation';
 export type localesType = 'en' | 'nl';
 export const locales = ['en', 'nl'];
 export const defaultLocale = locales[0];
+export const navLang: { id: string; label: string }[] = [
+  { id: 'en', label: 'english' },
+  { id: 'nl', label: 'netherlands' },
+];
 
 export const routing = defineRouting({
   locales: locales,
