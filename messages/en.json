@@ -1,5 +1,10 @@
 {
   "Index": {
-    "hello_world": "hello world"
+    "current": "en",
+
+    "present": "present",
+    "name": "Name",
+    "message": "Message",
+    "email": "Email"
   }
 }

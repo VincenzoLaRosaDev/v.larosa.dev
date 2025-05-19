@@ -1,18 +1,36 @@
 import {CodeBlockIcon} from '@sanity/icons'
 import {defineField} from 'sanity'
+import {paddingBlock} from '../atoms'
 
 export const projectsObject = defineField({
   name: 'projects',
   type: 'object',
   icon: CodeBlockIcon,
   preview: {
-    prepare: () => {
+    select: {
+      title: 'title',
+      paddingTop: 'paddingBlock.paddingTop.value',
+      paddingBottom: 'paddingBlock.paddingBottom.value',
+    },
+    prepare: ({title, paddingTop, paddingBottom}) => {
       return {
-        title: 'Projects',
+        title: title,
+        subtitle: `padding top: ${paddingTop} - padding bottom: ${paddingBottom}`,
       }
     },
   },
   fields: [
+    {
+      name: 'id',
+      type: 'string',
+      validation: (rule) => rule.required(),
+    },
+    {
+      name: 'title',
+      type: 'string',
+      validation: (rule) => rule.required(),
+    },
+    paddingBlock,
     {
       name: 'items',
       type: 'array',

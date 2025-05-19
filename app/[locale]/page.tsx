@@ -1,10 +1,68 @@
-import { useTranslations } from 'next-intl';
-import Image from 'next/image';
+import {
+  RenderBlocks,
+  RichText,
+  ScrollTitleAnimation,
+  SideNav,
+  HelloSwiper,
+} from '@/components';
+import { getLinks, getLocalizeHomePage } from '@/sanity/queries';
+import type { Metadata } from 'next';
 
-export default function Home() {
-  const t = useTranslations('Index');
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<any>;
+}): Promise<Metadata> {
+  const locale = (await Promise.resolve(params)).locale;
+  const data = await getLocalizeHomePage(locale);
+
+  return {
+    metadataBase: new URL(`${process.env.SITE_URL}`),
+    title: `${data[0].seo?.seoTitle}`,
+    description: `${data[0].seo?.seoDescription}`,
+    alternates: {
+      canonical: `${process.env.SITE_URL}/${locale}/`,
+    },
+    openGraph: {
+      title: `${data[0].seo?.seoTitle}`,
+      description: `${data[0].seo?.seoDescription}`,
+      siteName: "A'Cunziria",
+      type: 'website',
+      images: {
+        url: '/image-preview.jpg',
+      },
+    },
+    twitter: {
+      title: `${data[0].seo?.seoTitle}`,
+      description: `${data[0].seo?.seoDescription}`,
+      images: {
+        url: '/image-preview.jpg',
+      },
+    },
+  };
+}
+
+export default async function Home({ params }: { params: Promise<any> }) {
+  const locale = (await Promise.resolve(params)).locale;
+  const data = await getLocalizeHomePage(locale);
+  const socialLinks = await getLinks();
 
   return (
-    <></>
+    <section className="lg:flex lg:justify-between lg:gap-16 gap-4">
+      <ScrollTitleAnimation />
+      <SideNav
+        className="w-full relative lg:max-w-96 py-10 lg:py-20 px-3 lg:px-0"
+        homeBanner={data[0].homeBanner}
+        links={socialLinks}
+      />
+      <div className="w-full relative lg:max-w-[780px] py-10 lg:py-20">
+        <div className="flex justify-end px-3 lg:px-0">
+          <HelloSwiper />
+        </div>
+        <RenderBlocks layout={data[0].pageBlocks} />
+        <RichText value={data[0].richText} className="text-xs" />
+      </div>
+    </section>
   );
+  null;
 }

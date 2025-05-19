@@ -1,19 +1,36 @@
-import {InlineElementIcon} from '@sanity/icons'
 import {ComposeIcon} from '@sanity/icons'
 import {defineField} from 'sanity'
+import {paddingBlock} from '../atoms'
 
 export const blogsObject = defineField({
   name: 'blogs',
   type: 'object',
   icon: ComposeIcon,
   preview: {
-    prepare: () => {
+    select: {
+      title: 'title',
+      paddingTop: 'paddingBlock.paddingTop.value',
+      paddingBottom: 'paddingBlock.paddingBottom.value',
+    },
+    prepare: ({title, paddingTop, paddingBottom}) => {
       return {
-        title: 'Blogs',
+        title: title,
+        subtitle: `padding top: ${paddingTop} - padding bottom: ${paddingBottom}`,
       }
     },
   },
   fields: [
+    {
+      name: 'id',
+      type: 'string',
+      validation: (rule) => rule.required(),
+    },
+    {
+      name: 'title',
+      type: 'string',
+      validation: (rule) => rule.required(),
+    },
+    paddingBlock,
     {
       name: 'items',
       type: 'array',
@@ -31,21 +48,7 @@ export const blogsObject = defineField({
           fields: [
             {
               name: 'link',
-              type: 'object',
-              validation: (rule) => rule.required(),
-              fields: [
-                {
-                  name: 'href',
-                  type: 'url',
-                  title: 'URL',
-                  validation: (rule) => rule.required(),
-                },
-                {
-                  title: 'Open in new tab',
-                  name: 'blank',
-                  type: 'boolean',
-                },
-              ],
+              type: 'ctaLink',
             },
             {
               name: 'image',

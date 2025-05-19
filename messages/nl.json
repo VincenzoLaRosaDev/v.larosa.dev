@@ -1,0 +1,10 @@
+{
+  "Index": {
+    "current": "nl",
+
+    "present": "present",
+    "name": "Name",
+    "message": "Message",
+    "email": "Email"
+  }
+}

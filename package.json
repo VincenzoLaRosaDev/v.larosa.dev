@@ -14,19 +14,29 @@
     "validate:format": "npm run format -- --check",
     "validate:build": "tsc --noEmit",
     "validate": "npm run lint && npm run validate:format && npm run validate:build",
-    "e2e": "npx cypress open"
+    "e2e": "npx cypress open",
+    "typegen": "cd sanity-studio && sanity schema extract --path=schema.json && sanity typegen generate && mv schema.json ../sanity/extract.json && mv sanity.types.ts ../sanity/types.ts"
   },
   "dependencies": {
     "axios": "^1.9.0",
-    "next": "14.1.0",
+    "gsap": "^3.13.0",
+    "motion": "^12.10.5",
+    "next": "^15.3.2",
     "next-intl": "^3.5.2",
+    "next-sanity": "^9.8.25",
+    "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18",
-    "react-hook-form": "^7.49.3",
+    "react-hook-form": "^7.56.4",
+    "sanity": "^3.65.1",
+    "styled-components": "^6.1.18",
+    "swiper": "^11.2.6",
     "usehooks-ts": "^2.10.0"
   },
   "devDependencies": {
     "@cypress-audit/lighthouse": "^1.4.2",
+    "@portabletext/react": "^3.2.1",
+    "@sanity/image-url": "^1.1.0",
     "@svgr/webpack": "^8.1.0",
     "@testing-library/jest-dom": "^6.3.0",
     "@testing-library/react": "^14.1.2",
@@ -45,6 +55,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "postcss": "^8",
     "prettier": "^3.5.3",
+    "sanity-codegen": "^0.9.8",
     "tailwindcss": "^3.3.0",
     "ts-jest": "^29.1.2",
     "typescript": "^5"

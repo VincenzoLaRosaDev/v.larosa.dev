@@ -1,4 +1,4 @@
-import {defineField, SlugValidationContext} from 'sanity'
+import {defineField} from 'sanity'
 
 export const seoObject = defineField({
   name: 'seo',
@@ -23,6 +23,12 @@ export const seoObject = defineField({
     {
       name: 'seoDescription',
       type: 'text',
+      validation: (rule) => rule.required(),
+    },
+    {
+      name: 'seoImage',
+      type: 'image',
+      options: {hotspot: true},
       validation: (rule) => rule.required(),
     },
   ],
