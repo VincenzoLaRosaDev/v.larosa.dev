@@ -52,7 +52,6 @@ export const ScrollTitleContainer = ({
           />
         </h2>
       </div>
-      <div className="lg:fixed lg:left-0 lg:bottom-0 lg:h-28 lg:w-full lg:max-w-96 lg:bg-gradient-to-t lg:from-bg"></div>
       <div className="w-full relative">
         <h2
           className="lg:hidden z-20 sticky top-0 backdrop-blur-sm px-3 py-3"
