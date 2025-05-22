@@ -36,6 +36,7 @@ export const Experiences = ({
     >
       <ScrollTitleContainer id={id} title={title ?? ''}>
         <motion.div
+          style={{ willChange: 'opacity, transform' }}
           initial={{ opacity: 0, y: 50 }}
           whileInView={{
             opacity: 1,
