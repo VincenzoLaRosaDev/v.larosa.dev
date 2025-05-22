@@ -33,9 +33,10 @@ export const ScrollTitleContainer = ({
       {...rest}
       id={'transitionContainer'}
       ref={container}
+      style={{ transform: 'translateZ(0)' }}
       className={`inline-flex w-full ${className}`}
     >
-      <div className="justify-end absolute left-[-448px] hidden lg:flex">
+      <div className="hidden lg:flex absolute lg:left-[-448px] justify-end">
         <h2
           data-cursor-interactive
           id={'transitionTitle'}
