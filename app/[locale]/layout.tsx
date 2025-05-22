@@ -72,7 +72,7 @@ export default async function HomeLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className='bg-bg'>
+      <body className="bg-bg">
         <main>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <ThemeProviders>

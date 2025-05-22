@@ -8,6 +8,7 @@ export const MouseCursor = () => {
   const { theme } = useTheme();
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+  const [mounted, setMounted] = useState(false);
 
   const springX = useSpring(mouseX, { stiffness: 100, damping: 20 });
   const springY = useSpring(mouseY, { stiffness: 100, damping: 20 });
@@ -15,6 +16,12 @@ export const MouseCursor = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+
     const checkViewport = () => {
       setIsMobile(window.innerWidth < 1024); // tailwind lg breakpoint
     };
@@ -22,9 +29,11 @@ export const MouseCursor = () => {
     checkViewport();
     window.addEventListener('resize', checkViewport);
     return () => window.removeEventListener('resize', checkViewport);
-  }, []);
+  }, [mounted]);
 
   useEffect(() => {
+    if (!mounted) return;
+
     if (isMobile) {
       const centerX = window.innerWidth / 2 - 700;
       const centerY = window.innerHeight / 2 - 700;
@@ -40,10 +49,13 @@ export const MouseCursor = () => {
 
     window.addEventListener('mousemove', moveCursor);
     return () => window.removeEventListener('mousemove', moveCursor);
-  }, [isMobile, mouseX, mouseY]);
+  }, [isMobile, mouseX, mouseY, mounted]);
 
-  return (
+  if (!mounted) return null;
+
+  return theme === 'dark' && (
     <motion.div
+    className={`bg-gradient-radial from-[#D7D1E990] lg:from-[#D7D1E9] from-0% to-[#D7D1E900] to-60%`}
       style={{
         position: 'fixed',
         top: 0,
@@ -51,13 +63,9 @@ export const MouseCursor = () => {
         width: '1400px',
         height: '1400px',
         borderRadius: '50%',
-        background:
-          theme === 'dark'
-            ? 'radial-gradient(circle, #D7D1E990 0%, #D7D1E900 60%)'
-            : 'radial-gradient(circle, #D7D1E930 0%, #D7D1E900 60%)',
         mixBlendMode: 'overlay',
         pointerEvents: 'none',
-        zIndex: 60,
+        zIndex: 50,
         x: springX,
         y: springY,
       }}

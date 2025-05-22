@@ -41,8 +41,8 @@ export const IconsSwiper = ({
             viewport={{ once: true, amount: 0.3 }}
           >
             <div className="overflow-hidden h-full relative">
-              <div className="pointer-events-none absolute top-0 left-0 h-full w-32 bg-gradient-to-r from-bg to-transparent z-10" />
-              <div className="pointer-events-none absolute top-0 right-0 h-full w-32 bg-gradient-to-l from-bg to-transparent z-10" />
+              <div className="pointer-events-none absolute top-0 left-0 h-full w-16 bg-gradient-to-r from-bg to-transparent z-10" />
+              <div className="pointer-events-none absolute top-0 right-0 h-full w-16 bg-gradient-to-l from-bg to-transparent z-10" />
 
               <SwiperRow icons={icons} speed={speed} reverse={false} />
               <div className="h-4 lg:h-8" />
@@ -93,9 +93,7 @@ export const SwiperRow = ({
   });
 
   return (
-    <div
-      className={`relative h-[64px] ${!reverse ? 'mb-[100px]' : ''}`}
-    >
+    <div className={`relative h-[64px] ${!reverse ? 'mb-[100px]' : ''}`}>
       <div
         className={`absolute flex min-w-max will-change-transform ${reverse ? 'right-0' : 'left-0'}`}
         ref={containerRef}
