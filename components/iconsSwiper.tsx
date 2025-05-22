@@ -32,7 +32,7 @@ export const IconsSwiper = ({
       >
         <ScrollTitleContainer id={id} title={title ?? ''}>
           <motion.div
-            style={{ willChange: 'opacity, transform' }}
+            style={{ willChange: 'opacity, transform', transform: 'translateZ(0)' }}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{
               opacity: 1,
