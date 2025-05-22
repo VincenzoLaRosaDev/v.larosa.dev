@@ -40,66 +40,66 @@ export const Blogs = ({
     >
       <ScrollTitleContainer id={id} title={title ?? ''}>
         <FadeInOnView>
-          <div className="flex flex-col gap-8">
-            {items?.map((item, key) => {
-              const isHovered = hoveredIndex !== null && hoveredIndex !== key;
-              return (
-                <div
-                  key={key}
-                  onMouseEnter={() => setHoveredIndex(key)}
-                  onMouseLeave={() => setHoveredIndex(null)}
-                  className={`transition-all ${isHovered ? 'lg:opacity-50' : 'lg:opacity-100'}`}
-                >
-                  <CmsLink
-                    link={item.link}
-                    className={`group flex items-start flex-col md:flex-row gap-6 lg:p-6 rounded-lg overflow-hidden transition-all border-light/20 ${
-                      hoveredIndex === key
-                        ? 'lg:bg-grey/5 lg:border-t lg:border-light/20'
-                        : ''
-                    }`}
+            <div className="flex flex-col gap-8">
+              {items?.map((item, key) => {
+                const isHovered = hoveredIndex !== null && hoveredIndex !== key;
+                return (
+                  <div
+                    key={key}
+                    onMouseEnter={() => setHoveredIndex(key)}
+                    onMouseLeave={() => setHoveredIndex(null)}
+                    className={`transition-all ${isHovered ? 'lg:opacity-50' : 'lg:opacity-100'}`}
                   >
-                    <img
-                      src={urlFor(item.image).url()}
-                      alt={item.image?.alt ?? ''}
-                      className="w-full h-auto md:max-w-[164px] rounded-xl overflow-hidden"
-                    />
-                    <div className="flex flex-col gap-4 w-full">
-                      <div className="flex items-start gap-3">
-                        <span
-                          className={`archivo-black transition-all ${
-                            hoveredIndex === key ? 'text-primary' : ''
-                          }`}
-                        >
-                          {item.title}
-                        </span>
-                        {item?.link && (
-                          <ArrowIcon
-                            className={`h-6 w-6 min-h-6 min-w-6 transition-all ${
-                              hoveredIndex === key
-                                ? 'fill-primary translate-x-0.5 -translate-y-0.5'
-                                : 'fill-text'
+                    <CmsLink
+                      link={item.link}
+                      className={`group flex items-start flex-col md:flex-row gap-6 lg:p-6 rounded-lg overflow-hidden transition-all border-light/20 ${
+                        hoveredIndex === key
+                          ? 'lg:bg-grey/5 lg:border-t lg:border-light/20'
+                          : ''
+                      }`}
+                    >
+                      <img
+                        src={urlFor(item.image).url()}
+                        alt={item.image?.alt ?? ''}
+                        className="w-full h-auto md:max-w-[164px] rounded-xl overflow-hidden"
+                      />
+                      <div className="flex flex-col gap-4 w-full">
+                        <div className="flex items-start gap-3">
+                          <span
+                            className={`archivo-black transition-all ${
+                              hoveredIndex === key ? 'text-primary' : ''
                             }`}
-                          />
-                        )}
-                      </div>
-
-                      {item.richText && (
-                        <div className="text-xs text-text-light">
-                          <PortableText value={item.richText} />
+                          >
+                            {item.title}
+                          </span>
+                          {item?.link && (
+                            <ArrowIcon
+                              className={`h-6 w-6 min-h-6 min-w-6 transition-all ${
+                                hoveredIndex === key
+                                  ? 'fill-primary translate-x-0.5 -translate-y-0.5'
+                                  : 'fill-text'
+                              }`}
+                            />
+                          )}
                         </div>
-                      )}
 
-                      <div className="flex flex-wrap items-center gap-3">
-                        {item.tag?.map((skill, key) => (
-                          <Tag key={key}>{skill}</Tag>
-                        ))}
+                        {item.richText && (
+                          <div className="text-xs text-text-light">
+                            <PortableText value={item.richText} />
+                          </div>
+                        )}
+
+                        <div className="flex flex-wrap items-center gap-3">
+                          {item.tag?.map((skill, key) => (
+                            <Tag key={key}>{skill}</Tag>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  </CmsLink>
-                </div>
-              );
-            })}
-          </div>
+                    </CmsLink>
+                  </div>
+                );
+              })}
+            </div>
         </FadeInOnView>
       </ScrollTitleContainer>
     </PaddingContainer>

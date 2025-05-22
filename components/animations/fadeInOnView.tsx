@@ -1,40 +1,37 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
-import { ReactNode, useRef } from 'react';
+import { WithChildren } from '@/types';
+import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
-interface FadeInOnViewProps {
-  children: ReactNode;
-  y?: number; // distanza iniziale Y
-  delay?: number;
-  duration?: number;
-  once?: boolean;
-  className?: string;
-}
+interface FadeInOnViewProps extends WithChildren {}
 
-export const FadeInOnView = ({
-  children,
-  y = 50,
-  delay = 0,
-  duration = 0.6,
-  once = true,
-  className = '',
-}: FadeInOnViewProps) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, {
-    once,
-    margin: '0px 0px -20% 0px',
-  });
+export const FadeInOnView = ({ children }: FadeInOnViewProps) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const width = window.innerWidth;
+      setIsMobile(width < 1024);
+    }
+  }, []);
+
+  if (isMobile) {
+    return <div>{children}</div>;
+  }
 
   return (
-    <div ref={ref} className={className}>
-      <motion.div
-        initial={{ opacity: 0, y }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration, delay, ease: 'easeOut' }}
-      >
-        {children}
-      </motion.div>
-    </div>
+    <motion.div
+      style={{ willChange: 'opacity, transform', transform: 'translateZ(0)' }}
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.6, ease: 'easeOut' },
+      }}
+      viewport={{ once: true, amount: 0.3 }}
+    >
+      {children}
+    </motion.div>
   );
 };

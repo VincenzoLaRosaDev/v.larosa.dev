@@ -33,7 +33,9 @@ export const MouseCursor = () => {
     if (!mounted) return;
 
     const checkViewport = () => {
-      setIsMobile(window.innerWidth < 1024);
+      const hasTouch =
+        'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      setIsMobile(hasTouch);
     };
 
     checkViewport();
