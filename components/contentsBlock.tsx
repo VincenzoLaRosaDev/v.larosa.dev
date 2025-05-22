@@ -53,8 +53,24 @@ export const ContentsBlock = ({
                 </div>
 
                 {item.richText && (
-                  <div className="mt-4 text-text-light">
-                    <PortableText value={item.richText} />
+                  <div className="mt-4 text-text-light flex flex-col gap-8">
+                    <PortableText 
+                      value={item.richText} 
+                      components={{
+                        marks: {
+                          link: ({ children, value }) => (
+                            <a
+                              href={value?.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="underline"
+                            >
+                              {children}
+                            </a>
+                          ),
+                        },
+                      }} 
+                    />
                   </div>
                 )}
               </div>

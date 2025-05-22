@@ -15,6 +15,8 @@ export interface RichTextProps extends TailwindProps {
   paddingBlock?: RichTextObj['paddingBlock'];
 }
 
+
+
 export const RichText = ({
   className,
   id,
@@ -31,7 +33,25 @@ export const RichText = ({
       >
         <ScrollTitleContainer id={id} title={title ?? ''}>
           <FadeInOnView>
-            <PortableText value={value} />
+            <div className='flex flex-col gap-8'>
+              <PortableText 
+                value={value} 
+                components={{
+                  marks: {
+                    link: ({ children, value }) => (
+                      <a
+                        href={value?.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline"
+                      >
+                        {children}
+                      </a>
+                    ),
+                  },
+                }} 
+              />
+            </div>
           </FadeInOnView>
         </ScrollTitleContainer>
       </PaddingContainer>

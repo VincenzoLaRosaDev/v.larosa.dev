@@ -21,13 +21,45 @@ export const SideNav = ({ className, homeBanner, links }: SideNavProps) => {
             {homeBanner?.title}
           </h1>
           {homeBanner?.textTitle && (
-            <div className="text-2xl">
-              <PortableText value={homeBanner?.textTitle} />
+            <div className="text-2xl flex flex-col gap-8">
+              <PortableText 
+                value={homeBanner.textTitle} 
+                components={{
+                  marks: {
+                    link: ({ children, value }) => (
+                      <a
+                        href={value?.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline"
+                      >
+                        {children}
+                      </a>
+                    ),
+                  },
+                }} 
+              />
             </div>
           )}
           {homeBanner?.subText && (
-            <div className="text-base text-text-light mt-6">
-              <PortableText value={homeBanner?.subText} />
+            <div className="text-base text-text-light mt-6 flex flex-col gap-8">
+              <PortableText 
+                value={homeBanner.subText} 
+                components={{
+                  marks: {
+                    link: ({ children, value }) => (
+                      <a
+                        href={value?.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline"
+                      >
+                        {children}
+                      </a>
+                    ),
+                  },
+                }} 
+              />
             </div>
           )}
         </div>
