@@ -7,6 +7,7 @@ import { ScrollTitleContainer } from './scrollTitleContainer';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { motion } from 'motion/react';
+import { FadeInOnView } from './animations';
 
 export interface ContactFormProps extends TailwindProps {
   id: ContactFormSanity['id'];
@@ -32,16 +33,7 @@ export const ContactForm = ({
       className={`relative ${className}`}
     >
       <ScrollTitleContainer id={id} title={title ?? ''}>
-        <motion.div
-          style={{ willChange: 'opacity, transform', transform: 'translateZ(0)' }}
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.6, ease: 'easeOut' },
-          }}
-          viewport={{ once: true, amount: 0.3 }}
-        >
+        <FadeInOnView>
           <form noValidate className="w-full flex flex-col gap-6">
             <textarea
               id="message"
@@ -64,7 +56,7 @@ export const ContactForm = ({
               {cta?.ctaLabel}
             </CmsLink>
           </form>
-        </motion.div>
+        </FadeInOnView>
       </ScrollTitleContainer>
     </PaddingContainer>
   );

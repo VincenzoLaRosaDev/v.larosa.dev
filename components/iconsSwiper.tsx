@@ -6,6 +6,7 @@ import { PaddingContainer } from './atoms';
 import { useRef } from 'react';
 import { motion, useAnimationFrame } from 'motion/react';
 import { ScrollTitleContainer } from './scrollTitleContainer';
+import { FadeInOnView } from './animations';
 
 export interface IconsSwiperProps extends TailwindProps {
   id: IconsSwiperSanity['id'];
@@ -31,16 +32,7 @@ export const IconsSwiper = ({
         className={`relative w-full py-8 bg-bg ${className}`}
       >
         <ScrollTitleContainer id={id} title={title ?? ''}>
-          <motion.div
-            style={{ willChange: 'opacity, transform', transform: 'translateZ(0)' }}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-              transition: { duration: 0.6, ease: 'easeOut' },
-            }}
-            viewport={{ once: true, amount: 0.3 }}
-          >
+          <FadeInOnView>
             <div className="overflow-hidden h-full relative">
               <div className="pointer-events-none absolute top-0 left-0 h-full w-16 bg-gradient-to-r from-bg to-transparent z-10" />
               <div className="pointer-events-none absolute top-0 right-0 h-full w-16 bg-gradient-to-l from-bg to-transparent z-10" />
@@ -49,7 +41,7 @@ export const IconsSwiper = ({
               <div className="h-4 lg:h-8" />
               <SwiperRow icons={icons} speed={speed} reverse={true} />
             </div>
-          </motion.div>
+          </FadeInOnView>
         </ScrollTitleContainer>
       </PaddingContainer>
     )

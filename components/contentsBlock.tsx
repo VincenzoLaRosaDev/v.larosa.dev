@@ -6,6 +6,7 @@ import { PortableText } from 'next-sanity';
 import { motion } from 'motion/react';
 import { PaddingContainer } from './atoms';
 import { ScrollTitleContainer } from './scrollTitleContainer';
+import { FadeInOnView } from './animations';
 
 export interface ContentsBlockProps extends TailwindProps {
   id: ContentsBlockSanity['id'];
@@ -28,16 +29,7 @@ export const ContentsBlock = ({
       className={`relative ${className}`}
     >
       <ScrollTitleContainer id={id} title={title ?? ''}>
-        <motion.div
-          style={{ willChange: 'opacity, transform', transform: 'translateZ(0)' }}
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.6, ease: 'easeOut' },
-          }}
-          viewport={{ once: true, amount: 0.3 }}
-        >
+        <FadeInOnView>
           <div className="bg-grey/5 border-t border-light/20 rounded-xl p-6 flex flex-col lg:flex-row flex-wrap gap-9">
             {items?.map((item, key) => (
               <div
@@ -68,7 +60,7 @@ export const ContentsBlock = ({
               </div>
             ))}
           </div>
-        </motion.div>
+        </FadeInOnView>
       </ScrollTitleContainer>
     </PaddingContainer>
   );

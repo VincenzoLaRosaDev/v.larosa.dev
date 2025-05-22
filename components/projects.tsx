@@ -10,6 +10,7 @@ import { urlFor } from '@/sanity/client';
 import { ScrollTitleContainer } from './scrollTitleContainer';
 import { useState } from 'react';
 import { motion } from 'motion/react';
+import { FadeInOnView } from './animations';
 
 export interface ProjectsProps extends TailwindProps {
   id: ProjectsSanity['id'];
@@ -34,16 +35,7 @@ export const Projects = ({
       className={`relative ${className}`}
     >
       <ScrollTitleContainer id={id} title={title ?? ''}>
-        <motion.div
-          style={{ willChange: 'opacity, transform', transform: 'translateZ(0)' }}
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.6, ease: 'easeOut' },
-          }}
-          viewport={{ once: true, amount: 0.3 }}
-        >
+        <FadeInOnView>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {items?.map((item, key) => {
               const isHovered = hoveredIndex !== null && hoveredIndex !== key;
@@ -106,7 +98,7 @@ export const Projects = ({
               );
             })}
           </div>
-        </motion.div>
+        </FadeInOnView>
       </ScrollTitleContainer>
     </PaddingContainer>
   );

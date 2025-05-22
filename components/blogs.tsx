@@ -8,8 +8,9 @@ import { PortableText } from 'next-sanity';
 import ArrowIcon from '@/public/arrow_outward.svg';
 import { urlFor } from '@/sanity/client';
 import { ScrollTitleContainer } from './scrollTitleContainer';
-import { useState } from 'react';
-import { motion } from 'motion/react';
+import { useRef, useState } from 'react';
+import { motion, useInView } from 'motion/react';
+import { FadeInOnView } from './animations';
 
 export interface BlogsProps extends TailwindProps {
   id: BlogsSanity['id'];
@@ -28,6 +29,9 @@ export const Blogs = ({
   const t = useTranslations('Index');
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '0px 0px -20% 0px' });
+
   return (
     <PaddingContainer
       id={id}
@@ -35,16 +39,7 @@ export const Blogs = ({
       className={`relative ${className}`}
     >
       <ScrollTitleContainer id={id} title={title ?? ''}>
-        <motion.div
-          style={{ willChange: 'opacity, transform', transform: 'translateZ(0)' }}
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.6, ease: 'easeOut' },
-          }}
-          viewport={{ once: true, amount: 0.3 }}
-        >
+        <FadeInOnView>
           <div className="flex flex-col gap-8">
             {items?.map((item, key) => {
               const isHovered = hoveredIndex !== null && hoveredIndex !== key;
@@ -105,7 +100,7 @@ export const Blogs = ({
               );
             })}
           </div>
-        </motion.div>
+        </FadeInOnView>
       </ScrollTitleContainer>
     </PaddingContainer>
   );
