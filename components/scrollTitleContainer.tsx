@@ -37,8 +37,9 @@ export const ScrollTitleContainer = ({
     >
       <div className="justify-end absolute left-[-448px] hidden lg:flex">
         <h2
+          data-cursor-interactive
           id={'transitionTitle'}
-          className={`h-fit w-auto text-nowrap pb-3 text-xs text-text hover:!opacity-100 archivo-black uppercase transition-opacity transition-font cursor-pointer`}
+          className={`h-fit z-50 w-auto text-nowrap pb-3 text-xs text-text hover:!opacity-100 archivo-black uppercase transition-opacity transition-font`}
           onClick={() => {
             scrollTo({
               top: initialPosition,

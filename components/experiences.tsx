@@ -71,29 +71,51 @@ export const Experiences = ({
                       <div className="text-text-light archivo-black">
                         {item.role}
                       </div>
-                      <a
-                        href={item.companyLink?.href}
-                        target={`${item.companyLink?.blank ? '_blank' : '_self'}`}
-                        className="group/link flex items-center gap-3"
-                      >
-                        <span
-                          className={`text-2xl archivo-black transition-all ${
-                            hoveredIndex === key ? 'text-primary' : ''
-                          }`}
+                      {item.companyLink?.href ? (
+                        <a
+                          href={item.companyLink?.href}
+                          target={`${item.companyLink?.blank ? '_blank' : '_self'}`}
+                          className="group/link flex items-center gap-3"
                         >
-                          {item.company}
-                        </span>
-                        {item.companyLink?.href && (
-                          <ArrowIcon
-                            className={`h-6 w-6 min-h-6 min-w-6 transition-all
+                          <span
+                            className={`text-2xl archivo-black transition-all ${
+                              hoveredIndex === key ? 'text-primary' : ''
+                            }`}
+                          >
+                            {item.company}
+                          </span>
+                          {item.companyLink?.href && (
+                            <ArrowIcon
+                              className={`h-6 w-6 min-h-6 min-w-6 transition-all
                           ${
                             hoveredIndex === key
                               ? 'fill-primary translate-x-0.5 -translate-y-0.5'
                               : 'fill-text'
                           }`}
-                          />
-                        )}
-                      </a>
+                            />
+                          )}
+                        </a>
+                      ) : (
+                        <div className="group/link flex items-center gap-3">
+                          <span
+                            className={`text-2xl archivo-black transition-all ${
+                              hoveredIndex === key ? 'text-primary' : ''
+                            }`}
+                          >
+                            {item.company}
+                          </span>
+                          {item.companyLink?.href && (
+                            <ArrowIcon
+                              className={`h-6 w-6 min-h-6 min-w-6 transition-all
+                          ${
+                            hoveredIndex === key
+                              ? 'fill-primary translate-x-0.5 -translate-y-0.5'
+                              : 'fill-text'
+                          }`}
+                            />
+                          )}
+                        </div>
+                      )}
                     </div>
 
                     {item.richText && (

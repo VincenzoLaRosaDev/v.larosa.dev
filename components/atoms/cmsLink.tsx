@@ -18,6 +18,7 @@ export const CmsLink = ({
 }: CmsLinkProps) => {
   return link?.externalLink?.href || link?.internalLink || link?.customLink ? (
     <Link
+      data-cursor-interactive
       onClick={(e) => (onClick ? onClick(e) : null)}
       tabIndex={props.tabIndex}
       style={props.style}

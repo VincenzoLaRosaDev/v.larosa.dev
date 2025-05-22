@@ -40,7 +40,6 @@ export const SideNav = ({ className, homeBanner, links }: SideNavProps) => {
                   dangerouslySetInnerHTML={{
                     __html: link.linkIcon ?? '',
                   }}
-                  suppressHydrationWarning
                 ></div>
               </CmsLink>
             ))}

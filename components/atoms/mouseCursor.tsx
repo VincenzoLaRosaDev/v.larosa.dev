@@ -9,21 +9,31 @@ export const MouseCursor = () => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const [mounted, setMounted] = useState(false);
-
-  const springX = useSpring(mouseX, { stiffness: 100, damping: 20 });
-  const springY = useSpring(mouseY, { stiffness: 100, damping: 20 });
-
+  const [isHovering, setIsHovering] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isInsideWindow, setIsInsideWindow] = useState(true);
+
+  const glowX = useSpring(mouseX, { stiffness: 300, damping: 30 });
+  const glowY = useSpring(mouseY, { stiffness: 300, damping: 30 });
+
+  const glowOffsetX = useMotionValue(0);
+  const glowOffsetY = useMotionValue(0);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    return glowX.onChange((v) => glowOffsetX.set(v - 700));
+  }, [glowX]);
+
+  useEffect(() => {
+    return glowY.onChange((v) => glowOffsetY.set(v - 700));
+  }, [glowY]);
+
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     if (!mounted) return;
 
     const checkViewport = () => {
-      setIsMobile(window.innerWidth < 1024); // tailwind lg breakpoint
+      setIsMobile(window.innerWidth < 1024);
     };
 
     checkViewport();
@@ -32,44 +42,118 @@ export const MouseCursor = () => {
   }, [mounted]);
 
   useEffect(() => {
-    if (!mounted) return;
-
-    if (isMobile) {
-      const centerX = window.innerWidth / 2 - 700;
-      const centerY = window.innerHeight / 2 - 700;
-      mouseX.set(centerX);
-      mouseY.set(centerY);
-      return;
-    }
+    if (!mounted || isMobile) return;
 
     const moveCursor = (e: MouseEvent) => {
-      mouseX.set(e.clientX - 700);
-      mouseY.set(e.clientY - 700);
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+      if (!isInsideWindow) setIsInsideWindow(true);
     };
 
-    window.addEventListener('mousemove', moveCursor);
-    return () => window.removeEventListener('mousemove', moveCursor);
-  }, [isMobile, mouseX, mouseY, mounted]);
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const isInteractive = target.closest('a, button, [data-cursor-interactive]');
+      setIsHovering(!!isInteractive);
+    };
+
+    const handleMouseLeaveDocument = (e: MouseEvent) => {
+      // mouse left the document (window)
+      setIsInsideWindow(false);
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        setIsInsideWindow(false);
+      } else {
+        setIsInsideWindow(true);
+      }
+    };
+
+    document.addEventListener('mousemove', moveCursor);
+    document.addEventListener('mouseover', handleMouseOver);
+    document.addEventListener('mouseleave', handleMouseLeaveDocument);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener('mousemove', moveCursor);
+      document.removeEventListener('mouseover', handleMouseOver);
+      document.removeEventListener('mouseleave', handleMouseLeaveDocument);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [isMobile, mounted, isInsideWindow, mouseX, mouseY]);
 
   if (!mounted) return null;
 
-  return theme === 'dark' && (
-    <motion.div
-    className={`bg-gradient-radial from-[#D7D1E990] lg:from-[#D7D1E9] from-0% to-[#D7D1E900] to-60%`}
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '1400px',
-        height: '1400px',
-        borderRadius: '50%',
-        mixBlendMode: 'overlay',
-        pointerEvents: 'none',
-        zIndex: 50,
-        x: springX,
-        y: springY,
-      }}
-      suppressHydrationWarning
-    />
+  return (
+    <>
+      {isInsideWindow && !isMobile && (
+        <motion.div
+          className="fixed top-0 left-0 z-[1000] pointer-events-none"
+          style={{
+            x: mouseX,
+            y: mouseY,
+          }}
+        >
+          {isHovering && (
+            <motion.div
+              className="absolute rounded-full border"
+              style={{
+                width: 16,
+                height: 16,
+                marginLeft: -8,
+                marginTop: -8,
+                backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)',
+                borderColor: theme === 'dark' ? 'white' : 'black',
+                zIndex: -1,
+              }}
+              animate={{
+                scale: [1, 1.5, 2],
+                opacity: [0, 0.5, 0],
+              }}
+              transition={{
+                duration: 1,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }}
+            />
+          )}
+
+          <motion.div
+            className="rounded-full border"
+            style={{
+              borderColor: theme === 'dark' ? 'white' : 'black',
+              backgroundColor: theme === 'dark' ? 'rgba(0, 0, 0, 0.4)' : 'rgba(0, 0, 0, 0.2)',
+            }}
+            animate={{
+              width: isHovering ? 16 : 24,
+              height: isHovering ? 16 : 24,
+              marginLeft: isHovering ? -8 : -16,
+              marginTop: isHovering ? -8 : -16,
+              transition: { type: 'spring', stiffness: 300, damping: 20 },
+            }}
+          />
+        </motion.div>
+      )}
+
+      {theme === 'dark' && (
+        <motion.div
+          className={`bg-gradient-radial from-[#D7D1E990] lg:from-[#D7D1E9] from-0% to-[#D7D1E900] to-60% pointer-events-none`}
+          style={{
+            position: 'fixed',
+            top: isMobile ? '50vh' : 0,
+            left: isMobile ? '50vw' : 0,
+            width: '1400px',
+            height: '1400px',
+            borderRadius: '50%',
+            mixBlendMode: 'overlay',
+            zIndex: 50,
+            x: isMobile ? 0 : glowOffsetX,
+            y: isMobile ? 0 : glowOffsetY,
+            translateX: isMobile ? '-50%' : undefined,
+            translateY: isMobile ? '-50%' : undefined,
+          }}
+        />
+      )}
+    </>
   );
 };

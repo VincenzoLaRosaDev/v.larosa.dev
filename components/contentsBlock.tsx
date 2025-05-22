@@ -49,7 +49,6 @@ export const ContentsBlock = ({
                     dangerouslySetInnerHTML={{
                       __html: item.icon ?? '',
                     }}
-                    suppressHydrationWarning
                   />
                   <div>
                     <div className="archivo-black text-sm text-text-light">
