@@ -52,7 +52,9 @@ export const MouseCursor = () => {
 
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      const isInteractive = target.closest('a, button, [data-cursor-interactive]');
+      const isInteractive = target.closest(
+        'a, button, [data-cursor-interactive]',
+      );
       setIsHovering(!!isInteractive);
     };
 
@@ -102,7 +104,10 @@ export const MouseCursor = () => {
                 height: 16,
                 marginLeft: -8,
                 marginTop: -8,
-                backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)',
+                backgroundColor:
+                  theme === 'dark'
+                    ? 'rgba(255, 255, 255, 0.5)'
+                    : 'rgba(0, 0, 0, 0.5)',
                 borderColor: theme === 'dark' ? 'white' : 'black',
                 zIndex: -1,
               }}
@@ -122,7 +127,8 @@ export const MouseCursor = () => {
             className="rounded-full border"
             style={{
               borderColor: theme === 'dark' ? 'white' : 'black',
-              backgroundColor: theme === 'dark' ? 'rgba(0, 0, 0, 0.4)' : 'rgba(0, 0, 0, 0.2)',
+              backgroundColor:
+                theme === 'dark' ? 'rgba(0, 0, 0, 0.4)' : 'rgba(0, 0, 0, 0.2)',
             }}
             animate={{
               width: isHovering ? 16 : 24,
