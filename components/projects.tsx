@@ -52,7 +52,7 @@ export const Projects = ({
                     className={`group flex items-start flex-col gap-6 lg:p-6 rounded-lg overflow-hidden transition-all border-light/20 ${
                       hoveredIndex === key
                         ? 'lg:bg-grey/5 lg:border-t lg:border-light/20'
-                        : ''
+                        : 'lg:border-t lg:border-transparent'
                     }`}
                   >
                     <img
@@ -72,9 +72,9 @@ export const Projects = ({
                         </span>
                         {item?.link && (
                           <ArrowIcon
-                            className={`h-6 w-6 min-h-6 min-w-6 transition-all ${
+                            className={`h-6 w-6 min-h-6 min-w-6 transition-all rotate-45 group-hover:rotate-0 ${
                               hoveredIndex === key
-                                ? 'fill-primary translate-x-0.5 -translate-y-0.5'
+                                ? 'fill-primary'
                                 : 'fill-text'
                             }`}
                           />

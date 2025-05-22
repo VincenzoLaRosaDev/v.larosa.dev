@@ -48,7 +48,7 @@ export const Experiences = ({
                   className={`flex flex-col lg:flex-row gap-6 lg:p-6 rounded-lg overflow-hidden transition-all border-light/20 ${
                     hoveredIndex === key
                       ? 'lg:bg-light/5 lg:border-t lg:border-light/20'
-                      : ''
+                      : 'lg:border-t lg:border-transparent'
                   } ${isHovered ? 'lg:opacity-50' : 'lg:opacity-100'}`}
                 >
                   <div className="uppercase archivo-black text-text-light min-w-40">
@@ -68,7 +68,7 @@ export const Experiences = ({
                         <a
                           href={item.companyLink?.href}
                           target={`${item.companyLink?.blank ? '_blank' : '_self'}`}
-                          className="group/link flex items-center gap-3"
+                          className="group/link flex w-fit items-center gap-3"
                         >
                           <span
                             className={`text-2xl archivo-black transition-all ${
@@ -79,10 +79,10 @@ export const Experiences = ({
                           </span>
                           {item.companyLink?.href && (
                             <ArrowIcon
-                              className={`h-6 w-6 min-h-6 min-w-6 transition-all
+                              className={`h-6 w-6 min-h-6 min-w-6 transition-all rotate-45 group-hover/link:rotate-0
                           ${
                             hoveredIndex === key
-                              ? 'fill-primary translate-x-0.5 -translate-y-0.5'
+                              ? 'fill-primary'
                               : 'fill-text'
                           }`}
                             />
@@ -97,16 +97,6 @@ export const Experiences = ({
                           >
                             {item.company}
                           </span>
-                          {item.companyLink?.href && (
-                            <ArrowIcon
-                              className={`h-6 w-6 min-h-6 min-w-6 transition-all
-                          ${
-                            hoveredIndex === key
-                              ? 'fill-primary translate-x-0.5 -translate-y-0.5'
-                              : 'fill-text'
-                          }`}
-                            />
-                          )}
                         </div>
                       )}
                     </div>
