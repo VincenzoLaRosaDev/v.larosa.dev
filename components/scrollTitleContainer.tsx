@@ -55,7 +55,7 @@ export const ScrollTitleContainer = ({
       </div>
       <div className="w-full relative">
         <h2
-          className="lg:hidden z-20 sticky top-0 backdrop-blur-sm px-3 py-3"
+          className="lg:hidden z-[60] sticky top-0 backdrop-blur-sm px-3 py-3"
           onClick={() => {
             scrollTo({
               top: initialPosition,

@@ -62,7 +62,7 @@ export default async function Home({ params }: { params: Promise<any> }) {
         <RenderBlocks layout={data[0].pageBlocks} />
         <RichText value={data[0].richText} paragraphSpace={false} className="text-xs text-center text-balance" />
       </div>
-      <div className="hidden lg:block lg:fixed z-50 left-0 top-0 h-10 lg:h-20 w-full bg-gradient-to-b from-bg"></div>
+      <div className="fixed z-50 left-0 top-0 h-10 lg:h-20 w-full bg-gradient-to-b from-bg"></div>
       <div className="fixed z-50 left-0 bottom-0 h-10 lg:h-20 w-full bg-gradient-to-t from-bg"></div>
     </section>
   );
