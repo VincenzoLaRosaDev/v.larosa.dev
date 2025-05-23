@@ -20,6 +20,10 @@ html, body {
 Link, a, button, [data-cursor-interactive] {
   cursor: none;
 }
+.iubenda-cs-content,
+#iubenda-iframe {
+  cursor: auto !important;
+}
 
 .pin-spacer {
   z-index: -1;

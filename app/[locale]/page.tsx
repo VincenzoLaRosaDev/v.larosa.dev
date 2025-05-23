@@ -50,34 +50,6 @@ export default async function Home({ params }: { params: Promise<any> }) {
 
   return (
     <>
-      <Head>
-        {/* Iubenda script di configurazione */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-          var _iub = _iub || [];
-          _iub.csConfiguration = {
-            siteId: 4043574,
-            cookiePolicyId: 96600430,
-            lang: "en-GB",
-            storage: { useSiteId: true }
-          };
-        `,
-          }}
-        />
-        {/* Script autoblocking */}
-        <script
-          type="text/javascript"
-          src="https://cs.iubenda.com/autoblocking/4043574.js"
-        />
-        {/* Script principale Iubenda */}
-        <script
-          type="text/javascript"
-          src="//cdn.iubenda.com/cs/iubenda_cs.js"
-          charSet="UTF-8"
-          async
-        />
-      </Head>
       <section className="lg:flex lg:justify-between lg:gap-16 gap-4">
         <ScrollTitleAnimation />
         <SideNav

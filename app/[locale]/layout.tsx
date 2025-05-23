@@ -7,6 +7,7 @@ import { locales } from '@/i18n/routing';
 import { setRequestLocale } from 'next-intl/server';
 import { ThemeProviders } from '@/theme';
 import { MouseCursor } from '@/components';
+import Script from 'next/script';
 
 export async function generateMetadata() {
   return {
@@ -73,6 +74,27 @@ export default async function HomeLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className="bg-bg">
+        <Script id="iubenda-config" strategy="afterInteractive">
+          {`
+            var _iub = _iub || [];
+            _iub.csConfiguration = {
+              siteId: 4043574,
+              cookiePolicyId: 96600430,
+              lang: "en-GB",
+              storage: { useSiteId: true }
+            };
+          `}
+        </Script>
+        <Script
+          src="https://cs.iubenda.com/autoblocking/4043574.js"
+          strategy="afterInteractive"
+        />
+        <Script
+          src="//cdn.iubenda.com/cs/iubenda_cs.js"
+          charSet="UTF-8"
+          async
+          strategy="afterInteractive"
+        />
         <main>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <ThemeProviders>
