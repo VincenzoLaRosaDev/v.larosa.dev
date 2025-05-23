@@ -81,9 +81,7 @@ export const Experiences = ({
                             <ArrowIcon
                               className={`h-6 w-6 min-h-6 min-w-6 transition-all rotate-45 group-hover/link:rotate-0
                           ${
-                            hoveredIndex === key
-                              ? 'fill-primary'
-                              : 'fill-text'
+                            hoveredIndex === key ? 'fill-primary' : 'fill-text'
                           }`}
                             />
                           )}
@@ -102,9 +100,9 @@ export const Experiences = ({
                     </div>
 
                     {item.richText && (
-                      <div className='text-text-light flex flex-col gap-2'>
-                        <PortableText 
-                          value={item.richText} 
+                      <div className="text-text-light flex flex-col gap-2">
+                        <PortableText
+                          value={item.richText}
                           components={{
                             marks: {
                               link: ({ children, value }) => (
@@ -118,7 +116,7 @@ export const Experiences = ({
                                 </a>
                               ),
                             },
-                          }} 
+                          }}
                         />
                       </div>
                     )}

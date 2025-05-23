@@ -54,8 +54,8 @@ export const ContentsBlock = ({
 
                 {item.richText && (
                   <div className="mt-4 text-text-light flex flex-col gap-2">
-                    <PortableText 
-                      value={item.richText} 
+                    <PortableText
+                      value={item.richText}
                       components={{
                         marks: {
                           link: ({ children, value }) => (
@@ -69,7 +69,7 @@ export const ContentsBlock = ({
                             </a>
                           ),
                         },
-                      }} 
+                      }}
                     />
                   </div>
                 )}

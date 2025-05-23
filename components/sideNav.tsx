@@ -22,8 +22,8 @@ export const SideNav = ({ className, homeBanner, links }: SideNavProps) => {
           </h1>
           {homeBanner?.textTitle && (
             <div className="text-2xl">
-              <PortableText 
-                value={homeBanner.textTitle} 
+              <PortableText
+                value={homeBanner.textTitle}
                 components={{
                   marks: {
                     link: ({ children, value }) => (
@@ -37,14 +37,14 @@ export const SideNav = ({ className, homeBanner, links }: SideNavProps) => {
                       </a>
                     ),
                   },
-                }} 
+                }}
               />
             </div>
           )}
           {homeBanner?.subText && (
             <div className="text-base text-text-light mt-6 text-balance">
-              <PortableText 
-                value={homeBanner.subText} 
+              <PortableText
+                value={homeBanner.subText}
                 components={{
                   marks: {
                     link: ({ children, value }) => (
@@ -58,7 +58,7 @@ export const SideNav = ({ className, homeBanner, links }: SideNavProps) => {
                       </a>
                     ),
                   },
-                }} 
+                }}
               />
             </div>
           )}
