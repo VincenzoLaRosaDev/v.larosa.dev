@@ -43,7 +43,9 @@ export const ContactForm = ({
               className="bg-primary/10 rounded-lg overflow-hidden p-4 min-h-32 align-top"
             />
             <CmsLink
-              onClick={() => setMessage('')}
+              onClick={() => setTimeout(() => {
+                setMessage('')
+              }, 500)}
               link={{
                 ...cta?.ctaLink,
                 customLink: cta?.ctaLink?.customLink?.concat(
