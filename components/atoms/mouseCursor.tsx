@@ -145,7 +145,7 @@ export const MouseCursor = () => {
 
       {theme === 'dark' && (
         <motion.div
-          className={`bg-gradient-radial from-[#D7D1E990] lg:from-[#D7D1E9] from-0% to-[#D7D1E900] to-60% pointer-events-none`}
+          className={`bg-gradient-radial from-[#D7D1E970] from-0% to-[#D7D1E900] to-60% pointer-events-none`}
           style={{
             position: 'fixed',
             top: isMobile ? '50vh' : 0,

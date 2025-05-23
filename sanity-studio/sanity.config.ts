@@ -27,6 +27,7 @@ export default defineConfig({
     // ]
     documentInternationalization({
       supportedLanguages: [
+        {id: 'it', title: 'Italian 🇮🇹'},
         {id: 'en', title: 'English 🇬🇧'},
         {id: 'nl', title: 'Dutch 🇳🇱'},
       ],

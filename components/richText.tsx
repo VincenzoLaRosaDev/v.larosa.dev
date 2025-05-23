@@ -13,6 +13,7 @@ export interface RichTextProps extends TailwindProps {
   title?: RichTextObj['title'];
   value: RichTextObj['value'];
   paddingBlock?: RichTextObj['paddingBlock'];
+  paragraphSpace?: boolean;
 }
 
 
@@ -23,6 +24,7 @@ export const RichText = ({
   title,
   value,
   paddingBlock,
+  paragraphSpace = true
 }: RichTextProps) => {
   return (
     value && (
@@ -33,7 +35,7 @@ export const RichText = ({
       >
         <ScrollTitleContainer id={id} title={title ?? ''}>
           <FadeInOnView>
-            <div className='flex flex-col gap-8'>
+            <div className={`${paragraphSpace && 'flex flex-col gap-8'}`}>
               <PortableText 
                 value={value} 
                 components={{

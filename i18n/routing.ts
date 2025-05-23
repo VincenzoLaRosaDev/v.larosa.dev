@@ -1,10 +1,11 @@
 import { defineRouting } from 'next-intl/routing';
 import { createNavigation } from 'next-intl/navigation';
 
-export type localesType = 'en' | 'nl';
-export const locales = ['en', 'nl'];
-export const defaultLocale = locales[0];
+export type localesType = 'it' | 'en' | 'nl';
+export const locales = ['it', 'en', 'nl'];
+export const defaultLocale = locales[1];
 export const navLang: { id: string; label: string }[] = [
+  { id: 'it', label: 'italian' },
   { id: 'en', label: 'english' },
   { id: 'nl', label: 'netherlands' },
 ];

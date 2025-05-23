@@ -21,7 +21,7 @@ export const SideNav = ({ className, homeBanner, links }: SideNavProps) => {
             {homeBanner?.title}
           </h1>
           {homeBanner?.textTitle && (
-            <div className="text-2xl flex flex-col gap-8">
+            <div className="text-2xl">
               <PortableText 
                 value={homeBanner.textTitle} 
                 components={{
@@ -42,7 +42,7 @@ export const SideNav = ({ className, homeBanner, links }: SideNavProps) => {
             </div>
           )}
           {homeBanner?.subText && (
-            <div className="text-base text-text-light mt-6 flex flex-col gap-8">
+            <div className="text-base text-text-light mt-6">
               <PortableText 
                 value={homeBanner.subText} 
                 components={{
