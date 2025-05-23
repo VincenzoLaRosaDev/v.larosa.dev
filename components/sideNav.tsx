@@ -42,7 +42,7 @@ export const SideNav = ({ className, homeBanner, links }: SideNavProps) => {
             </div>
           )}
           {homeBanner?.subText && (
-            <div className="text-base text-text-light mt-6">
+            <div className="text-base text-text-light mt-6 text-balance">
               <PortableText 
                 value={homeBanner.subText} 
                 components={{
