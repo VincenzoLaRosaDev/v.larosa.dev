@@ -60,7 +60,6 @@ export const MouseCursor = () => {
     };
 
     const handleMouseLeaveDocument = (e: MouseEvent) => {
-      // mouse left the document (window)
       setIsInsideWindow(false);
     };
 

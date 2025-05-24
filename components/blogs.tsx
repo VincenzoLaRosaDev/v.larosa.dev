@@ -9,7 +9,7 @@ import ArrowIcon from '@/public/arrow_outward.svg';
 import { urlFor } from '@/sanity/client';
 import { ScrollTitleContainer } from './scrollTitleContainer';
 import { useRef, useState } from 'react';
-import { motion, useInView } from 'motion/react';
+import { useInView } from 'motion/react';
 import { FadeInOnView } from './animations';
 
 export interface BlogsProps extends TailwindProps {

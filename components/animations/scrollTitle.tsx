@@ -75,10 +75,8 @@ export const ScrollTitleAnimation = () => {
             trigger: elements[i + 1],
             endTrigger: containers[containers.length - 1],
             start: `top top+=${sideHeaderHeight + space}px`,
-            end: `bottom top+=${sideHeaderHeight + totalSpace}`,
             scrub: true,
           },
-          // opacity: 0.3,
         });
       }
     });

@@ -5,7 +5,6 @@ import { TailwindProps } from '@/types';
 import { PortableText } from 'next-sanity';
 import { PaddingContainer } from './atoms';
 import { ScrollTitleContainer } from './scrollTitleContainer';
-import { motion } from 'motion/react';
 import { FadeInOnView } from './animations';
 
 export interface RichTextProps extends TailwindProps {

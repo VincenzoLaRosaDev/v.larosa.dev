@@ -67,9 +67,21 @@ export default async function Home({ params }: { params: Promise<any> }) {
             paragraphSpace={false}
             className="text-xs text-center text-balance"
           />
-          <div className='flex justify-center gap-4 mt-[50px]'>
-            <a href="https://www.iubenda.com/privacy-policy/96600430" className="text-xs text-text-light" title="Privacy Policy ">Privacy Policy</a>
-            <a href="https://www.iubenda.com/privacy-policy/96600430/cookie-policy" className="text-xs text-text-light" title="Cookie Policy ">Cookie Policy</a>
+          <div className="flex justify-center gap-4 mt-[50px]">
+            <a
+              href="https://www.iubenda.com/privacy-policy/96600430"
+              className="text-xs text-text-light"
+              title="Privacy Policy "
+            >
+              Privacy Policy
+            </a>
+            <a
+              href="https://www.iubenda.com/privacy-policy/96600430/cookie-policy"
+              className="text-xs text-text-light"
+              title="Cookie Policy "
+            >
+              Cookie Policy
+            </a>
           </div>
         </div>
         <div className="fixed z-50 left-0 top-0 h-10 lg:h-20 w-full bg-gradient-to-b from-bg"></div>

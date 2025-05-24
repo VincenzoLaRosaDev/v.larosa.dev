@@ -31,7 +31,6 @@ export const TextReveal = ({
   const textLetters = Array.from(text);
   const inView = useInView(textEl);
 
-  // Funzione per inizializzare i caratteri random
   const InitialAnimatedLetter = () => {
     textSpansRef.current.forEach((span) => {
       span.textContent =
@@ -39,7 +38,6 @@ export const TextReveal = ({
     });
   };
 
-  // Funzione per animare i caratteri fino alla lettera corretta
   const AnimatedLetter = () => {
     textSpansRef.current.forEach((span, i) => {
       const animationSteps = Math.floor(

@@ -4,7 +4,7 @@ import { IconsSwiper as IconsSwiperSanity } from '@/sanity/types';
 import { TailwindProps } from '@/types';
 import { PaddingContainer } from './atoms';
 import { useRef } from 'react';
-import { motion, useAnimationFrame } from 'motion/react';
+import { useAnimationFrame } from 'motion/react';
 import { ScrollTitleContainer } from './scrollTitleContainer';
 import { FadeInOnView } from './animations';
 

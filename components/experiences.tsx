@@ -9,7 +9,6 @@ import ArrowIcon from '@/public/arrow_outward.svg';
 import LinkIcon from '@/public/link.svg';
 import { ScrollTitleContainer } from './scrollTitleContainer';
 import { useState } from 'react';
-import { motion } from 'motion/react';
 import { FadeInOnView } from './animations';
 
 export interface ExperiencesProps extends TailwindProps {

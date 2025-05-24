@@ -3,7 +3,6 @@
 import { ContentsBlock as ContentsBlockSanity } from '@/sanity/types';
 import { TailwindProps } from '@/types';
 import { PortableText } from 'next-sanity';
-import { motion } from 'motion/react';
 import { PaddingContainer } from './atoms';
 import { ScrollTitleContainer } from './scrollTitleContainer';
 import { FadeInOnView } from './animations';

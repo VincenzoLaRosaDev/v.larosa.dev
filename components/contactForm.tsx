@@ -6,7 +6,6 @@ import { ContactForm as ContactFormSanity } from '@/sanity/types';
 import { ScrollTitleContainer } from './scrollTitleContainer';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { motion } from 'motion/react';
 import { FadeInOnView } from './animations';
 
 export interface ContactFormProps extends TailwindProps {

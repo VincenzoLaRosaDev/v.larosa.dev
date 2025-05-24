@@ -3,13 +3,11 @@
 import { Projects as ProjectsSanity } from '@/sanity/types';
 import { TailwindProps } from '@/types';
 import { CmsLink, PaddingContainer, Tag } from './atoms';
-import { useTranslations } from 'next-intl';
 import { PortableText } from 'next-sanity';
 import ArrowIcon from '@/public/arrow_outward.svg';
 import { urlFor } from '@/sanity/client';
 import { ScrollTitleContainer } from './scrollTitleContainer';
 import { useState } from 'react';
-import { motion } from 'motion/react';
 import { FadeInOnView } from './animations';
 
 export interface ProjectsProps extends TailwindProps {

@@ -20,11 +20,6 @@ export default defineConfig({
     visionTool({}),
     vercelDeployTool(),
     inlineSvgInput(),
-    // locales: [
-    // {code: 'it', title: 'Italian', label: '🇮🇹'},
-    // {code: 'en', title: 'English', label: '🇬🇧'},
-    // {code: 'nl', title: 'Dutch', label: '🇳🇱'}
-    // ]
     documentInternationalization({
       supportedLanguages: [
         {id: 'it', title: 'Italian 🇮🇹'},
