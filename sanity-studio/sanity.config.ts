@@ -15,8 +15,8 @@ export default defineConfig({
   dataset: 'production',
 
   plugins: [
-    media(),
     structureTool({}),
+    media(),
     visionTool({}),
     vercelDeployTool(),
     inlineSvgInput(),
