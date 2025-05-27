@@ -33,7 +33,7 @@ export const ContentsBlock = ({
             {items?.map((item, key) => (
               <div
                 key={key}
-                className={`${item.size === 'half' ? 'lg:w-[calc(50%_-_18px)]' : 'w-full'}`}
+                className={`${item.size === 'half' ? 'xl:w-[calc(50%_-_18px)]' : 'w-full'}`}
               >
                 <div className="flex items-center gap-6">
                   <div
