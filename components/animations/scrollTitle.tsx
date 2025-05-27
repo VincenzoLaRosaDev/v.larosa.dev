@@ -4,15 +4,22 @@ import { useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
+function isTouchDevice() {
+  if (typeof navigator === 'undefined') return false;
+  return navigator.maxTouchPoints > 0;
+}
+
 export const ScrollTitleAnimation = () => {
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.innerWidth < 1024) return;
+    if (typeof window === 'undefined') return;
 
     gsap.registerPlugin(ScrollTrigger);
 
     const elements = document.querySelectorAll<HTMLElement>('#transitionTitle');
     const containers = document.querySelectorAll('#transitionContainer');
     const sideHeader = document.querySelector('#side-header');
+
+    const isTouch = isTouchDevice();
 
     let space = 0;
     let totalSpace = 0;
@@ -34,19 +41,19 @@ export const ScrollTitleAnimation = () => {
         pinSpacing: false,
         scrub: true,
         onEnter: () => {
-          item.classList.add('!text-sm');
+          if (!isTouch) item.classList.add('!text-sm');
           item.classList.remove('!opacity-30');
         },
         onLeave: () => {
-          item.classList.remove('!text-sm');
+          if (!isTouch) item.classList.remove('!text-sm');
           item.classList.add('!opacity-30');
         },
         onEnterBack: () => {
-          item.classList.add('!text-sm');
+          if (!isTouch) item.classList.add('!text-sm');
           item.classList.remove('!opacity-30');
         },
         onLeaveBack: () => {
-          item.classList.remove('!text-sm');
+          if (!isTouch) item.classList.remove('!text-sm');
           item.classList.add('!opacity-30');
         },
       });
@@ -61,11 +68,11 @@ export const ScrollTitleAnimation = () => {
           end: `bottom top+=${sideHeaderHeight + totalSpace}`,
           toggleActions: 'play none none reverse',
           onEnter: () => {
-            item.classList.remove('!text-sm');
+            if (!isTouch) item.classList.remove('!text-sm');
             item.classList.add('!opacity-30');
           },
           onLeaveBack: () => {
-            item.classList.add('!text-sm');
+            if (!isTouch) item.classList.add('!text-sm');
             item.classList.remove('!opacity-30');
           },
         });
