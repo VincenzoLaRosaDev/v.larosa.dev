@@ -135,9 +135,7 @@
       },
       {
         "options": {
-          "list": [
-            "page"
-          ]
+          "list": ["page"]
         },
         "description": "Optional: Used to filter the reference fields above so all translations share the same types.",
         "of": [
@@ -743,10 +741,7 @@
                             "flag": "uri",
                             "constraint": {
                               "options": {
-                                "scheme": [
-                                  "/^http$/",
-                                  "/^https$/"
-                                ],
+                                "scheme": ["/^http$/", "/^https$/"],
                                 "allowRelative": false,
                                 "relativeOnly": false,
                                 "allowCredentials": false
@@ -790,10 +785,7 @@
                                 "flag": "uri",
                                 "constraint": {
                                   "options": {
-                                    "scheme": [
-                                      "/^http$/",
-                                      "/^https$/"
-                                    ],
+                                    "scheme": ["/^http$/", "/^https$/"],
                                     "allowRelative": false,
                                     "relativeOnly": false,
                                     "allowCredentials": false
@@ -1374,10 +1366,7 @@
                 "flag": "uri",
                 "constraint": {
                   "options": {
-                    "scheme": [
-                      "/^http$/",
-                      "/^https$/"
-                    ],
+                    "scheme": ["/^http$/", "/^https$/"],
                     "allowRelative": false,
                     "relativeOnly": false,
                     "allowCredentials": false
@@ -1439,10 +1428,7 @@
                     "flag": "uri",
                     "constraint": {
                       "options": {
-                        "scheme": [
-                          "/^http$/",
-                          "/^https$/"
-                        ],
+                        "scheme": ["/^http$/", "/^https$/"],
                         "allowRelative": false,
                         "relativeOnly": false,
                         "allowCredentials": false
@@ -1530,12 +1516,7 @@
                           "flag": "uri",
                           "constraint": {
                             "options": {
-                              "scheme": [
-                                "/^http$/",
-                                "/^https$/",
-                                "/^tel$/",
-                                "/^mailto$/"
-                              ],
+                              "scheme": ["/^http$/", "/^https$/", "/^tel$/", "/^mailto$/"],
                               "allowRelative": true,
                               "relativeOnly": false,
                               "allowCredentials": false
