@@ -7,7 +7,6 @@ import {
 } from '@/components';
 import { getLinks, getLocalizeHomePage } from '@/sanity/queries';
 import type { Metadata } from 'next';
-import Head from 'next/head';
 
 export async function generateMetadata({
   params,
@@ -89,5 +88,4 @@ export default async function Home({ params }: { params: Promise<any> }) {
       </section>
     </>
   );
-  null;
 }

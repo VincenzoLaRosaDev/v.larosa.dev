@@ -9,6 +9,8 @@ const nextConfig = {
     version,
   },
 
+  matcher: ['/((?!_next|api|favicon.ico).*)'],
+
   images: {
     remotePatterns: [
       {
