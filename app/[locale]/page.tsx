@@ -83,8 +83,8 @@ export default async function Home({ params }: { params: Promise<any> }) {
             </a>
           </div>
         </div>
-        <div className="fixed z-50 left-0 top-0 h-10 lg:h-20 w-full bg-gradient-to-b from-bg"></div>
-        <div className="fixed z-50 left-0 bottom-0 h-10 lg:h-20 w-full bg-gradient-to-t from-bg"></div>
+        <div className="fixed hidden lg:block z-50 left-0 top-0 h-10 lg:h-20 w-full bg-gradient-to-b from-bg"></div>
+        <div className="fixed hidden lg:block z-50 left-0 bottom-0 h-10 lg:h-20 w-full bg-gradient-to-t from-bg"></div>
       </section>
     </>
   );
