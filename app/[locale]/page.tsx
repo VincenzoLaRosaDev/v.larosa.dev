@@ -8,6 +8,9 @@ import {
 import { getLinks, getLocalizeHomePage } from '@/sanity/queries';
 import type { Metadata } from 'next';
 
+// Abilita ISR: revalida ogni 60 secondi o quando viene triggerato un webhook
+export const revalidate = 60;
+
 export async function generateMetadata({
   params,
 }: {

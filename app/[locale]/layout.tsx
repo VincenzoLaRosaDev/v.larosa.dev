@@ -49,6 +49,9 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
+// Abilita ISR: revalida ogni 60 secondi o quando viene triggerato un webhook
+export const revalidate = 60;
+
 async function getMessages(locale: string) {
   try {
     return (await import(`../../messages/${locale}.json`)).default;

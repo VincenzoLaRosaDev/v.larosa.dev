@@ -58,7 +58,7 @@ export const ScrollTitleAnimation = () => {
         },
       });
 
-      space += item.clientHeight;
+      space += 32;
 
       if (i < elements.length - 1) {
         ScrollTrigger.create({

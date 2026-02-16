@@ -2,6 +2,7 @@ import { defineQuery } from 'groq';
 import { client } from './client';
 import { Link, Page } from './types';
 import { localesType } from '@/i18n/routing';
+import { unstable_cache } from 'next/cache';
 
 // Pages Query
 
@@ -37,11 +38,29 @@ const localizeHomePageQuery = (locale: localesType) => {
 };
 
 export const getLocalizeHomePage = (locale: localesType): Promise<Page[]> => {
-  return client.fetch(localizeHomePageQuery(locale));
+  return unstable_cache(
+    async () => {
+      return client.fetch(localizeHomePageQuery(locale));
+    },
+    [`homepage-${locale}`],
+    {
+      tags: [`homepage-${locale}`, 'pages'],
+      revalidate: 60,
+    }
+  )();
 };
 
 const linksQuery = defineQuery(`*[_type == "link"]`);
 
 export const getLinks = (): Promise<Link[]> => {
-  return client.fetch(linksQuery);
+  return unstable_cache(
+    async () => {
+      return client.fetch(linksQuery);
+    },
+    ['links'],
+    {
+      tags: ['links'],
+      revalidate: 60,
+    }
+  )();
 };
