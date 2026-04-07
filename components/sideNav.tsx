@@ -77,8 +77,8 @@ export const SideNav = ({ className, homeBanner, links }: SideNavProps) => {
             ))}
           </div>
           <div className="flex items-center gap-4">
-            <ChangeLang />
-            <ToogleColorMode />
+            {/* <ChangeLang /> */}
+            {/* <ToogleColorMode /> */}
           </div>
         </div>
       </div>
