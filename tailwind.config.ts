@@ -5,6 +5,7 @@ const config: Config = {
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './utils/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
@@ -21,6 +22,8 @@ const config: Config = {
         primary: 'var(--primary)',
         'primary/10': 'var(--primary-100)',
         'primary/90': 'var(--primary-900)',
+        accent: 'var(--accent)',
+        'accent/10': 'var(--accent-100)',
         bg: 'var(--bg)',
         text: 'var(--text)',
         'text-light': 'var(--text-light)',
@@ -31,21 +34,19 @@ const config: Config = {
         light: '#EAEAEA',
         white: '#F4F4F4',
       },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-      },
       keyframes: {
         'cursor-pulse': {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '100%' },
+          '0%': { opacity: '1' },
+          '100%': { opacity: '0' },
+        },
+        'rec-blink': {
+          '0%, 100%': { opacity: '1' },
+          '30%': { opacity: '0.1' },
         },
       },
       animation: {
-        'cursor-pulse': 'cursor-pulse 1s ease-in-out infinite',
-        'hamburger-show': 'hamburger-show .3s ease-in',
-        'hamburger-hide': 'hamburger-hide .3s ease-out',
+        'cursor-pulse': 'cursor-pulse 1s steps(2, jump-none) infinite',
+        'rec-blink': 'rec-blink 2s cubic-bezier(0, 0, 0.2, 1) infinite',
       },
     },
   },

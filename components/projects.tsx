@@ -9,6 +9,7 @@ import { urlFor } from '@/sanity/client';
 import { ScrollTitleContainer } from './scrollTitleContainer';
 import { useState } from 'react';
 import { FadeInOnView } from './animations';
+import { glassHoverClasses, cardDimmedClasses, cardTitleHoverClasses, cardArrowHoverClasses, cardHoverHandlers } from '@/utils';
 
 export interface ProjectsProps extends TailwindProps {
   id: ProjectsSanity['id'];
@@ -32,26 +33,20 @@ export const Projects = ({
       padding={{ _type: 'paddingBlock', ...paddingBlock }}
       className={`relative ${className}`}
     >
-      <ScrollTitleContainer id={id} title={title ?? ''}>
-        <FadeInOnView>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {items?.map((item, key) => {
-              const isHovered = hoveredIndex !== null && hoveredIndex !== key;
+      <ScrollTitleContainer title={title ?? ''}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {items?.map((item, key) => {
+            const isHovered = hoveredIndex !== null && hoveredIndex !== key;
 
-              return (
+            return (
+              <FadeInOnView key={key}>
                 <div
-                  key={key}
-                  onMouseEnter={() => setHoveredIndex(key)}
-                  onMouseLeave={() => setHoveredIndex(null)}
-                  className={`transition-all ${isHovered ? 'lg:opacity-50' : 'lg:opacity-100'}`}
+                  {...cardHoverHandlers(setHoveredIndex, key)}
+                  className={`transition-all ${cardDimmedClasses(isHovered)}`}
                 >
                   <CmsLink
                     link={item.link}
-                    className={`group flex items-start flex-col gap-6 lg:p-6 rounded-lg overflow-hidden transition-all border-light/20 ${
-                      hoveredIndex === key
-                        ? 'lg:bg-grey/5 lg:border-t lg:border-light/20'
-                        : 'lg:border-t lg:border-transparent'
-                    }`}
+                    className={`group flex items-start flex-col gap-6 lg:p-6 ${glassHoverClasses(hoveredIndex === key)}`}
                   >
                     <img
                       src={urlFor(item.image).url()}
@@ -62,19 +57,13 @@ export const Projects = ({
                     <div className="flex flex-col gap-4 w-full">
                       <div className="flex items-start gap-3">
                         <span
-                          className={`archivo-black transition-all ${
-                            hoveredIndex === key ? 'text-primary' : ''
-                          }`}
+                          className={`archivo-black transition-all ${cardTitleHoverClasses(hoveredIndex === key)}`}
                         >
                           {item.title}
                         </span>
                         {item?.link && (
                           <ArrowIcon
-                            className={`h-6 w-6 min-h-6 min-w-6 transition-all rotate-45 group-hover:rotate-0 ${
-                              hoveredIndex === key
-                                ? 'fill-primary'
-                                : 'fill-text'
-                            }`}
+                            className={`h-6 w-6 min-h-6 min-w-6 transition-all rotate-45 lg:group-hover:rotate-0 ${cardArrowHoverClasses(hoveredIndex === key)}`}
                           />
                         )}
                       </div>
@@ -109,10 +98,10 @@ export const Projects = ({
                     </div>
                   </CmsLink>
                 </div>
-              );
-            })}
-          </div>
-        </FadeInOnView>
+              </FadeInOnView>
+            );
+          })}
+        </div>
       </ScrollTitleContainer>
     </PaddingContainer>
   );

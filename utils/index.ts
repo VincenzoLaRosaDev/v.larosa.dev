@@ -8,3 +8,5 @@ export function getOffset(el?: HTMLElement | null) {
   }
   return undefined;
 }
+
+export * from './glass';

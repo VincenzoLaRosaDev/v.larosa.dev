@@ -30,7 +30,7 @@ export const RichText = ({
         padding={{ _type: 'paddingBlock', ...paddingBlock }}
         className={`relative text-text-light flex flex-col gap-4 ${className}`}
       >
-        <ScrollTitleContainer id={id} title={title ?? ''}>
+        <ScrollTitleContainer title={title ?? ''}>
           <FadeInOnView>
             <div className={`${paragraphSpace && 'flex flex-col gap-8'}`}>
               <PortableText

@@ -1,12 +1,14 @@
+import '@/theme/theme.css';
+import '@/theme/glass.css';
+import '@/theme/ambient.css';
 import './globals.css';
 import './font.css';
-import '@/theme/theme.css';
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { locales } from '@/i18n/routing';
 import { setRequestLocale } from 'next-intl/server';
 import { ThemeProviders } from '@/theme';
-import { MouseCursor } from '@/components';
+import { AmbientLayer, MouseCursor, MouseCursorProvider } from '@/components';
 import Script from 'next/script';
 
 export async function generateMetadata() {
@@ -98,17 +100,19 @@ export default async function HomeLayout({
           async
           strategy="afterInteractive"
         />
-        <main>
-          <NextIntlClientProvider locale={locale} messages={messages}>
-            <ThemeProviders>
-              <div className="text-text archivo max-w-7xl mx-auto">
-                <div className="lg:px-9">{children}</div>
-              </div>
-              <div className="fixed top-0 left-0 right-0 bottom-0 bg-bg z-[-1]" />
-              <MouseCursor />
-            </ThemeProviders>
-          </NextIntlClientProvider>
-        </main>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <ThemeProviders>
+            <MouseCursorProvider>
+              <AmbientLayer />
+              <main className="relative z-[1]">
+                <div className="relative z-[1] text-text archivo max-w-7xl mx-auto">
+                  <div className="relative z-[1] lg:px-9">{children}</div>
+                </div>
+                <MouseCursor />
+              </main>
+            </MouseCursorProvider>
+          </ThemeProviders>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
