@@ -1,17 +1,13 @@
 'use client';
 
+import { isDesktopLayout } from '@/utils';
 import { useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
-function isTouchDevice() {
-  if (typeof navigator === 'undefined') return false;
-  return navigator.maxTouchPoints > 0;
-}
-
 export const ScrollTitleAnimation = () => {
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined' || !isDesktopLayout()) return;
 
     gsap.registerPlugin(ScrollTrigger);
 
@@ -19,11 +15,9 @@ export const ScrollTitleAnimation = () => {
     const containers = document.querySelectorAll('#transitionContainer');
     const sideHeader = document.querySelector('#side-header');
 
-    const isTouch = isTouchDevice();
-
     let space = 0;
     let totalSpace = 0;
-    let sideHeaderHeight = sideHeader?.clientHeight
+    const sideHeaderHeight = sideHeader?.clientHeight
       ? sideHeader.clientHeight + 180
       : 0;
 
@@ -38,7 +32,7 @@ export const ScrollTitleAnimation = () => {
 
     if (elements[0]) {
       elements[0].classList.remove('!opacity-30');
-      if (!isTouch) elements[0].classList.add('!text-sm');
+      elements[0].classList.add('!text-sm');
     }
 
     elements.forEach((item, i) => {
@@ -51,19 +45,19 @@ export const ScrollTitleAnimation = () => {
         pinSpacing: false,
         scrub: true,
         onEnter: () => {
-          if (!isTouch) item.classList.add('!text-sm');
+          item.classList.add('!text-sm');
           item.classList.remove('!opacity-30');
         },
         onLeave: () => {
-          if (!isTouch) item.classList.remove('!text-sm');
+          item.classList.remove('!text-sm');
           item.classList.add('!opacity-30');
         },
         onEnterBack: () => {
-          if (!isTouch) item.classList.add('!text-sm');
+          item.classList.add('!text-sm');
           item.classList.remove('!opacity-30');
         },
         onLeaveBack: () => {
-          if (!isTouch) item.classList.remove('!text-sm');
+          item.classList.remove('!text-sm');
           item.classList.add('!opacity-30');
         },
       });
@@ -78,11 +72,11 @@ export const ScrollTitleAnimation = () => {
           end: `bottom top+=${sideHeaderHeight + totalSpace}`,
           toggleActions: 'play none none reverse',
           onEnter: () => {
-            if (!isTouch) item.classList.remove('!text-sm');
+            item.classList.remove('!text-sm');
             item.classList.add('!opacity-30');
           },
           onLeaveBack: () => {
-            if (!isTouch) item.classList.add('!text-sm');
+            item.classList.add('!text-sm');
             item.classList.remove('!opacity-30');
           },
         });
@@ -103,7 +97,7 @@ export const ScrollTitleAnimation = () => {
           end: `bottom top`,
           onLeaveBack: () => {
             item.classList.add('!opacity-30');
-            if (!isTouch) item.classList.remove('!text-sm');
+            item.classList.remove('!text-sm');
           },
         });
       }

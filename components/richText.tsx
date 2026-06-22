@@ -42,7 +42,7 @@ export const RichText = ({
                         href={value?.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="underline"
+                        className="underline hover:text-text transition-all"
                       >
                         {children}
                       </a>

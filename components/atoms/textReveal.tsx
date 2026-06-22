@@ -1,5 +1,6 @@
 'use client';
 
+import { isLiteExperience } from '@/utils';
 import { WithChildren } from '@/types';
 import { useInView } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
@@ -9,12 +10,15 @@ export interface TextRevealProps
     React.HTMLAttributes<HTMLDivElement> {
   text: string;
   renew?: boolean;
+  /** Run scramble animation on mobile (e.g. section scroll titles). */
+  animateOnMobile?: boolean;
 }
 
 export const TextReveal = ({
   className,
   text,
   renew = false,
+  animateOnMobile = false,
   ...rest
 }: TextRevealProps) => {
   const animationChars =
@@ -24,12 +28,17 @@ export const TextReveal = ({
   const maxSteps = 10;
   const minSteps = 5;
 
-  const textEl = useRef<HTMLDivElement>(null);
+  const textEl = useRef<HTMLSpanElement>(null);
   const textSpansRef = useRef<HTMLSpanElement[]>([]);
   const [hasAnimated, setHasAnimated] = useState(false);
+  const [isLite, setIsLite] = useState(true);
 
   const textLetters = Array.from(text);
   const inView = useInView(textEl);
+
+  useEffect(() => {
+    setIsLite(isLiteExperience() && !animateOnMobile);
+  }, [animateOnMobile]);
 
   const InitialAnimatedLetter = () => {
     textSpansRef.current.forEach((span) => {
@@ -70,23 +79,25 @@ export const TextReveal = ({
   };
 
   useEffect(() => {
-    if (textEl.current) {
-      textEl.current.innerHTML = '';
-      textSpansRef.current = [];
+    if (isLite || !textEl.current) return;
 
-      textLetters.forEach((letter) => {
-        const span = document.createElement('span');
-        span.classList.add('letter');
-        span.textContent = letter;
-        textEl.current?.appendChild(span);
-        textSpansRef.current.push(span);
-      });
+    textEl.current.innerHTML = '';
+    textSpansRef.current = [];
 
-      InitialAnimatedLetter();
-    }
-  }, [text]);
+    textLetters.forEach((letter) => {
+      const span = document.createElement('span');
+      span.classList.add('letter');
+      span.textContent = letter;
+      textEl.current?.appendChild(span);
+      textSpansRef.current.push(span);
+    });
+
+    InitialAnimatedLetter();
+  }, [isLite, text]);
 
   useEffect(() => {
+    if (isLite) return;
+
     if (inView && !hasAnimated) {
       AnimatedLetter();
       setHasAnimated(true);
@@ -95,7 +106,7 @@ export const TextReveal = ({
       AnimatedLetter();
       setHasAnimated(true);
     }
-  }, [inView, hasAnimated]);
+  }, [inView, hasAnimated, isLite, renew]);
 
   return (
     <span {...rest} ref={textEl} className={`inline-block ${className ?? ''}`}>

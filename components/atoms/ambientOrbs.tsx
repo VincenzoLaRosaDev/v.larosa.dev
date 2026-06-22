@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { isLiteExperience } from '@/utils';
+import { useEffect, useRef, useState } from 'react';
 
 interface OrbState {
   x: number;
@@ -139,10 +140,7 @@ function clampOrbs(orbs: OrbState[], width: number, height: number) {
   });
 }
 
-function syncOrbSizes(
-  orbs: OrbState[],
-  viewportWidth: number,
-) {
+function syncOrbSizes(orbs: OrbState[], viewportWidth: number) {
   orbs.forEach((orb, index) => {
     orb.size = getOrbSize(viewportWidth, ORB_LAYOUT[index].sizeRatio);
   });
@@ -160,7 +158,7 @@ function getExpandedBounds() {
   };
 }
 
-export const AmbientOrbs = () => {
+const AmbientOrbsAnimated = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const orbRefs = useRef<(HTMLDivElement | null)[]>([]);
   const orbsRef = useRef<OrbState[]>([]);
@@ -273,4 +271,16 @@ export const AmbientOrbs = () => {
       ))}
     </div>
   );
+};
+
+export const AmbientOrbs = () => {
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    setEnabled(!isLiteExperience());
+  }, []);
+
+  if (!enabled) return null;
+
+  return <AmbientOrbsAnimated />;
 };
