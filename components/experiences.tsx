@@ -10,6 +10,7 @@ import LinkIcon from '@/public/link.svg';
 import { ScrollTitleContainer } from './scrollTitleContainer';
 import { useState } from 'react';
 import { FadeInOnView } from './animations';
+import { glassHoverClasses, cardDimmedClasses, cardTitleHoverClasses, cardArrowHoverClasses, cardHoverHandlers } from '@/utils';
 
 export interface ExperiencesProps extends TailwindProps {
   id: ExperiencesSanity['id'];
@@ -34,21 +35,16 @@ export const Experiences = ({
       padding={{ _type: 'paddingBlock', ...paddingBlock }}
       className={`relative ${className}`}
     >
-      <ScrollTitleContainer id={id} title={title ?? ''}>
-        <FadeInOnView>
-          <div className="flex flex-col gap-16">
-            {items?.map((item, key) => {
-              const isHovered = hoveredIndex !== null && hoveredIndex !== key;
-              return (
+      <ScrollTitleContainer title={title ?? ''}>
+        <div className="flex flex-col gap-16">
+          {items?.map((item, key) => {
+            const isHovered = hoveredIndex !== null && hoveredIndex !== key;
+
+            return (
+              <FadeInOnView key={key}>
                 <div
-                  key={key}
-                  onMouseEnter={() => setHoveredIndex(key)}
-                  onMouseLeave={() => setHoveredIndex(null)}
-                  className={`flex flex-col lg:flex-row gap-6 lg:p-6 rounded-lg overflow-hidden transition-all border-light/20 ${
-                    hoveredIndex === key
-                      ? 'lg:bg-light/5 lg:border-t lg:border-light/20'
-                      : 'lg:border-t lg:border-transparent'
-                  } ${isHovered ? 'lg:opacity-50' : 'lg:opacity-100'}`}
+                  {...cardHoverHandlers(setHoveredIndex, key)}
+                  className={`flex flex-col lg:flex-row gap-6 lg:p-6 ${glassHoverClasses(hoveredIndex === key)} ${cardDimmedClasses(isHovered)}`}
                 >
                   <div className="uppercase archivo-black text-text-light min-w-40">
                     {`${item.startDate ? new Date(item.startDate).getFullYear() : ''} — ${
@@ -70,27 +66,20 @@ export const Experiences = ({
                           className="group/link flex w-fit items-center gap-3"
                         >
                           <span
-                            className={`text-2xl archivo-black transition-all ${
-                              hoveredIndex === key ? 'text-primary' : ''
-                            }`}
+                            className={`text-2xl archivo-black transition-all ${cardTitleHoverClasses(hoveredIndex === key)}`}
                           >
                             {item.company}
                           </span>
                           {item.companyLink?.href && (
                             <ArrowIcon
-                              className={`h-6 w-6 min-h-6 min-w-6 transition-all rotate-45 group-hover/link:rotate-0
-                          ${
-                            hoveredIndex === key ? 'fill-primary' : 'fill-text'
-                          }`}
+                              className={`h-6 w-6 min-h-6 min-w-6 transition-all rotate-45 lg:group-hover/link:rotate-0 ${cardArrowHoverClasses(hoveredIndex === key)}`}
                             />
                           )}
                         </a>
                       ) : (
                         <div className="group/link flex items-center gap-3">
                           <span
-                            className={`text-2xl archivo-black transition-all ${
-                              hoveredIndex === key ? 'text-primary' : ''
-                            }`}
+                            className={`text-2xl archivo-black transition-all ${cardTitleHoverClasses(hoveredIndex === key)}`}
                           >
                             {item.company}
                           </span>
@@ -126,7 +115,7 @@ export const Experiences = ({
                           key={key}
                           href={tag.href}
                           target={`${tag?.blank ? '_blank' : '_self'}`}
-                          className="group flex items-center gap-2.5 text-text-light hover:text-text transition-all"
+                          className="group flex items-center gap-2 text-text-light hover:text-text transition-all"
                         >
                           <LinkIcon className="fill-text-light h-4 w-4 min-h-4 min-w-4 group-hover:fill-text transition-all" />
                           <span className="text-xs leading-3">{tag.label}</span>
@@ -141,10 +130,10 @@ export const Experiences = ({
                     </div>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        </FadeInOnView>
+              </FadeInOnView>
+            );
+          })}
+        </div>
       </ScrollTitleContainer>
     </PaddingContainer>
   );

@@ -29,14 +29,11 @@ export const IconsSwiper = ({
       <PaddingContainer
         id={id}
         padding={{ _type: 'paddingBlock', ...paddingBlock }}
-        className={`relative w-full py-8 bg-bg ${className}`}
+        className={`relative w-full py-8 ${className}`}
       >
-        <ScrollTitleContainer id={id} title={title ?? ''}>
+        <ScrollTitleContainer title={title ?? ''}>
           <FadeInOnView>
-            <div className="overflow-hidden h-full relative">
-              <div className="pointer-events-none absolute top-0 left-0 h-full w-16 bg-gradient-to-r from-bg to-transparent z-10" />
-              <div className="pointer-events-none absolute top-0 right-0 h-full w-16 bg-gradient-to-l from-bg to-transparent z-10" />
-
+            <div className="overflow-hidden h-full relative [mask-image:linear-gradient(to_right,transparent,black_48px,black_calc(100%-48px),transparent)]">
               <SwiperRow icons={icons} speed={speed} reverse={false} />
               <div className="h-4 lg:h-8" />
               <SwiperRow icons={icons} speed={speed} reverse={true} />

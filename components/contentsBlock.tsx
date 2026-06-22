@@ -3,7 +3,7 @@
 import { ContentsBlock as ContentsBlockSanity } from '@/sanity/types';
 import { TailwindProps } from '@/types';
 import { PortableText } from 'next-sanity';
-import { PaddingContainer } from './atoms';
+import { GlassPanel, PaddingContainer } from './atoms';
 import { ScrollTitleContainer } from './scrollTitleContainer';
 import { FadeInOnView } from './animations';
 
@@ -27,9 +27,9 @@ export const ContentsBlock = ({
       padding={{ _type: 'paddingBlock', ...paddingBlock }}
       className={`relative ${className}`}
     >
-      <ScrollTitleContainer id={id} title={title ?? ''}>
+      <ScrollTitleContainer title={title ?? ''}>
         <FadeInOnView>
-          <div className="bg-grey/5 border-t border-light/20 rounded-xl p-6 flex flex-col lg:flex-row flex-wrap gap-9">
+          <GlassPanel className="p-6 flex flex-col lg:flex-row flex-wrap gap-9">
             {items?.map((item, key) => (
               <div
                 key={key}
@@ -62,7 +62,7 @@ export const ContentsBlock = ({
                               href={value?.href}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="underline"
+                              className="underline hover:text-text transition-all"
                             >
                               {children}
                             </a>
@@ -74,7 +74,7 @@ export const ContentsBlock = ({
                 )}
               </div>
             ))}
-          </div>
+          </GlassPanel>
         </FadeInOnView>
       </ScrollTitleContainer>
     </PaddingContainer>

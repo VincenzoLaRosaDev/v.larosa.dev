@@ -6,20 +6,21 @@
   .text-balance {
     text-wrap: balance;
   }
-  .transition-font {
-    transition: font-size 0.3s ease;
-  }
 }
 
-html, body {
+html,
+body {
   height: 100%;
   scroll-behavior: smooth;
-  cursor: none; 
-}
-
-Link, a, button, [data-cursor-interactive] {
   cursor: none;
 }
+
+a,
+button,
+[data-cursor-interactive] {
+  cursor: none;
+}
+
 .iubenda-cs-content,
 #iubenda-iframe {
   cursor: auto !important;

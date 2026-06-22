@@ -1,10 +1,38 @@
 'use client';
 
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from 'react';
+import { motion, useMotionTemplate, useMotionValue, useSpring } from 'framer-motion';
 import { useTheme } from 'next-themes';
-import { useEffect, useState } from 'react';
 
-export const MouseCursor = () => {
+type MouseCursorContextValue = {
+  theme?: string;
+  mounted: boolean;
+  isHovering: boolean;
+  isMobile: boolean;
+  isInsideWindow: boolean;
+  mouseX: ReturnType<typeof useMotionValue<number>>;
+  mouseY: ReturnType<typeof useMotionValue<number>>;
+  glowX: ReturnType<typeof useSpring>;
+  glowY: ReturnType<typeof useSpring>;
+};
+
+const MouseCursorContext = createContext<MouseCursorContextValue | null>(null);
+
+function useMouseCursorContext() {
+  const context = useContext(MouseCursorContext);
+  if (!context) {
+    throw new Error('MouseCursor components must be used within MouseCursorProvider');
+  }
+  return context;
+}
+
+export function MouseCursorProvider({ children }: { children: ReactNode }) {
   const { theme } = useTheme();
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -15,17 +43,6 @@ export const MouseCursor = () => {
 
   const glowX = useSpring(mouseX, { stiffness: 300, damping: 30 });
   const glowY = useSpring(mouseY, { stiffness: 300, damping: 30 });
-
-  const glowOffsetX = useMotionValue(0);
-  const glowOffsetY = useMotionValue(0);
-
-  useEffect(() => {
-    return glowX.onChange((v) => glowOffsetX.set(v - 700));
-  }, [glowX]);
-
-  useEffect(() => {
-    return glowY.onChange((v) => glowOffsetY.set(v - 700));
-  }, [glowY]);
 
   useEffect(() => setMounted(true), []);
 
@@ -48,7 +65,7 @@ export const MouseCursor = () => {
     const moveCursor = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
-      if (!isInsideWindow) setIsInsideWindow(true);
+      setIsInsideWindow(true);
     };
 
     const handleMouseOver = (e: MouseEvent) => {
@@ -59,16 +76,12 @@ export const MouseCursor = () => {
       setIsHovering(!!isInteractive);
     };
 
-    const handleMouseLeaveDocument = (e: MouseEvent) => {
+    const handleMouseLeaveDocument = () => {
       setIsInsideWindow(false);
     };
 
     const handleVisibilityChange = () => {
-      if (document.visibilityState === 'hidden') {
-        setIsInsideWindow(false);
-      } else {
-        setIsInsideWindow(true);
-      }
+      setIsInsideWindow(document.visibilityState !== 'hidden');
     };
 
     document.addEventListener('mousemove', moveCursor);
@@ -82,7 +95,30 @@ export const MouseCursor = () => {
       document.removeEventListener('mouseleave', handleMouseLeaveDocument);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
-  }, [isMobile, mounted, isInsideWindow, mouseX, mouseY]);
+  }, [isMobile, mounted, mouseX, mouseY]);
+
+  return (
+    <MouseCursorContext.Provider
+      value={{
+        theme,
+        mounted,
+        isHovering,
+        isMobile,
+        isInsideWindow,
+        mouseX,
+        mouseY,
+        glowX,
+        glowY,
+      }}
+    >
+      {children}
+    </MouseCursorContext.Provider>
+  );
+}
+
+export const MouseCursor = () => {
+  const { theme, mounted, isHovering, isMobile, isInsideWindow, mouseX, mouseY } =
+    useMouseCursorContext();
 
   if (!mounted) return null;
 
@@ -140,26 +176,24 @@ export const MouseCursor = () => {
           />
         </motion.div>
       )}
-
-      {theme === 'dark' && (
-        <motion.div
-          className={`bg-gradient-radial from-[#D7D1E970] from-0% to-[#D7D1E900] to-60% pointer-events-none`}
-          style={{
-            position: 'fixed',
-            top: isMobile ? '50vh' : 0,
-            left: isMobile ? '50vw' : 0,
-            width: '1400px',
-            height: '1400px',
-            borderRadius: '50%',
-            mixBlendMode: 'overlay',
-            zIndex: 50,
-            x: isMobile ? 0 : glowOffsetX,
-            y: isMobile ? 0 : glowOffsetY,
-            translateX: isMobile ? '-50%' : undefined,
-            translateY: isMobile ? '-50%' : undefined,
-          }}
-        />
-      )}
     </>
+  );
+};
+
+export const MouseGlow = () => {
+  const { mounted, isMobile, glowX, glowY } = useMouseCursorContext();
+  const glowTransform = useMotionTemplate`translate(${glowX}px, ${glowY}px) translate(-50%, -50%)`;
+
+  if (!mounted) return null;
+
+  if (isMobile) {
+    return <div className="ambient-mouse-glow ambient-mouse-glow--center" />;
+  }
+
+  return (
+    <motion.div
+      className="ambient-mouse-glow"
+      style={{ transform: glowTransform }}
+    />
   );
 };

@@ -24,15 +24,25 @@ export const ScrollTitleAnimation = () => {
     let space = 0;
     let totalSpace = 0;
     let sideHeaderHeight = sideHeader?.clientHeight
-      ? sideHeader.clientHeight + 168
+      ? sideHeader.clientHeight + 180
       : 0;
 
     elements.forEach((item) => {
       totalSpace += item.clientHeight;
     });
 
+    elements.forEach((item) => {
+      item.classList.add('!opacity-30');
+      item.classList.remove('!text-sm');
+    });
+
+    if (elements[0]) {
+      elements[0].classList.remove('!opacity-30');
+      if (!isTouch) elements[0].classList.add('!text-sm');
+    }
+
     elements.forEach((item, i) => {
-      const pinTrigger = ScrollTrigger.create({
+      ScrollTrigger.create({
         trigger: item,
         endTrigger: containers[containers.length - 1],
         start: `top top+=${sideHeaderHeight + space}px`,
@@ -83,6 +93,17 @@ export const ScrollTitleAnimation = () => {
             endTrigger: containers[containers.length - 1],
             start: `top top+=${sideHeaderHeight + space}px`,
             scrub: true,
+          },
+        });
+      } else if (elements.length > 1) {
+        ScrollTrigger.create({
+          trigger: elements[i],
+          endTrigger: containers[containers.length - 1],
+          start: `top top+=${sideHeaderHeight + space}px`,
+          end: `bottom top`,
+          onLeaveBack: () => {
+            item.classList.add('!opacity-30');
+            if (!isTouch) item.classList.remove('!text-sm');
           },
         });
       }

@@ -1,7 +1,7 @@
 'use client';
 
 import { TailwindProps } from '@/types';
-import { CmsLink, PaddingContainer } from './atoms';
+import { CmsLink, GlassPanel, PaddingContainer } from './atoms';
 import { ContactForm as ContactFormSanity } from '@/sanity/types';
 import { ScrollTitleContainer } from './scrollTitleContainer';
 import { useTranslations } from 'next-intl';
@@ -31,16 +31,18 @@ export const ContactForm = ({
       padding={{ _type: 'paddingBlock', ...paddingBlock }}
       className={`relative ${className}`}
     >
-      <ScrollTitleContainer id={id} title={title ?? ''}>
+      <ScrollTitleContainer title={title ?? ''}>
         <FadeInOnView>
           <form noValidate className="w-full flex flex-col gap-6">
-            <textarea
-              id="message"
-              placeholder={t('message')}
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              className="bg-primary/10 rounded-lg overflow-hidden p-4 min-h-32 align-top"
-            />
+            <GlassPanel className="w-full">
+              <textarea
+                id="message"
+                placeholder={t('message')}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                className="w-full min-h-32 resize-none bg-transparent rounded-2xl p-4 align-top text-text border-0 placeholder:text-text-light/60 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary/30 transition-shadow"
+              />
+            </GlassPanel>
             <CmsLink
               onClick={() =>
                 setTimeout(() => {

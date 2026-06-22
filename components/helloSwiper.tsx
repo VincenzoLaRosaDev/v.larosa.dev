@@ -5,7 +5,7 @@ import 'swiper/css';
 import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { TailwindProps } from '@/types';
-import { Cursor, TextReveal } from './atoms';
+import { Cursor, GlassPanel, TextReveal } from './atoms';
 import { useRef, useEffect } from 'react';
 import { useInView } from 'framer-motion';
 import Image from 'next/image'
@@ -33,16 +33,18 @@ export const HelloSwiper = ({ className }: HelloSwiperProps) => {
       className="w-full flex items-center justify-between gap-8"
     >
       <Image
-        src="/vincenzo-la-rosa-purple.jpg"
+        src="/vincenzo-la-rosa.jpg"
         alt="Vincenzo La Rosa"
         width={80}
         height={80}
         className="z-10 h-20 w-20 min-h-20 min-w-20 rounded-full overflow-hidden"
       />
 
-      <div className={`w-full max-w-[230px] text-reverse ${className ?? ''}`}>
+      <GlassPanel
+        className={`w-full max-w-[230px] h-20 ${className ?? ''}`}
+      >
         <Swiper
-          className="pointer-events-none rounded-xl h-20 bg-grey/5 border-t border-light/20 !mb-0"
+          className="pointer-events-none h-20 !mb-0 bg-transparent"
           style={{ margin: 0, padding: '0 10px 0 20px' }}
           spaceBetween={0}
           slidesPerView={1}
@@ -81,7 +83,7 @@ export const HelloSwiper = ({ className }: HelloSwiperProps) => {
             </SwiperSlide>
           ))}
         </Swiper>
-      </div>
+      </GlassPanel>
     </div>
   );
 };
