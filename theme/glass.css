@@ -61,3 +61,18 @@
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
   }
 }
+
+/* Mobile / touch: skip backdrop-filter on panels/cards — keep sticky section headers. */
+@media (max-width: 1023px) {
+  .glass-panel::before,
+  .glass-hover::before,
+  .glass-hover-active::before {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .glass-sticky-layer {
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+  }
+}

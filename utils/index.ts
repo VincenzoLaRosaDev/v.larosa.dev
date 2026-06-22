@@ -10,3 +10,4 @@ export function getOffset(el?: HTMLElement | null) {
 }
 
 export * from './glass';
+export * from './device';

@@ -9,7 +9,7 @@ export interface TagProps extends TailwindProps, WithChildren {
 export const Tag = ({ className, children, live }: TagProps) => {
   return (
     <div
-      className={`inline-flex items-center gap-2 px-3 py-1.5 text-xs leading-3 text-primary rounded-full relative isolate bg-[var(--tag-bg)] border border-[var(--tag-border)] backdrop-blur-[8px] ${live ? 'overflow-visible' : 'overflow-hidden'} ${className}`}
+      className={`inline-flex items-center gap-2 px-3 py-1.5 text-xs leading-3 text-primary rounded-full relative isolate bg-[var(--tag-bg)] border border-[var(--tag-border)] lg:backdrop-blur-[8px] ${live ? 'overflow-visible' : 'overflow-hidden'} ${className}`}
     >
       {live && (
         <span
