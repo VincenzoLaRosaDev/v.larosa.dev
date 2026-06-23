@@ -6,4 +6,3 @@ export * from './tag';
 export * from './mouseCursor';
 export * from './glassPanel';
 export * from './ambientLayer';
-export * from './safariChrome';

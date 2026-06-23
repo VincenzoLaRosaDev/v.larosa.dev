@@ -62,8 +62,8 @@
   }
 }
 
-/* Mobile / touch: skip backdrop-filter on panels/cards — keep sticky section headers. */
-@media (max-width: 1023px) {
+/* Mobile / touch: skip backdrop-filter on panels/cards — keep sticky title blur. */
+@media (max-width: 1023px), (pointer: coarse) {
   .glass-panel::before,
   .glass-hover::before,
   .glass-hover-active::before {

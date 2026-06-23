@@ -7,16 +7,12 @@ import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { locales } from '@/i18n/routing';
 import { setRequestLocale } from 'next-intl/server';
-import { ThemeProviders } from '@/theme';
-import { AmbientLayer, MouseCursor, MouseCursorProvider, SafariChrome } from '@/components';
+import { AmbientLayer, MouseCursor, MouseCursorProvider } from '@/components';
 import Script from 'next/script';
 
 export async function generateMetadata() {
   return {
-    themeColor: [
-      { media: '(prefers-color-scheme: light)', color: '#f4f6f4' },
-      { media: '(prefers-color-scheme: dark)', color: '#091410' },
-    ],
+    themeColor: '#091410',
     appleWebApp: {
       capable: true,
       statusBarStyle: 'black-translucent',
@@ -86,7 +82,7 @@ export default async function HomeLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className="bg-bg">
+      <body>
         <Script id="iubenda-config" strategy="afterInteractive">
           {`
             var _iub = _iub || [];
@@ -109,18 +105,15 @@ export default async function HomeLayout({
           strategy="afterInteractive"
         />
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <ThemeProviders>
-            <SafariChrome />
-            <MouseCursorProvider>
-              <AmbientLayer />
-              <main className="relative z-[1]">
-                <div className="relative z-[1] text-text archivo max-w-7xl mx-auto">
-                  <div className="relative z-[1] lg:px-9">{children}</div>
-                </div>
-                <MouseCursor />
-              </main>
-            </MouseCursorProvider>
-          </ThemeProviders>
+          <MouseCursorProvider>
+            <AmbientLayer />
+            <main className="relative z-[1]">
+              <div className="relative z-[1] text-text archivo max-w-7xl mx-auto">
+                <div className="relative z-[1] lg:px-9">{children}</div>
+              </div>
+              <MouseCursor />
+            </main>
+          </MouseCursorProvider>
         </NextIntlClientProvider>
       </body>
     </html>

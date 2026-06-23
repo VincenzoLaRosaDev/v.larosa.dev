@@ -13,5 +13,4 @@ export * from './projects';
 export * from './scrollTitleContainer';
 export * from './contactForm';
 export * from './changeLang';
-export * from './toggleColorMode';
 export * from './helloSwiper';
