@@ -10,6 +10,10 @@
   transform: translateZ(0);
 }
 
+.ambient-chrome-edge {
+  display: none;
+}
+
 /* Lite ambient: narrow viewport or touch — sync with utils/device.ts */
 @media (max-width: 1023px), (pointer: coarse) {
   body {
@@ -22,7 +26,7 @@
     inset: auto;
     top: calc(-1 * env(safe-area-inset-top, 0px));
     right: 0;
-    bottom: calc(-1 * env(safe-area-inset-bottom, 0px));
+    bottom: calc(-1 * (env(safe-area-inset-bottom, 0px) + var(--safari-toolbar)));
     left: 0;
     overflow: visible;
     transform: none;
@@ -30,14 +34,14 @@
     background-image:
       linear-gradient(
         to bottom,
-        color-mix(in srgb, var(--accent) 11%, var(--bg)) 0%,
+        var(--ambient-chrome-top) 0%,
         color-mix(in srgb, var(--accent) 4%, var(--bg)) 28%,
         color-mix(in srgb, var(--accent) 1.5%, var(--bg)) 52%,
         var(--bg) 72%
       ),
       linear-gradient(
         to top,
-        color-mix(in srgb, var(--primary) 10%, var(--bg)) 0%,
+        var(--ambient-chrome-bottom) 0%,
         color-mix(in srgb, var(--primary) 3.5%, var(--bg)) 28%,
         color-mix(in srgb, var(--primary) 1.5%, var(--bg)) 52%,
         var(--bg) 72%
@@ -45,8 +49,21 @@
     background-repeat: no-repeat;
     background-size:
       100% calc(50vh + env(safe-area-inset-top, 0px)),
-      100% calc(50vh + env(safe-area-inset-bottom, 0px));
+      100% calc(50vh + env(safe-area-inset-bottom, 0px) + var(--safari-toolbar));
     background-position: top center, bottom center;
+  }
+
+  /* Same color as gradient stop 0% — Safari sampling when bars turn opaque */
+  .ambient-chrome-edge {
+    display: block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: calc(env(safe-area-inset-bottom, 0px) + var(--safari-toolbar));
+    background-color: var(--ambient-chrome-bottom);
+    pointer-events: none;
+    z-index: 0;
   }
 }
 

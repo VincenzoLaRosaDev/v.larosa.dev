@@ -28,24 +28,16 @@ body {
 @media (max-width: 1023px), (pointer: coarse) {
   html {
     background-color: var(--bg);
-    background-image:
-      linear-gradient(
-        to bottom,
-        var(--ambient-chrome-top) 0px,
-        var(--ambient-chrome-top) max(env(safe-area-inset-top, 0px), 3px),
-        transparent max(calc(env(safe-area-inset-top, 0px) + 1px), 4px)
-      ),
-      linear-gradient(
-        to top,
-        var(--ambient-chrome-bottom) 0px,
-        var(--ambient-chrome-bottom) max(env(safe-area-inset-bottom, 0px), 3px),
-        transparent max(calc(env(safe-area-inset-bottom, 0px) + 1px), 4px)
-      );
+    /* Top edge only — bottom is handled by .ambient-layer under the toolbar */
+    background-image: linear-gradient(
+      to bottom,
+      var(--ambient-chrome-top) 0px,
+      var(--ambient-chrome-top) max(env(safe-area-inset-top, 0px), 3px),
+      transparent max(calc(env(safe-area-inset-top, 0px) + 1px), 4px)
+    );
     background-repeat: no-repeat;
-    background-size:
-      100% calc(env(safe-area-inset-top, 0px) + 3.25rem),
-      100% calc(env(safe-area-inset-bottom, 0px) + 2.75rem);
-    background-position: top center, bottom center;
+    background-size: 100% calc(env(safe-area-inset-top, 0px) + 3.25rem);
+    background-position: top center;
   }
 
   body {
