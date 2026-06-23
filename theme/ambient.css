@@ -12,58 +12,49 @@
 
 /* Lite ambient: narrow viewport or touch — sync with utils/device.ts */
 @media (max-width: 1023px), (pointer: coarse) {
-  /*
-   * iOS 26 Safari at scrollY=0 samples background-color only — not pseudo-elements
-   * or background-image. overflow:hidden was clipping bleed into the chrome zone.
-   * Scroll runway (--safari-scroll-offset) + SafariChromeBoot nudge compositor on load.
-   */
-  html {
-    overflow-y: scroll;
-    overscroll-behavior: none;
-    background-color: var(--safari-chrome-top);
-  }
-
-  body {
-    min-height: calc(100dvh + var(--safari-scroll-offset));
-  }
-
   .ambient-layer {
     --ambient-bleed-x: 0vw;
     --ambient-bleed-y: 0vh;
-    inset: auto;
+    background-color: transparent;
+    top: calc(-1 * env(safe-area-inset-top, 0px));
+    right: calc(-1 * env(safe-area-inset-right, 0px));
+    bottom: calc(-1 * env(safe-area-inset-bottom, 0px));
+    left: calc(-1 * env(safe-area-inset-left, 0px));
     overflow: visible;
     transform: none;
-    background-color: transparent;
-    top: calc(-1 * (env(safe-area-inset-top, 0px) + var(--safari-top-bleed)));
-    right: calc(-1 * env(safe-area-inset-right, 0px));
-    bottom: calc(-1 * (env(safe-area-inset-bottom, 0px) + var(--safari-bottom-bleed)));
-    left: calc(-1 * env(safe-area-inset-left, 0px));
-    background-image:
-      linear-gradient(
-        180deg,
-        color-mix(in srgb, var(--accent) 11%, var(--bg)) 0%,
-        color-mix(in srgb, var(--accent) 4%, var(--bg)) 22%,
-        color-mix(in srgb, var(--accent) 1.5%, var(--bg)) 40%,
-        transparent 68%
-      ),
-      linear-gradient(
-        0deg,
-        color-mix(in srgb, var(--primary) 10%, var(--bg)) 0%,
-        color-mix(in srgb, var(--primary) 3.5%, var(--bg)) 22%,
-        color-mix(in srgb, var(--primary) 1.5%, var(--bg)) 40%,
-        transparent 68%
-      );
-    background-repeat: no-repeat;
-    background-size:
-      100% calc(68vh + env(safe-area-inset-top, 0px) + var(--safari-top-bleed)),
-      100% calc(68vh + env(safe-area-inset-bottom, 0px) + var(--safari-bottom-bleed));
-    background-position: top center, bottom center;
   }
 
-  .safari-chrome-stage {
-    margin-top: calc(-1 * var(--safari-top-bleed));
-    padding-top: var(--safari-top-bleed);
-    padding-bottom: var(--safari-bottom-bleed);
+  .ambient-layer::before,
+  .ambient-layer::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+  }
+
+  .ambient-layer::before {
+    top: 0;
+    height: calc(68vh + env(safe-area-inset-top, 0px));
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--accent) 11%, transparent) 0%,
+      color-mix(in srgb, var(--accent) 4%, transparent) 28%,
+      color-mix(in srgb, var(--accent) 1.5%, transparent) 52%,
+      transparent 72%
+    );
+  }
+
+  .ambient-layer::after {
+    bottom: 0;
+    height: calc(68vh + env(safe-area-inset-bottom, 0px));
+    background: linear-gradient(
+      to top,
+      color-mix(in srgb, var(--primary) 10%, transparent) 0%,
+      color-mix(in srgb, var(--primary) 3.5%, transparent) 28%,
+      color-mix(in srgb, var(--primary) 1.5%, transparent) 52%,
+      transparent 72%
+    );
   }
 }
 
@@ -149,13 +140,8 @@
 }
 
 html {
+  background-color: var(--bg);
   --page-grain-bleed: 30vh;
-}
-
-@media (min-width: 1024px) and (pointer: fine) {
-  html {
-    background-color: var(--bg);
-  }
 }
 
 body::before {
