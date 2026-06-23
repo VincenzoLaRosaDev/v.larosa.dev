@@ -4,7 +4,7 @@
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
-  background-color: transparent;
+  background-color: var(--bg);
   --ambient-bleed-x: 20vw;
   --ambient-bleed-y: 30vh;
   transform: translateZ(0);
@@ -15,37 +15,20 @@
   .ambient-layer {
     --ambient-bleed-x: 0vw;
     --ambient-bleed-y: 0vh;
-    top: calc(-1 * env(safe-area-inset-top, 0px));
-    right: calc(-1 * env(safe-area-inset-right, 0px));
-    bottom: calc(-1 * env(safe-area-inset-bottom, 0px));
-    left: calc(-1 * env(safe-area-inset-left, 0px));
   }
 
-  /* Real nodes (not ::pseudo) — paint behind Safari Liquid Glass chrome. */
-  .ambient-mobile-fade {
+  .ambient-layer::before,
+  .ambient-layer::after {
+    content: '';
     position: absolute;
     left: 0;
     right: 0;
-    background-color: transparent;
     pointer-events: none;
   }
 
-  .ambient-mobile-fade--top {
+  .ambient-layer::before {
     top: 0;
-    height: calc(68vh + env(safe-area-inset-top, 0px));
-  }
-
-  .ambient-mobile-fade--bottom {
-    bottom: 0;
-    height: calc(68vh + env(safe-area-inset-bottom, 0px));
-  }
-
-  .ambient-mobile-fade__glow {
-    position: absolute;
-    inset: 0;
-  }
-
-  .ambient-mobile-fade__glow--top {
+    height: 68vh;
     background: linear-gradient(
       to bottom,
       color-mix(in srgb, var(--accent) 11%, transparent) 0%,
@@ -55,7 +38,9 @@
     );
   }
 
-  .ambient-mobile-fade__glow--bottom {
+  .ambient-layer::after {
+    bottom: 0;
+    height: 68vh;
     background: linear-gradient(
       to top,
       color-mix(in srgb, var(--primary) 10%, transparent) 0%,
@@ -63,16 +48,6 @@
       color-mix(in srgb, var(--primary) 1.5%, transparent) 52%,
       transparent 72%
     );
-  }
-}
-
-.ambient-mobile-fade {
-  display: none;
-}
-
-@media (max-width: 1023px), (pointer: coarse) {
-  .ambient-mobile-fade {
-    display: block;
   }
 }
 
@@ -106,7 +81,7 @@
 .ambient-orb--gold {
   background: radial-gradient(
     circle,
-    rgba(212, 168, 0, 0.2) 0%,
+    rgba(250, 204, 21, 0.18) 0%,
     transparent 70%
   );
 }
@@ -114,36 +89,12 @@
 .ambient-orb--teal {
   background: radial-gradient(
     circle,
-    rgba(14, 60, 52, 0.18) 0%,
-    transparent 70%
-  );
-}
-
-.ambient-orb--teal-alt {
-  background: radial-gradient(
-    circle,
-    rgba(36, 88, 76, 0.16) 0%,
-    transparent 70%
-  );
-}
-
-.dark .ambient-orb--gold {
-  background: radial-gradient(
-    circle,
-    rgba(250, 204, 21, 0.18) 0%,
-    transparent 70%
-  );
-}
-
-.dark .ambient-orb--teal {
-  background: radial-gradient(
-    circle,
     rgba(60, 150, 130, 0.2) 0%,
     transparent 70%
   );
 }
 
-.dark .ambient-orb--teal-alt {
+.ambient-orb--teal-alt {
   background: radial-gradient(
     circle,
     rgba(74, 168, 148, 0.17) 0%,
@@ -164,7 +115,7 @@
   width: var(--mouse-glow-size, 900px);
   height: var(--mouse-glow-size, 900px);
   border-radius: 50%;
-  opacity: var(--mouse-glow-opacity, 0.32);
+  opacity: var(--mouse-glow-opacity, 0.12);
   background: radial-gradient(
     circle,
     color-mix(in srgb, var(--primary) 14%, transparent) 0%,
@@ -179,16 +130,6 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-}
-
-.light .ambient-mouse-glow,
-.dark .reverse .ambient-mouse-glow {
-  opacity: var(--mouse-glow-opacity-light, 0.22);
-  background: radial-gradient(
-    circle,
-    color-mix(in srgb, var(--accent) 12%, transparent) 0%,
-    transparent 58%
-  );
 }
 
 html {
@@ -210,7 +151,6 @@ body::before {
   background-repeat: repeat;
 }
 
-/* Lite ambient: narrow viewport or touch — sync with utils/device.ts */
 @media (max-width: 1023px), (pointer: coarse) {
   body::before {
     display: none;

@@ -8,10 +8,8 @@ import {
   type ReactNode,
 } from 'react';
 import { motion, useMotionTemplate, useMotionValue, useSpring } from 'framer-motion';
-import { useTheme } from 'next-themes';
 
 type MouseCursorContextValue = {
-  theme?: string;
   mounted: boolean;
   isHovering: boolean;
   isMobile: boolean;
@@ -33,7 +31,6 @@ function useMouseCursorContext() {
 }
 
 export function MouseCursorProvider({ children }: { children: ReactNode }) {
-  const { theme } = useTheme();
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const [mounted, setMounted] = useState(false);
@@ -100,7 +97,6 @@ export function MouseCursorProvider({ children }: { children: ReactNode }) {
   return (
     <MouseCursorContext.Provider
       value={{
-        theme,
         mounted,
         isHovering,
         isMobile,
@@ -117,7 +113,7 @@ export function MouseCursorProvider({ children }: { children: ReactNode }) {
 }
 
 export const MouseCursor = () => {
-  const { theme, mounted, isHovering, isMobile, isInsideWindow, mouseX, mouseY } =
+  const { mounted, isHovering, isMobile, isInsideWindow, mouseX, mouseY } =
     useMouseCursorContext();
 
   if (!mounted) return null;
@@ -134,17 +130,13 @@ export const MouseCursor = () => {
         >
           {isHovering && (
             <motion.div
-              className="absolute rounded-full border"
+              className="absolute rounded-full border border-white"
               style={{
                 width: 16,
                 height: 16,
                 marginLeft: -8,
                 marginTop: -8,
-                backgroundColor:
-                  theme === 'dark'
-                    ? 'rgba(255, 255, 255, 0.5)'
-                    : 'rgba(0, 0, 0, 0.5)',
-                borderColor: theme === 'dark' ? 'white' : 'black',
+                backgroundColor: 'rgba(255, 255, 255, 0.5)',
                 zIndex: -1,
               }}
               animate={{
@@ -160,11 +152,9 @@ export const MouseCursor = () => {
           )}
 
           <motion.div
-            className="rounded-full border"
+            className="rounded-full border border-white"
             style={{
-              borderColor: theme === 'dark' ? 'white' : 'black',
-              backgroundColor:
-                theme === 'dark' ? 'rgba(0, 0, 0, 0.4)' : 'rgba(0, 0, 0, 0.2)',
+              backgroundColor: 'rgba(0, 0, 0, 0.4)',
             }}
             animate={{
               width: isHovering ? 16 : 24,

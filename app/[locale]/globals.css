@@ -15,6 +15,10 @@ body {
   cursor: none;
 }
 
+body {
+  background-color: var(--bg);
+}
+
 @media (max-width: 1023px), (pointer: coarse) {
   body {
     padding-left: env(safe-area-inset-left, 0px);

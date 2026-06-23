@@ -4,8 +4,6 @@ import { Page, Link } from '@/sanity/types';
 import { TailwindProps } from '@/types';
 import { PortableText } from 'next-sanity';
 import { CmsLink, GlassPanel, Tag } from './atoms';
-import { ChangeLang } from './changeLang';
-import { ToogleColorMode } from './toggleColorMode';
 
 export interface SideNavProps extends TailwindProps {
   homeBanner: Page['homeBanner'];
@@ -83,10 +81,6 @@ export const SideNav = ({ className, homeBanner, links }: SideNavProps) => {
                 </GlassPanel>
               </CmsLink>
             ))}
-          </div>
-          <div className="flex items-center gap-4">
-            {/* <ChangeLang /> */}
-            {/* <ToogleColorMode /> */}
           </div>
         </div>
       </div>
