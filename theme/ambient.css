@@ -10,51 +10,63 @@
   transform: translateZ(0);
 }
 
+.ambient-chrome-edge {
+  display: none;
+}
+
 /* Lite ambient: narrow viewport or touch — sync with utils/device.ts */
 @media (max-width: 1023px), (pointer: coarse) {
+  html,
+  body {
+    background-color: transparent;
+  }
+
   .ambient-layer {
     --ambient-bleed-x: 0vw;
     --ambient-bleed-y: 0vh;
-    background-color: transparent;
-    top: calc(-1 * env(safe-area-inset-top, 0px));
-    right: calc(-1 * env(safe-area-inset-right, 0px));
-    bottom: calc(-1 * env(safe-area-inset-bottom, 0px));
-    left: calc(-1 * env(safe-area-inset-left, 0px));
-    overflow: visible;
     transform: none;
+    background-color: var(--bg);
+    background-image:
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--accent) 11%, var(--bg)) 0%,
+        color-mix(in srgb, var(--accent) 4%, var(--bg)) 28%,
+        color-mix(in srgb, var(--accent) 1.5%, var(--bg)) 52%,
+        var(--bg) 72%
+      ),
+      linear-gradient(
+        to top,
+        color-mix(in srgb, var(--primary) 10%, var(--bg)) 0%,
+        color-mix(in srgb, var(--primary) 3.5%, var(--bg)) 28%,
+        color-mix(in srgb, var(--primary) 1.5%, var(--bg)) 52%,
+        var(--bg) 72%
+      );
+    background-repeat: no-repeat;
+    background-size: 100% 50vh, 100% 50vh;
+    background-position: top center, bottom center;
   }
 
-  .ambient-layer::before,
-  .ambient-layer::after {
-    content: '';
-    position: absolute;
+  /* Safari iOS samples background-color on fixed edge elements — thin, no visual fade */
+  .ambient-chrome-edge {
+    display: block;
+    position: fixed;
     left: 0;
     right: 0;
+    width: 100%;
     pointer-events: none;
+    z-index: 0;
   }
 
-  .ambient-layer::before {
+  .ambient-chrome-edge--top {
     top: 0;
-    height: calc(68vh + env(safe-area-inset-top, 0px));
-    background: linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--accent) 11%, transparent) 0%,
-      color-mix(in srgb, var(--accent) 4%, transparent) 28%,
-      color-mix(in srgb, var(--accent) 1.5%, transparent) 52%,
-      transparent 72%
-    );
+    height: max(3px, env(safe-area-inset-top, 0px));
+    background-color: var(--ambient-chrome-top);
   }
 
-  .ambient-layer::after {
-    bottom: 0;
-    height: calc(68vh + env(safe-area-inset-bottom, 0px));
-    background: linear-gradient(
-      to top,
-      color-mix(in srgb, var(--primary) 10%, transparent) 0%,
-      color-mix(in srgb, var(--primary) 3.5%, transparent) 28%,
-      color-mix(in srgb, var(--primary) 1.5%, transparent) 52%,
-      transparent 72%
-    );
+  .ambient-chrome-edge--bottom {
+    bottom: -8px;
+    min-height: 12px;
+    background-color: var(--ambient-chrome-bottom);
   }
 }
 

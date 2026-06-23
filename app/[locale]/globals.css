@@ -19,7 +19,14 @@ body {
   background-color: var(--bg);
 }
 
+@media (min-width: 1024px) and (pointer: fine) {
+  html {
+    background-color: var(--bg);
+  }
+}
+
 @media (max-width: 1023px), (pointer: coarse) {
+  html,
   body {
     padding-left: env(safe-area-inset-left, 0px);
     padding-right: env(safe-area-inset-right, 0px);
