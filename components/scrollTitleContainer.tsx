@@ -77,7 +77,9 @@ export const ScrollTitleContainer = ({
       <div className="w-full relative">
         <div ref={stickySentinelRef} className="lg:hidden h-px w-full" aria-hidden />
         <h2
-          className="lg:hidden sticky top-0 z-[60] w-full"
+          className={`lg:hidden sticky top-0 z-[60] w-full bg-transparent transition-shadow duration-200 ease-out ${
+            isStuck ? 'shadow-[inset_0_-1px_0_0_var(--glass-border)]' : ''
+          }`}
           onClick={() => {
             scrollTo({
               top: initialPosition,
@@ -85,17 +87,6 @@ export const ScrollTitleContainer = ({
             });
           }}
         >
-          <div
-            aria-hidden
-            className={`absolute inset-0 glass-sticky-layer transition-opacity duration-200 ease-out ${
-              isStuck ? 'opacity-100' : 'opacity-0'
-            }`}
-            style={{
-              boxShadow: isStuck
-                ? 'inset 0 -1px 0 0 var(--glass-border)'
-                : 'none',
-            }}
-          />
           <div className="relative px-3 py-3">
             <TextReveal
               animateOnMobile
