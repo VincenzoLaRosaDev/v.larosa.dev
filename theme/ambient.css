@@ -15,38 +15,20 @@
   .ambient-layer {
     --ambient-bleed-x: 0vw;
     --ambient-bleed-y: 0vh;
+    background-color: var(--bg);
   }
 
-  .ambient-layer::before,
-  .ambient-layer::after {
+  /* Single center radial — keeps top/bottom uniform for Safari liquid glass */
+  .ambient-layer::before {
     content: '';
     position: absolute;
-    left: 0;
-    right: 0;
+    inset: 0;
     pointer-events: none;
-  }
-
-  .ambient-layer::before {
-    top: -50px;
-    height: 72vh;
-    background: linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--accent) 11%, transparent) 0%,
-      color-mix(in srgb, var(--accent) 4%, transparent) 28%,
-      color-mix(in srgb, var(--accent) 1.5%, transparent) 52%,
-      transparent 72%
-    );
-  }
-
-  .ambient-layer::after {
-    bottom: -50px;
-    height: 72vh;
-    background: linear-gradient(
-      to top,
-      color-mix(in srgb, var(--primary) 10%, transparent) 0%,
-      color-mix(in srgb, var(--primary) 3.5%, transparent) 28%,
-      color-mix(in srgb, var(--primary) 1.5%, transparent) 52%,
-      transparent 72%
+    background: radial-gradient(
+      ellipse 100% 42% at 50% 50%,
+      color-mix(in srgb, var(--primary) 11%, transparent) 0%,
+      color-mix(in srgb, var(--primary) 4%, transparent) 45%,
+      transparent 70%
     );
   }
 }
