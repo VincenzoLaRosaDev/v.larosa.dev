@@ -10,41 +10,12 @@
 
 html,
 body {
-  min-height: 100%;
-  min-height: 100dvh;
+  height: 100%;
   cursor: none;
 }
 
 body {
-  background-color: var(--bg);
-}
-
-@media (min-width: 1024px) and (pointer: fine) {
-  html {
-    background-color: var(--bg);
-  }
-}
-
-@media (max-width: 1023px), (pointer: coarse) {
-  html {
-    background-color: var(--bg);
-    /* Top edge only — bottom is handled by .ambient-layer under the toolbar */
-    background-image: linear-gradient(
-      to bottom,
-      var(--ambient-chrome-top) 0px,
-      var(--ambient-chrome-top) max(env(safe-area-inset-top, 0px), 3px),
-      transparent max(calc(env(safe-area-inset-top, 0px) + 1px), 4px)
-    );
-    background-repeat: no-repeat;
-    background-size: 100% calc(env(safe-area-inset-top, 0px) + 3.25rem);
-    background-position: top center;
-  }
-
-  body {
-    padding-left: env(safe-area-inset-left, 0px);
-    padding-right: env(safe-area-inset-right, 0px);
-    background-color: transparent;
-  }
+  /* background-color: var(--bg); */
 }
 
 @media (min-width: 1024px) {

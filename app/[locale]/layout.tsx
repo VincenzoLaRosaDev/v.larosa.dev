@@ -12,7 +12,7 @@ import Script from 'next/script';
 
 export async function generateMetadata() {
   return {
-    themeColor: '#0b1713',
+    themeColor: '#091410',
     appleWebApp: {
       capable: true,
       statusBarStyle: 'black-translucent',
