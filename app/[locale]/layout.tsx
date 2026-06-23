@@ -7,12 +7,12 @@ import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { locales } from '@/i18n/routing';
 import { setRequestLocale } from 'next-intl/server';
-import { AmbientLayer, MouseCursor, MouseCursorProvider } from '@/components';
+import { AmbientLayer, MouseCursor, MouseCursorProvider, SafariChromeBoot } from '@/components';
 import Script from 'next/script';
 
 export async function generateMetadata() {
   return {
-    themeColor: '#091410',
+    themeColor: '#0b1713',
     appleWebApp: {
       capable: true,
       statusBarStyle: 'black-translucent',
@@ -106,8 +106,9 @@ export default async function HomeLayout({
         />
         <NextIntlClientProvider locale={locale} messages={messages}>
           <MouseCursorProvider>
+            <SafariChromeBoot />
             <AmbientLayer />
-            <main className="relative z-[1]">
+            <main className="relative z-[1] safari-chrome-stage">
               <div className="relative z-[1] text-text archivo max-w-7xl mx-auto">
                 <div className="relative z-[1] lg:px-9">{children}</div>
               </div>

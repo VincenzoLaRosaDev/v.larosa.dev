@@ -15,4 +15,10 @@
   --tag-border: rgba(250, 204, 21, 0.34);
   --mouse-glow-size: 900px;
   --mouse-glow-opacity: 0.12;
+  /* Safari iOS 26 — sampled background-color at scrollY=0 (not background-image) */
+  --safari-chrome-top: color-mix(in srgb, var(--accent) 11%, var(--bg));
+  --safari-chrome-bottom: color-mix(in srgb, var(--primary) 10%, var(--bg));
+  --safari-top-bleed: 62px;
+  --safari-bottom-bleed: 34px;
+  --safari-scroll-offset: 1px;
 }

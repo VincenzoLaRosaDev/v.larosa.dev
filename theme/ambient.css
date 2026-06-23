@@ -13,37 +13,31 @@
 /* Lite ambient: narrow viewport or touch — sync with utils/device.ts */
 @media (max-width: 1023px), (pointer: coarse) {
   /*
-   * Safari iOS 26: samples background-color of fixed edge elements, not pseudo-elements.
-   * A solid --bg on this layer caused flat chrome on first paint; gradients on ::before/::after
-   * were invisible to the sampler. Use transparent bg + background-image on the element itself
-   * (see barr.digital: no full-viewport fixed fill, body/background carries the visual).
+   * iOS 26 Safari at scrollY=0 samples background-color only — not pseudo-elements
+   * or background-image. overflow:hidden was clipping bleed into the chrome zone.
+   * Scroll runway (--safari-scroll-offset) + SafariChromeBoot nudge compositor on load.
    */
   html {
-    background-color: var(--bg);
-    background-image:
-      linear-gradient(
-        180deg,
-        color-mix(in srgb, var(--accent) 11%, var(--bg)) 0%,
-        color-mix(in srgb, var(--accent) 4%, var(--bg)) 22%,
-        color-mix(in srgb, var(--accent) 1.5%, var(--bg)) 40%,
-        var(--bg) 68%
-      ),
-      linear-gradient(
-        0deg,
-        color-mix(in srgb, var(--primary) 10%, var(--bg)) 0%,
-        color-mix(in srgb, var(--primary) 3.5%, var(--bg)) 22%,
-        color-mix(in srgb, var(--primary) 1.5%, var(--bg)) 40%,
-        var(--bg) 68%
-      );
-    background-repeat: no-repeat;
-    background-size: 100% 68vh, 100% 68vh;
-    background-position: top center, bottom center;
+    overflow-y: scroll;
+    overscroll-behavior: none;
+    background-color: var(--safari-chrome-top);
+  }
+
+  body {
+    min-height: calc(100dvh + var(--safari-scroll-offset));
   }
 
   .ambient-layer {
     --ambient-bleed-x: 0vw;
     --ambient-bleed-y: 0vh;
+    inset: auto;
+    overflow: visible;
+    transform: none;
     background-color: transparent;
+    top: calc(-1 * (env(safe-area-inset-top, 0px) + var(--safari-top-bleed)));
+    right: calc(-1 * env(safe-area-inset-right, 0px));
+    bottom: calc(-1 * (env(safe-area-inset-bottom, 0px) + var(--safari-bottom-bleed)));
+    left: calc(-1 * env(safe-area-inset-left, 0px));
     background-image:
       linear-gradient(
         180deg,
@@ -60,12 +54,16 @@
         transparent 68%
       );
     background-repeat: no-repeat;
-    background-size: 100% 68vh, 100% 68vh;
+    background-size:
+      100% calc(68vh + env(safe-area-inset-top, 0px) + var(--safari-top-bleed)),
+      100% calc(68vh + env(safe-area-inset-bottom, 0px) + var(--safari-bottom-bleed));
     background-position: top center, bottom center;
-    top: calc(-1 * env(safe-area-inset-top, 0px));
-    right: calc(-1 * env(safe-area-inset-right, 0px));
-    bottom: calc(-1 * env(safe-area-inset-bottom, 0px));
-    left: calc(-1 * env(safe-area-inset-left, 0px));
+  }
+
+  .safari-chrome-stage {
+    margin-top: calc(-1 * var(--safari-top-bleed));
+    padding-top: var(--safari-top-bleed);
+    padding-bottom: var(--safari-bottom-bleed);
   }
 }
 
