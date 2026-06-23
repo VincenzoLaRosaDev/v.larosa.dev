@@ -15,6 +15,10 @@
   .ambient-layer {
     --ambient-bleed-x: 0vw;
     --ambient-bleed-y: 0vh;
+    top: calc(-1 * env(safe-area-inset-top, 0px));
+    right: calc(-1 * env(safe-area-inset-right, 0px));
+    bottom: calc(-1 * env(safe-area-inset-bottom, 0px));
+    left: calc(-1 * env(safe-area-inset-left, 0px));
   }
 
   .ambient-layer::before,
@@ -27,8 +31,8 @@
   }
 
   .ambient-layer::before {
-    top: 0;
-    height: 68vh;
+    top: calc(-1 * env(safe-area-inset-top, 0px));
+    height: calc(68vh + env(safe-area-inset-top, 0px));
     background: linear-gradient(
       to bottom,
       color-mix(in srgb, var(--accent) 11%, transparent) 0%,
@@ -39,8 +43,8 @@
   }
 
   .ambient-layer::after {
-    bottom: 0;
-    height: 68vh;
+    bottom: calc(-1 * env(safe-area-inset-bottom, 0px));
+    height: calc(68vh + env(safe-area-inset-bottom, 0px));
     background: linear-gradient(
       to top,
       color-mix(in srgb, var(--primary) 10%, transparent) 0%,
