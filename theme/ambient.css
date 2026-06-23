@@ -16,7 +16,6 @@
 
 /* Lite ambient: narrow viewport or touch — sync with utils/device.ts */
 @media (max-width: 1023px), (pointer: coarse) {
-  html,
   body {
     background-color: transparent;
   }
@@ -24,6 +23,12 @@
   .ambient-layer {
     --ambient-bleed-x: 0vw;
     --ambient-bleed-y: 0vh;
+    inset: auto;
+    top: calc(-1 * env(safe-area-inset-top, 0px));
+    right: 0;
+    bottom: calc(-1 * env(safe-area-inset-bottom, 0px));
+    left: 0;
+    overflow: visible;
     transform: none;
     background-color: var(--bg);
     background-image:
@@ -42,11 +47,13 @@
         var(--bg) 72%
       );
     background-repeat: no-repeat;
-    background-size: 100% 50vh, 100% 50vh;
+    background-size:
+      100% calc(50vh + env(safe-area-inset-top, 0px)),
+      100% calc(50vh + env(safe-area-inset-bottom, 0px));
     background-position: top center, bottom center;
   }
 
-  /* Safari iOS samples background-color on fixed edge elements — thin, no visual fade */
+  /* Bottom sampler for Safari when bars turn opaque after scroll */
   .ambient-chrome-edge {
     display: block;
     position: fixed;
@@ -55,12 +62,6 @@
     width: 100%;
     pointer-events: none;
     z-index: 0;
-  }
-
-  .ambient-chrome-edge--top {
-    top: 0;
-    height: max(3px, env(safe-area-inset-top, 0px));
-    background-color: var(--ambient-chrome-top);
   }
 
   .ambient-chrome-edge--bottom {
@@ -152,8 +153,13 @@
 }
 
 html {
-  background-color: var(--bg);
   --page-grain-bleed: 30vh;
+}
+
+@media (min-width: 1024px) and (pointer: fine) {
+  html {
+    background-color: var(--bg);
+  }
 }
 
 body::before {

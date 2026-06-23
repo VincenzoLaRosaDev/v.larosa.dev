@@ -26,7 +26,11 @@ body {
 }
 
 @media (max-width: 1023px), (pointer: coarse) {
-  html,
+  html {
+    /* Matches gradient stop 0% — visible through transparent status bar at load */
+    background-color: var(--ambient-chrome-top);
+  }
+
   body {
     padding-left: env(safe-area-inset-left, 0px);
     padding-right: env(safe-area-inset-right, 0px);
