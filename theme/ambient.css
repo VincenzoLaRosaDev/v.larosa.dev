@@ -12,46 +12,60 @@
 
 /* Lite ambient: narrow viewport or touch — sync with utils/device.ts */
 @media (max-width: 1023px), (pointer: coarse) {
+  /*
+   * Safari iOS 26: samples background-color of fixed edge elements, not pseudo-elements.
+   * A solid --bg on this layer caused flat chrome on first paint; gradients on ::before/::after
+   * were invisible to the sampler. Use transparent bg + background-image on the element itself
+   * (see barr.digital: no full-viewport fixed fill, body/background carries the visual).
+   */
+  html {
+    background-color: var(--bg);
+    background-image:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--accent) 11%, var(--bg)) 0%,
+        color-mix(in srgb, var(--accent) 4%, var(--bg)) 22%,
+        color-mix(in srgb, var(--accent) 1.5%, var(--bg)) 40%,
+        var(--bg) 68%
+      ),
+      linear-gradient(
+        0deg,
+        color-mix(in srgb, var(--primary) 10%, var(--bg)) 0%,
+        color-mix(in srgb, var(--primary) 3.5%, var(--bg)) 22%,
+        color-mix(in srgb, var(--primary) 1.5%, var(--bg)) 40%,
+        var(--bg) 68%
+      );
+    background-repeat: no-repeat;
+    background-size: 100% 68vh, 100% 68vh;
+    background-position: top center, bottom center;
+  }
+
   .ambient-layer {
     --ambient-bleed-x: 0vw;
     --ambient-bleed-y: 0vh;
+    background-color: transparent;
+    background-image:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--accent) 11%, var(--bg)) 0%,
+        color-mix(in srgb, var(--accent) 4%, var(--bg)) 22%,
+        color-mix(in srgb, var(--accent) 1.5%, var(--bg)) 40%,
+        transparent 68%
+      ),
+      linear-gradient(
+        0deg,
+        color-mix(in srgb, var(--primary) 10%, var(--bg)) 0%,
+        color-mix(in srgb, var(--primary) 3.5%, var(--bg)) 22%,
+        color-mix(in srgb, var(--primary) 1.5%, var(--bg)) 40%,
+        transparent 68%
+      );
+    background-repeat: no-repeat;
+    background-size: 100% 68vh, 100% 68vh;
+    background-position: top center, bottom center;
     top: calc(-1 * env(safe-area-inset-top, 0px));
     right: calc(-1 * env(safe-area-inset-right, 0px));
     bottom: calc(-1 * env(safe-area-inset-bottom, 0px));
     left: calc(-1 * env(safe-area-inset-left, 0px));
-  }
-
-  .ambient-layer::before,
-  .ambient-layer::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    pointer-events: none;
-  }
-
-  .ambient-layer::before {
-    top: calc(-1 * env(safe-area-inset-top, 0px));
-    height: calc(68vh + env(safe-area-inset-top, 0px));
-    background: linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--accent) 11%, transparent) 0%,
-      color-mix(in srgb, var(--accent) 4%, transparent) 28%,
-      color-mix(in srgb, var(--accent) 1.5%, transparent) 52%,
-      transparent 72%
-    );
-  }
-
-  .ambient-layer::after {
-    bottom: calc(-1 * env(safe-area-inset-bottom, 0px));
-    height: calc(68vh + env(safe-area-inset-bottom, 0px));
-    background: linear-gradient(
-      to top,
-      color-mix(in srgb, var(--primary) 10%, transparent) 0%,
-      color-mix(in srgb, var(--primary) 3.5%, transparent) 28%,
-      color-mix(in srgb, var(--primary) 1.5%, transparent) 52%,
-      transparent 72%
-    );
   }
 }
 
@@ -137,8 +151,13 @@
 }
 
 html {
-  background-color: var(--bg);
   --page-grain-bleed: 30vh;
+}
+
+@media (min-width: 1024px) and (pointer: fine) {
+  html {
+    background-color: var(--bg);
+  }
 }
 
 body::before {
