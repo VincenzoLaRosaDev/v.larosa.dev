@@ -77,7 +77,7 @@ export const ScrollTitleContainer = ({
       <div className="w-full relative">
         <div ref={stickySentinelRef} className="lg:hidden h-px w-full" aria-hidden />
         <h2
-          className="lg:hidden sticky top-0 z-[60] w-full"
+          className="lg:hidden sticky z-[60] w-full top-[env(safe-area-inset-top,0px)]"
           onClick={() => {
             scrollTo({
               top: initialPosition,

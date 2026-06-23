@@ -8,11 +8,19 @@ import { notFound } from 'next/navigation';
 import { locales } from '@/i18n/routing';
 import { setRequestLocale } from 'next-intl/server';
 import { ThemeProviders } from '@/theme';
-import { AmbientLayer, MouseCursor, MouseCursorProvider } from '@/components';
+import { AmbientLayer, MouseCursor, MouseCursorProvider, SafariChrome } from '@/components';
 import Script from 'next/script';
 
 export async function generateMetadata() {
   return {
+    themeColor: [
+      { media: '(prefers-color-scheme: light)', color: '#f4f6f4' },
+      { media: '(prefers-color-scheme: dark)', color: '#091410' },
+    ],
+    appleWebApp: {
+      capable: true,
+      statusBarStyle: 'black-translucent',
+    },
     icons: [
       {
         rel: 'icon',
@@ -102,6 +110,7 @@ export default async function HomeLayout({
         />
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ThemeProviders>
+            <SafariChrome />
             <MouseCursorProvider>
               <AmbientLayer />
               <main className="relative z-[1]">

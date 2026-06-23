@@ -4,6 +4,7 @@
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
+  background-color: transparent;
   --ambient-bleed-x: 20vw;
   --ambient-bleed-y: 30vh;
   transform: translateZ(0);
@@ -14,21 +15,37 @@
   .ambient-layer {
     --ambient-bleed-x: 0vw;
     --ambient-bleed-y: 0vh;
+    top: calc(-1 * env(safe-area-inset-top, 0px));
+    right: calc(-1 * env(safe-area-inset-right, 0px));
+    bottom: calc(-1 * env(safe-area-inset-bottom, 0px));
+    left: calc(-1 * env(safe-area-inset-left, 0px));
   }
 
-  /* Mobile: no orbs — soft primary/teal fades toward center. */
-  .ambient-layer::before,
-  .ambient-layer::after {
-    content: '';
+  /* Real nodes (not ::pseudo) — paint behind Safari Liquid Glass chrome. */
+  .ambient-mobile-fade {
     position: absolute;
     left: 0;
     right: 0;
+    background-color: transparent;
     pointer-events: none;
   }
 
-  .ambient-layer::before {
+  .ambient-mobile-fade--top {
     top: 0;
-    height: 68vh;
+    height: calc(68vh + env(safe-area-inset-top, 0px));
+  }
+
+  .ambient-mobile-fade--bottom {
+    bottom: 0;
+    height: calc(68vh + env(safe-area-inset-bottom, 0px));
+  }
+
+  .ambient-mobile-fade__glow {
+    position: absolute;
+    inset: 0;
+  }
+
+  .ambient-mobile-fade__glow--top {
     background: linear-gradient(
       to bottom,
       color-mix(in srgb, var(--accent) 11%, transparent) 0%,
@@ -38,9 +55,7 @@
     );
   }
 
-  .ambient-layer::after {
-    bottom: 0;
-    height: 68vh;
+  .ambient-mobile-fade__glow--bottom {
     background: linear-gradient(
       to top,
       color-mix(in srgb, var(--primary) 10%, transparent) 0%,
@@ -48,6 +63,16 @@
       color-mix(in srgb, var(--primary) 1.5%, transparent) 52%,
       transparent 72%
     );
+  }
+}
+
+.ambient-mobile-fade {
+  display: none;
+}
+
+@media (max-width: 1023px), (pointer: coarse) {
+  .ambient-mobile-fade {
+    display: block;
   }
 }
 
