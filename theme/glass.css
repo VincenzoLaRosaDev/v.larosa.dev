@@ -43,25 +43,12 @@
     -webkit-backdrop-filter 0.2s ease;
 }
 
-@media (min-width: 1024px) {
-  .glass-hover-active {
-    border-color: var(--glass-border);
-  }
-
-  /* Must follow .glass-hover::before — same element has both classes on hover. */
-  .glass-hover-active::before {
-    background: var(--glass-bg);
-    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-  }
+.glass-hover-active {
+  border-color: var(--glass-border);
 }
 
-/* Mobile / touch: no backdrop-filter — avoids Safari chrome re-sampling opaque bars */
-@media (max-width: 1023px), (pointer: coarse) {
-  .glass-panel::before,
-  .glass-hover::before,
-  .glass-hover-active::before {
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
+.glass-hover-active::before {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
 }

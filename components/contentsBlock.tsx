@@ -52,7 +52,7 @@ export const ContentsBlock = ({
                 </div>
 
                 {item.richText && (
-                  <div className="mt-4 text-text-light flex flex-col gap-2">
+                  <div className="text-sm lg:text-base mt-4 text-text-light flex flex-col gap-2">
                     <PortableText
                       value={item.richText}
                       components={{

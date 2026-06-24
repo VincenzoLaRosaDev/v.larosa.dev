@@ -18,15 +18,26 @@ export function glassHoverClasses(isActive: boolean) {
 }
 
 export function cardDimmedClasses(isDimmed: boolean) {
-  return isDimmed ? 'lg:opacity-50' : 'lg:opacity-100';
+  return isDimmed ? 'lg:opacity-50' : '';
 }
 
 export function cardTitleHoverClasses(isActive: boolean) {
-  return isActive ? 'lg:text-primary' : '';
+  return isActive ? 'text-primary' : '';
 }
 
 export function cardArrowHoverClasses(isActive: boolean) {
-  return `fill-text ${isActive ? 'lg:fill-primary' : ''}`;
+  return `fill-text transition-all ${isActive ? 'fill-primary' : ''}`;
+}
+
+export function cardArrowRotationClasses(
+  isActive: boolean,
+  group: 'group' | 'group/link' = 'group',
+) {
+  const hoverClass =
+    group === 'group/link'
+      ? 'lg:group-hover/link:rotate-0'
+      : 'lg:group-hover:rotate-0';
+  return isActive ? 'rotate-0' : `rotate-45 ${hoverClass}`;
 }
 
 export function cardHoverHandlers(

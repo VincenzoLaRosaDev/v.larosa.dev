@@ -55,11 +55,11 @@ export default async function Home({ params }: { params: Promise<any> }) {
       <section className="lg:flex lg:justify-between lg:gap-16 gap-4">
         <ScrollTitleAnimation />
         <SideNav
-          className="w-full relative lg:max-w-96 py-10 lg:py-20 px-3 lg:px-0"
+          className="w-full relative lg:max-w-96 pb-10 pt-20 lg:pb-40 lg:pt-32 px-3 lg:px-0"
           homeBanner={data[0].homeBanner}
           links={socialLinks}
         />
-        <div className="w-full relative lg:max-w-[780px] py-10 lg:py-20">
+        <div className="w-full relative lg:max-w-[780px] pt-10 pb-20 lg:pb-40 lg:pt-32">
           <div className="flex justify-end px-3 lg:px-0">
             <HelloSwiper />
           </div>

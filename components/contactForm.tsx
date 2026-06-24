@@ -40,7 +40,7 @@ export const ContactForm = ({
                 placeholder={t('message')}
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                className="w-full min-h-32 resize-none bg-transparent rounded-2xl p-4 align-top text-text border-0 placeholder:text-text-light/60 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary/30 transition-shadow"
+                className="w-full min-h-64 resize-none bg-transparent rounded-2xl p-4 align-top text-text border-0 placeholder:text-text-light/60 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary/30 transition-shadow"
               />
             </GlassPanel>
             <CmsLink

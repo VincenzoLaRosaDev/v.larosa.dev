@@ -12,24 +12,9 @@
 
 /* Lite ambient: narrow viewport or touch — sync with utils/device.ts */
 @media (max-width: 1023px), (pointer: coarse) {
+  /* Fixed full-viewport layer breaks Safari Liquid Glass chrome (opaque resample). */
   .ambient-layer {
-    --ambient-bleed-x: 0vw;
-    --ambient-bleed-y: 0vh;
-    background-color: var(--bg);
-  }
-
-  /* Single center radial — keeps top/bottom uniform for Safari liquid glass */
-  .ambient-layer::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: radial-gradient(
-      ellipse 100% 42% at 50% 50%,
-      color-mix(in srgb, var(--primary) 11%, transparent) 0%,
-      color-mix(in srgb, var(--primary) 4%, transparent) 45%,
-      transparent 70%
-    );
+    display: none;
   }
 }
 
@@ -61,11 +46,7 @@
 }
 
 .ambient-orb--gold {
-  background: radial-gradient(
-    circle,
-    rgba(250, 204, 21, 0.18) 0%,
-    transparent 70%
-  );
+  background: var(--ambient-primary-glow);
 }
 
 .ambient-orb--teal {
@@ -117,6 +98,31 @@
 html {
   background-color: var(--bg);
   --page-grain-bleed: 30vh;
+  /* Same primary tint as .ambient-orb--gold (desktop) */
+  --ambient-primary-glow: radial-gradient(
+    circle,
+    rgba(250, 204, 21, 0.18) 0%,
+    transparent 70%
+  );
+}
+
+@media (max-width: 1023px), (pointer: coarse) {
+  /*
+   * Fixed center glow — gold orb color, no blur (Safari-safe).
+   * html/body keep flat --bg at viewport edges for chrome sampling.
+   */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse 100vw 60vh at 50% 50%,
+      rgba(250, 204, 21, 0.14) 0%,
+      transparent 70%
+    );
+  }
 }
 
 body::before {

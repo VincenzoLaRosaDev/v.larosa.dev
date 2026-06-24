@@ -7,9 +7,15 @@ import { PortableText } from 'next-sanity';
 import ArrowIcon from '@/public/arrow_outward.svg';
 import { urlFor } from '@/sanity/client';
 import { ScrollTitleContainer } from './scrollTitleContainer';
-import { useState } from 'react';
 import { FadeInOnView } from './animations';
-import { glassHoverClasses, cardDimmedClasses, cardTitleHoverClasses, cardArrowHoverClasses, cardHoverHandlers } from '@/utils';
+import {
+  glassHoverClasses,
+  cardDimmedClasses,
+  cardTitleHoverClasses,
+  cardArrowHoverClasses,
+  cardArrowRotationClasses,
+  useGlassCardFocus,
+} from '@/utils';
 
 export interface ProjectsProps extends TailwindProps {
   id: ProjectsSanity['id'];
@@ -25,7 +31,9 @@ export const Projects = ({
   paddingBlock,
   items,
 }: ProjectsProps) => {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const { activeIndex, itemRef, getCardHoverHandlers } = useGlassCardFocus(
+    items?.length ?? 0,
+  );
 
   return (
     <PaddingContainer
@@ -36,17 +44,19 @@ export const Projects = ({
       <ScrollTitleContainer title={title ?? ''}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {items?.map((item, key) => {
-            const isHovered = hoveredIndex !== null && hoveredIndex !== key;
+            const isDimmed = activeIndex !== null && activeIndex !== key;
+            const isActive = activeIndex === key;
 
             return (
               <FadeInOnView key={key}>
                 <div
-                  {...cardHoverHandlers(setHoveredIndex, key)}
-                  className={`transition-all ${cardDimmedClasses(isHovered)}`}
+                  ref={itemRef(key)}
+                  {...getCardHoverHandlers(key)}
+                  className={`transition-all ${cardDimmedClasses(isDimmed)}`}
                 >
                   <CmsLink
                     link={item.link}
-                    className={`group flex items-start flex-col gap-6 lg:p-6 ${glassHoverClasses(hoveredIndex === key)}`}
+                    className={`group flex items-start flex-col gap-6 p-6 ${glassHoverClasses(isActive)}`}
                   >
                     <img
                       src={urlFor(item.image).url()}
@@ -57,19 +67,19 @@ export const Projects = ({
                     <div className="flex flex-col gap-4 w-full">
                       <div className="flex items-start gap-3">
                         <span
-                          className={`archivo-black transition-all ${cardTitleHoverClasses(hoveredIndex === key)}`}
+                          className={`archivo-black transition-all ${cardTitleHoverClasses(isActive)}`}
                         >
                           {item.title}
                         </span>
                         {item?.link && (
                           <ArrowIcon
-                            className={`h-6 w-6 min-h-6 min-w-6 transition-all rotate-45 lg:group-hover:rotate-0 ${cardArrowHoverClasses(hoveredIndex === key)}`}
+                            className={`h-6 w-6 min-h-6 min-w-6 transition-all ${cardArrowRotationClasses(isActive)} ${cardArrowHoverClasses(isActive)}`}
                           />
                         )}
                       </div>
 
                       {item.richText && (
-                        <div className="text-xs text-text-light flex flex-col gap-8">
+                        <div className="text-sm lg:text-base text-text-light flex flex-col gap-8">
                           <PortableText
                             value={item.richText}
                             components={{

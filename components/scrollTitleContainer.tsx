@@ -2,7 +2,8 @@
 
 import { WithChildren } from '@/types';
 import { getOffset } from '@/utils';
-import { ComponentProps, useEffect, useRef, useState } from 'react';
+import { ComponentProps, useCallback, useEffect, useRef, useState } from 'react';
+import { useMobileScrollTitleRegistration } from './mobileScrollTitle';
 import { TextReveal } from './atoms';
 
 export interface ScrollTitleContainerProps
@@ -20,33 +21,30 @@ export const ScrollTitleContainer = ({
   ...rest
 }: ScrollTitleContainerProps) => {
   const [initialPosition, setInitialPosition] = useState<number>(0);
-  const [isStuck, setIsStuck] = useState(false);
 
   const container = useRef<HTMLDivElement>(null);
-  const stickySentinelRef = useRef<HTMLDivElement>(null);
-  const isStuckRef = useRef(false);
+  const sentinelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setInitialPosition((getOffset(container.current)?.top ?? 0) - 80);
   }, [container]);
 
-  useEffect(() => {
-    const sentinel = stickySentinelRef.current;
-    if (!sentinel) return;
+  const scrollToTitle = useCallback(() => {
+    scrollTo({
+      top: initialPosition,
+      behavior: 'smooth',
+    });
+  }, [initialPosition]);
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        const next = !entry.isIntersecting;
-        if (next === isStuckRef.current) return;
-        isStuckRef.current = next;
-        setIsStuck(next);
-      },
-      { threshold: 0, rootMargin: '-1px 0px 0px 0px' },
-    );
+  const { isFirstSection, hideInFlowTitle } = useMobileScrollTitleRegistration({
+    title,
+    sentinelRef,
+    containerRef: container,
+    labelClass,
+    scrollTo: scrollToTitle,
+  });
 
-    observer.observe(sentinel);
-    return () => observer.disconnect();
-  }, []);
+  const mobileTitleClass = `text-text archivo-black uppercase leading-8 block ${labelClass ?? ''}`;
 
   return (
     <div
@@ -60,41 +58,32 @@ export const ScrollTitleContainer = ({
           data-cursor-interactive
           id={'transitionTitle'}
           className={`h-fit !min-h-[56px] z-50 w-auto text-nowrap pb-3 text-xs text-text hover:!opacity-100 archivo-black uppercase !opacity-30 transition-[opacity,font-size] duration-300 ease-in-out`}
-          onClick={() => {
-            scrollTo({
-              top: initialPosition,
-              behavior: 'smooth',
-            });
-          }}
+          onClick={scrollToTitle}
         >
           <TextReveal
-            animateOnMobile
             text={title}
             className={`px-1 py-2 relative text-text ${labelClass}`}
           />
         </h2>
       </div>
       <div className="w-full relative">
-        <div ref={stickySentinelRef} className="lg:hidden h-px w-full" aria-hidden />
-        <h2
-          className={`lg:hidden sticky top-0 z-[60] w-full bg-transparent transition-shadow duration-200 ease-out ${
-            isStuck ? 'shadow-[inset_0_-1px_0_0_var(--glass-border)]' : ''
-          }`}
-          onClick={() => {
-            scrollTo({
-              top: initialPosition,
-              behavior: 'smooth',
-            });
-          }}
-        >
-          <div className="relative px-3 py-3">
-            <TextReveal
-              animateOnMobile
-              text={title}
-              className={`text-text archivo-black uppercase leading-8 ${labelClass}`}
-            />
-          </div>
-        </h2>
+        <div ref={sentinelRef} className="lg:hidden h-px w-full" aria-hidden />
+        {isFirstSection ? (
+          <h2
+            className={`lg:hidden w-full bg-transparent ${hideInFlowTitle ? 'invisible' : ''}`}
+            onClick={scrollToTitle}
+            aria-hidden={hideInFlowTitle}
+          >
+            <div className="relative px-3 py-3">
+              <span className={mobileTitleClass}>{title}</span>
+            </div>
+          </h2>
+        ) : (
+          <>
+            <div className="lg:hidden min-h-[3.5rem]" aria-hidden />
+            <h2 className="sr-only text-text archivo-black uppercase leading-8">{title}</h2>
+          </>
+        )}
         <div className="px-3 lg:px-0 mt-6 lg:mt-0">{children}</div>
       </div>
     </div>

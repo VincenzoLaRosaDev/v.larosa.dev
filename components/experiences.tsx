@@ -8,9 +8,15 @@ import { PortableText } from 'next-sanity';
 import ArrowIcon from '@/public/arrow_outward.svg';
 import LinkIcon from '@/public/link.svg';
 import { ScrollTitleContainer } from './scrollTitleContainer';
-import { useState } from 'react';
 import { FadeInOnView } from './animations';
-import { glassHoverClasses, cardDimmedClasses, cardTitleHoverClasses, cardArrowHoverClasses, cardHoverHandlers } from '@/utils';
+import {
+  glassHoverClasses,
+  cardDimmedClasses,
+  cardTitleHoverClasses,
+  cardArrowHoverClasses,
+  cardArrowRotationClasses,
+  useGlassCardFocus,
+} from '@/utils';
 
 export interface ExperiencesProps extends TailwindProps {
   id: ExperiencesSanity['id'];
@@ -27,7 +33,9 @@ export const Experiences = ({
   items,
 }: ExperiencesProps) => {
   const t = useTranslations('Index');
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const { activeIndex, itemRef, getCardHoverHandlers } = useGlassCardFocus(
+    items?.length ?? 0,
+  );
 
   return (
     <PaddingContainer
@@ -38,13 +46,15 @@ export const Experiences = ({
       <ScrollTitleContainer title={title ?? ''}>
         <div className="flex flex-col gap-16">
           {items?.map((item, key) => {
-            const isHovered = hoveredIndex !== null && hoveredIndex !== key;
+            const isDimmed = activeIndex !== null && activeIndex !== key;
+            const isActive = activeIndex === key;
 
             return (
               <FadeInOnView key={key}>
                 <div
-                  {...cardHoverHandlers(setHoveredIndex, key)}
-                  className={`flex flex-col lg:flex-row gap-6 lg:p-6 ${glassHoverClasses(hoveredIndex === key)} ${cardDimmedClasses(isHovered)}`}
+                  ref={itemRef(key)}
+                  {...getCardHoverHandlers(key)}
+                  className={`flex flex-col lg:flex-row gap-6 p-6 ${glassHoverClasses(isActive)} ${cardDimmedClasses(isDimmed)}`}
                 >
                   <div className="uppercase archivo-black text-text-light min-w-40">
                     {`${item.startDate ? new Date(item.startDate).getFullYear() : ''} — ${
@@ -66,20 +76,20 @@ export const Experiences = ({
                           className="group/link flex w-fit items-center gap-3"
                         >
                           <span
-                            className={`text-2xl archivo-black transition-all ${cardTitleHoverClasses(hoveredIndex === key)}`}
+                            className={`text-2xl archivo-black transition-all ${cardTitleHoverClasses(isActive)}`}
                           >
                             {item.company}
                           </span>
                           {item.companyLink?.href && (
                             <ArrowIcon
-                              className={`h-6 w-6 min-h-6 min-w-6 transition-all rotate-45 lg:group-hover/link:rotate-0 ${cardArrowHoverClasses(hoveredIndex === key)}`}
+                              className={`h-6 w-6 min-h-6 min-w-6 transition-all ${cardArrowRotationClasses(isActive, 'group/link')} ${cardArrowHoverClasses(isActive)}`}
                             />
                           )}
                         </a>
                       ) : (
                         <div className="group/link flex items-center gap-3">
                           <span
-                            className={`text-2xl archivo-black transition-all ${cardTitleHoverClasses(hoveredIndex === key)}`}
+                            className={`text-2xl archivo-black transition-all ${cardTitleHoverClasses(isActive)}`}
                           >
                             {item.company}
                           </span>
@@ -88,7 +98,7 @@ export const Experiences = ({
                     </div>
 
                     {item.richText && (
-                      <div className="text-text-light flex flex-col gap-2">
+                      <div className="text-sm lg:text-base text-text-light flex flex-col gap-2">
                         <PortableText
                           value={item.richText}
                           components={{

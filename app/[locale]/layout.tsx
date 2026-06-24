@@ -8,15 +8,11 @@ import { notFound } from 'next/navigation';
 import { locales } from '@/i18n/routing';
 import { setRequestLocale } from 'next-intl/server';
 import { AmbientLayer, MouseCursor, MouseCursorProvider } from '@/components';
+import { MobileScrollTitleProvider } from '@/components/mobileScrollTitle';
 import Script from 'next/script';
 
 export async function generateMetadata() {
   return {
-    themeColor: '#091410',
-    appleWebApp: {
-      capable: true,
-      statusBarStyle: 'black-translucent',
-    },
     icons: [
       {
         rel: 'icon',
@@ -105,15 +101,17 @@ export default async function HomeLayout({
           strategy="afterInteractive"
         />
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <MouseCursorProvider>
-            <AmbientLayer />
-            <main className="relative z-[1]">
-              <div className="relative z-[1] text-text archivo max-w-7xl mx-auto">
-                <div className="relative z-[1] lg:px-9">{children}</div>
-              </div>
-              <MouseCursor />
-            </main>
-          </MouseCursorProvider>
+          <MobileScrollTitleProvider>
+            <MouseCursorProvider>
+              <AmbientLayer />
+              <main className="relative z-[1]">
+                <div className="relative z-[1] text-text archivo max-w-7xl mx-auto">
+                  <div className="relative z-[1] lg:px-9">{children}</div>
+                </div>
+                <MouseCursor />
+              </main>
+            </MouseCursorProvider>
+          </MobileScrollTitleProvider>
         </NextIntlClientProvider>
       </body>
     </html>

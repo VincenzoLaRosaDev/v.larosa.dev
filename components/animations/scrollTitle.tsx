@@ -18,7 +18,7 @@ export const ScrollTitleAnimation = () => {
     let space = 0;
     let totalSpace = 0;
     const sideHeaderHeight = sideHeader?.clientHeight
-      ? sideHeader.clientHeight + 180
+      ? sideHeader.clientHeight + 228
       : 0;
 
     elements.forEach((item) => {

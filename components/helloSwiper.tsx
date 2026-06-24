@@ -76,6 +76,7 @@ export const HelloSwiper = ({ className }: HelloSwiperProps) => {
             >
               {({ isActive }) => (
                 <TextReveal
+                  animateOnMobile
                   text={`${item.label}!`}
                   renew={isActive && inView}
                 />
