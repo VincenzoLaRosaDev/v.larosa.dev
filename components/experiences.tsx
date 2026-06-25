@@ -76,20 +76,20 @@ export const Experiences = ({
                           className="group/link flex w-fit items-center gap-3"
                         >
                           <span
-                            className={`text-2xl archivo-black transition-all ${cardTitleHoverClasses(isActive)}`}
+                            className={`text-2xl archivo-black transition-all ${cardTitleHoverClasses(isActive, 'group/link')}`}
                           >
                             {item.company}
                           </span>
                           {item.companyLink?.href && (
                             <ArrowIcon
-                              className={`h-6 w-6 min-h-6 min-w-6 transition-all ${cardArrowRotationClasses(isActive, 'group/link')} ${cardArrowHoverClasses(isActive)}`}
+                              className={`h-6 w-6 min-h-6 min-w-6 transition-all ${cardArrowRotationClasses(isActive, 'group/link')} ${cardArrowHoverClasses(isActive, 'group/link')}`}
                             />
                           )}
                         </a>
                       ) : (
                         <div className="group/link flex items-center gap-3">
                           <span
-                            className={`text-2xl archivo-black transition-all ${cardTitleHoverClasses(isActive)}`}
+                            className={`text-2xl archivo-black transition-all ${cardTitleHoverClasses(isActive, 'group/link')}`}
                           >
                             {item.company}
                           </span>

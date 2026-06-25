@@ -21,12 +21,26 @@ export function cardDimmedClasses(isDimmed: boolean) {
   return isDimmed ? 'lg:opacity-50' : '';
 }
 
-export function cardTitleHoverClasses(isActive: boolean) {
-  return isActive ? 'text-primary' : '';
+export function cardTitleHoverClasses(
+  isActive: boolean,
+  group: 'group' | 'group/link' = 'group',
+) {
+  const hoverClass =
+    group === 'group/link'
+      ? 'lg:group-hover/link:text-primary'
+      : 'lg:group-hover:text-primary';
+  return `transition-all ${hoverClass} ${isActive ? 'text-primary' : ''}`;
 }
 
-export function cardArrowHoverClasses(isActive: boolean) {
-  return `fill-text transition-all ${isActive ? 'fill-primary' : ''}`;
+export function cardArrowHoverClasses(
+  isActive: boolean,
+  group: 'group' | 'group/link' = 'group',
+) {
+  const hoverFill =
+    group === 'group/link'
+      ? 'lg:group-hover/link:fill-primary'
+      : 'lg:group-hover:fill-primary';
+  return `transition-all ${isActive ? 'fill-primary' : 'fill-text'} ${hoverFill}`;
 }
 
 export function cardArrowRotationClasses(
