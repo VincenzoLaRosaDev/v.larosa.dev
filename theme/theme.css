@@ -7,10 +7,10 @@
   --bg: #091410;
   --text: #eef4f2;
   --text-light: #789188;
-  --glass-bg: rgba(18, 36, 30, 0.32);
-  --glass-border: rgba(250, 204, 21, 0.28);
+  --glass-bg: rgba(18, 36, 30, 0.22);
+  --glass-border: rgba(250, 204, 21, 0.18);
   --glass-blur: 0px;
-  --glass-saturate: 180%;
+  --glass-saturate: 124%;
   --tag-bg: rgba(250, 204, 21, 0.16);
   --tag-border: rgba(250, 204, 21, 0.34);
   --mouse-glow-size: 900px;

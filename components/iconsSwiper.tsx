@@ -3,7 +3,7 @@
 import { IconsSwiper as IconsSwiperSanity } from '@/sanity/types';
 import { TailwindProps } from '@/types';
 import { PaddingContainer } from './atoms';
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { useAnimationFrame } from 'motion/react';
 import { ScrollTitleContainer } from './scrollTitleContainer';
 import { FadeInOnView } from './animations';
@@ -45,6 +45,23 @@ export const IconsSwiper = ({
   );
 };
 
+function shuffleWithSeed<T>(items: T[], seed: number): T[] {
+  const shuffled = [...items];
+  let state = seed;
+
+  const next = () => {
+    state = (state * 1103515245 + 12345) & 0x7fffffff;
+    return state / 0x7fffffff;
+  };
+
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(next() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  return shuffled;
+}
+
 interface SwiperRowProps {
   icons: string[];
   speed: number;
@@ -56,9 +73,10 @@ export const SwiperRow = ({
   speed,
   reverse = false,
 }: SwiperRowProps) => {
-  const duplicatedIcons = icons
-    .sort(() => Math.random() - 0.5)
-    .concat(icons.sort(() => Math.random() - 0.5));
+  const duplicatedIcons = useMemo(() => {
+    const shuffled = shuffleWithSeed(icons, reverse ? 7919 : 104729);
+    return [...shuffled, ...shuffled];
+  }, [icons, reverse]);
   const containerRef = useRef<HTMLDivElement>(null);
   const baseX = useRef(0);
 
