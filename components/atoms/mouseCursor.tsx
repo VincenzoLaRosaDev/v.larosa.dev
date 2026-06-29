@@ -4,6 +4,7 @@ import {
   createContext,
   useContext,
   useEffect,
+  useMemo,
   useState,
   type ReactNode,
 } from 'react';
@@ -94,19 +95,22 @@ export function MouseCursorProvider({ children }: { children: ReactNode }) {
     };
   }, [isMobile, mounted, mouseX, mouseY]);
 
+  const value = useMemo(
+    () => ({
+      mounted,
+      isHovering,
+      isMobile,
+      isInsideWindow,
+      mouseX,
+      mouseY,
+      glowX,
+      glowY,
+    }),
+    [mounted, isHovering, isMobile, isInsideWindow, mouseX, mouseY, glowX, glowY],
+  );
+
   return (
-    <MouseCursorContext.Provider
-      value={{
-        mounted,
-        isHovering,
-        isMobile,
-        isInsideWindow,
-        mouseX,
-        mouseY,
-        glowX,
-        glowY,
-      }}
-    >
+    <MouseCursorContext.Provider value={value}>
       {children}
     </MouseCursorContext.Provider>
   );
