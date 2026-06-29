@@ -103,7 +103,7 @@ export default async function HomeLayout({
         <NextIntlClientProvider locale={locale} messages={messages}>
           <MobileScrollTitleProvider>
             <MouseCursorProvider>
-              <AmbientLayer />
+              {/* <AmbientLayer /> */}
               <main className="relative z-[1]">
                 <div className="relative z-[1] text-text archivo max-w-7xl mx-auto">
                   <div className="relative z-[1] lg:px-9">{children}</div>

@@ -106,12 +106,12 @@ html {
   );
 }
 
-@media (max-width: 1023px), (pointer: coarse) {
+/* @media (max-width: 1023px), (pointer: coarse) { */
   /*
    * Fixed center glow — gold orb color, no blur (Safari-safe).
    * html/body keep flat --bg at viewport edges for chrome sampling.
    */
-  body::after {
+  /* body::after {
     content: '';
     position: fixed;
     inset: 0;
@@ -123,8 +123,7 @@ html {
       transparent 70%
     );
   }
-}
-
+} */
 body::before {
   content: '';
   position: fixed;
@@ -144,3 +143,4 @@ body::before {
     display: none;
   }
 }
+
