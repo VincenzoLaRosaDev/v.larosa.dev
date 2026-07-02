@@ -12,7 +12,16 @@ html,
 body {
   height: 100%;
   cursor: none;
+}
+
+/* Background lives on the root canvas (see split gradient below); body stays
+   transparent so the two-tone split isn't covered by an opaque body layer. */
+html {
   background-color: var(--bg);
+}
+
+body {
+  background-color: transparent;
 }
 
 @media (min-width: 1024px) {
@@ -35,4 +44,48 @@ button,
 
 .pin-spacer {
   z-index: -1;
+}
+
+/* Full-viewport two-tone background, split at the column gap (desktop only).
+   Fixed layer with vertical overscan so top/bottom rubber-band overscroll never
+   reveals a bare edge. --split-x is set by the SplitBackground component. */
+.split-bg {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: -50vh;
+  bottom: -50vh;
+  z-index: 0;
+  pointer-events: none;
+  background-color: var(--bg);
+  transform: translateZ(0);
+}
+
+@media (min-width: 1024px) {
+  .split-bg {
+    /* Default that already matches the stable seam (sidebar-right + gap/2),
+       derived from max-w-7xl=1280, px-9=36, sidebar=384, gap-16=64. The
+       SplitBackground component overrides this with the exact measured value,
+       but starting here avoids the pre-JS 50vw fallback jumping into place. */
+    --split-x: max(452px, 50vw - 188px);
+    background-image: linear-gradient(
+      to right,
+      var(--split-left-bg) 0,
+      var(--split-left-bg) var(--split-x, 50vw),
+      var(--split-right-bg) var(--split-x, 50vw),
+      var(--split-right-bg) 100%
+    );
+  }
+
+  /* 1px primary divider on the split seam */
+  .split-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--split-x, 50vw);
+    width: 1px;
+    margin-left: -0.5px;
+    background: var(--primary);
+  }
 }

@@ -52,3 +52,46 @@
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
 }
+
+/* ---- Full-bleed content bands ----
+   Instead of a card, active content paints a horizontal band. On desktop the
+   band bleeds from the split divider (left) to the right viewport edge, cutting
+   the page into full-width stripes. The fill lives on a ::before at z-index -1
+   so it stays behind the content (which keeps its own padding). */
+.band {
+  position: relative;
+  isolation: isolate;
+}
+
+.band::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  /* Mobile: bleed out to both viewport edges (blocks carry px-3 = 0.75rem). */
+  left: -0.75rem;
+  right: -0.75rem;
+  background: transparent;
+  transition: background-color 0.25s ease;
+}
+
+@media (min-width: 1024px) {
+  .band::before {
+    /* -2rem = half of the column gap (gap-16); +1px so the fill starts just
+       past the split divider and never covers its 1px primary line.
+       right -> reach the right viewport edge (max-w-7xl=1280, px-9=36). */
+    left: calc(-2rem + 1px);
+    right: min(-36px, 604px - 50vw);
+  }
+}
+
+/* Permanent band (content block) */
+.band-static::before {
+  background: var(--band-bg);
+}
+
+/* Interactive band: fills only when active (hover on desktop / center on mobile) */
+.band-active::before {
+  background: var(--band-bg);
+}

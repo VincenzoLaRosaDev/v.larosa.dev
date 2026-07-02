@@ -3,7 +3,7 @@
 import { ContentsBlock as ContentsBlockSanity } from '@/sanity/types';
 import { TailwindProps } from '@/types';
 import { PortableText } from 'next-sanity';
-import { GlassPanel, PaddingContainer } from './atoms';
+import { PaddingContainer } from './atoms';
 import { ScrollTitleContainer } from './scrollTitleContainer';
 import { FadeInOnView } from './animations';
 
@@ -29,7 +29,7 @@ export const ContentsBlock = ({
     >
       <ScrollTitleContainer title={title ?? ''}>
         <FadeInOnView>
-          <GlassPanel className="p-6 flex flex-col lg:flex-row flex-wrap gap-9">
+          <div className="band band-static p-6 flex flex-col lg:flex-row flex-wrap gap-9">
             {items?.map((item, key) => (
               <div
                 key={key}
@@ -74,7 +74,7 @@ export const ContentsBlock = ({
                 )}
               </div>
             ))}
-          </GlassPanel>
+          </div>
         </FadeInOnView>
       </ScrollTitleContainer>
     </PaddingContainer>

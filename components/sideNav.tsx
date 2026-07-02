@@ -3,7 +3,8 @@
 import { Page, Link } from '@/sanity/types';
 import { TailwindProps } from '@/types';
 import { PortableText } from 'next-sanity';
-import { CmsLink, GlassPanel, Tag } from './atoms';
+import Image from 'next/image';
+import { CmsLink, GlassPanel } from './atoms';
 
 export interface SideNavProps extends TailwindProps {
   homeBanner: Page['homeBanner'];
@@ -12,12 +13,19 @@ export interface SideNavProps extends TailwindProps {
 
 export const SideNav = ({ className, homeBanner, links }: SideNavProps) => {
   return (
-    <div className={`lg:sticky lg:h-screen lg:top-0 ${className}`}>
+    <div
+      data-split-col="left"
+      className={`lg:sticky lg:h-screen lg:top-0 ${className}`}
+    >
       <div className="h-full flex flex-col gap-8">
         <div id="side-header">
-          <Tag live className="uppercase tracking-wider">
-            Available
-          </Tag>
+          <Image
+            src="/vincenzo-la-rosa.jpg"
+            alt="Vincenzo La Rosa"
+            width={80}
+            height={80}
+            className="hidden lg:block h-20 w-20 min-h-20 min-w-20 rounded-full overflow-hidden mb-4 grayscale"
+          />
           <h1 className="text-4xl archivo-black text-text mt-2">
             {homeBanner?.title}
           </h1>

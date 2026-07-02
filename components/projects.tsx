@@ -42,7 +42,7 @@ export const Projects = ({
       className={`relative ${className}`}
     >
       <ScrollTitleContainer title={title ?? ''}>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="flex flex-col gap-8">
           {items?.map((item, key) => {
             const isDimmed = activeIndex !== null && activeIndex !== key;
             const isActive = activeIndex === key;

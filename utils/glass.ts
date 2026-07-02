@@ -7,12 +7,9 @@ export function isDesktopHover() {
   );
 }
 
-/** Shared classes for interactive glass cards (projects, blogs, experiences). */
+/** Shared classes for interactive content bands (projects, blogs, experiences). */
 export function glassHoverClasses(isActive: boolean) {
-  return [
-    'rounded-2xl overflow-hidden glass-hover',
-    isActive && 'glass-hover-active',
-  ]
+  return ['band band-hover', isActive && 'band-active']
     .filter(Boolean)
     .join(' ');
 }

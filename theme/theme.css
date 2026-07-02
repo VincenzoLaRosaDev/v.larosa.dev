@@ -1,19 +1,47 @@
 :root {
+  /* ---- Slate carbon palette (shared design tokens) ---- */
+  --bg-base: #111417;
+  --bg-surface: #1c2127;
+  --bg-card: #262e38;
+  --border: #38434f;
+  --accent-primary: #48d880;
+  --accent-lime: #b8f060;
+  --accent-cyan: #9abbc0;
+  --green-deep: #16a34a;
+  --text-primary: #111417;
+  --text-secondary: #e2ecee;
+  --text-muted: #7a9098;
+
+  /* ---- Brand primary (kept as-is) ---- */
   --primary: #facc15;
   --primary-100: #facc1518;
   --primary-900: #e0b412;
-  --accent: #737373;
-  --accent-100: #73737318;
-  --bg: #0a0a0a;
-  --text: #fafafa;
-  --text-light: #737373;
-  --glass-bg: rgba(18, 36, 30, 0.22);
+
+  /* ---- App tokens mapped onto the slate carbon palette ---- */
+  --accent: var(--text-muted);
+  --accent-100: #7a909818;
+  --bg: var(--bg-base);
+  --text: var(--text-secondary);
+  --text-light: var(--text-muted);
+
+  /* Glass surfaces: slate fill, gold (primary) border to keep the brand accent */
+  --glass-bg: rgba(38, 46, 56, 0.5);
   --glass-border: rgba(250, 204, 21, 0.18);
   --glass-blur: 0px;
   --glass-saturate: 124%;
+
+  /* Tag keeps the gold (primary) accent */
   --tag-bg: rgba(250, 204, 21, 0.16);
   --tag-border: rgba(250, 204, 21, 0.34);
-  --divider: rgba(255, 255, 255, 0.06);
+
+  /* Content bands: faint gold-tinted surface, distinct from the neutral sidebar */
+  --band-bg: color-mix(in srgb, var(--primary) 9%, var(--bg-card));
+
+  --divider: rgba(56, 67, 79, 0.4);
   --mouse-glow-size: 0px;
   --mouse-glow-opacity: 0;
+
+  /* Desktop split background: left = sidebar side, right = content side */
+  --split-left-bg: var(--bg-surface);
+  --split-right-bg: var(--bg-base);
 }

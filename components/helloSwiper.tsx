@@ -8,7 +8,6 @@ import { TailwindProps } from '@/types';
 import { Cursor, GlassPanel, TextReveal } from './atoms';
 import { useRef, useEffect } from 'react';
 import { useInView } from 'framer-motion';
-import Image from 'next/image'
 
 export interface HelloSwiperProps extends TailwindProps {}
 
@@ -30,16 +29,8 @@ export const HelloSwiper = ({ className }: HelloSwiperProps) => {
   return (
     <div
       ref={containerRef}
-      className="w-full flex items-center justify-between gap-8"
+      className="w-full flex items-center justify-end"
     >
-      <Image
-        src="/vincenzo-la-rosa.jpg"
-        alt="Vincenzo La Rosa"
-        width={80}
-        height={80}
-        className="z-10 h-20 w-20 min-h-20 min-w-20 rounded-full overflow-hidden"
-      />
-
       <GlassPanel
         className={`w-full max-w-[230px] h-20 ${className ?? ''}`}
       >
