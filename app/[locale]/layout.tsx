@@ -7,7 +7,12 @@ import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { locales } from '@/i18n/routing';
 import { setRequestLocale } from 'next-intl/server';
-import { AmbientLayer, MouseCursor, MouseCursorProvider } from '@/components';
+import {
+  AmbientLayer,
+  MouseCursor,
+  MouseCursorProvider,
+  SplitBackground,
+} from '@/components';
 import { MobileScrollTitleProvider } from '@/components/mobileScrollTitle';
 import Script from 'next/script';
 
@@ -104,6 +109,7 @@ export default async function HomeLayout({
           <MobileScrollTitleProvider>
             <MouseCursorProvider>
               <AmbientLayer />
+              <SplitBackground />
               <main className="relative z-[1]">
                 <div className="relative z-[1] text-text archivo max-w-7xl mx-auto">
                   <div className="relative z-[1] lg:px-9">{children}</div>

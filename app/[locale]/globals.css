@@ -36,3 +36,57 @@ button,
 .pin-spacer {
   z-index: -1;
 }
+
+/* Desktop split background.
+   Sits above the ambient layer but below the content (main is z-[1]).
+   The sidebar (left) side is painted with the same glass surface used by the
+   other components; the content (right) side stays transparent so the current
+   --bg + ambient orbs show through unchanged. A 1px line marks the seam. */
+.split-bg {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: -50vh;
+  bottom: -50vh;
+  z-index: 0;
+  pointer-events: none;
+  transform: translateZ(0);
+}
+
+@media (min-width: 1024px) {
+  .split-bg {
+    /* Default that already matches the stable seam (sidebar-right + gap/2),
+       derived from max-w-7xl=1280, px-9=36, sidebar=384, gap-16=64. The
+       SplitBackground component overrides this with the exact measured value,
+       but starting here avoids a pre-JS jump. */
+    --split-x: max(452px, 50vw - 188px);
+  }
+
+  /* Frosted-glass surface on the sidebar (left) side. Reuses the global glass
+     tokens so it stays consistent with the other glass components. */
+  .split-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: var(--split-x, 50vw);
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    -webkit-backdrop-filter: blur(var(--glass-blur))
+      saturate(var(--glass-saturate));
+  }
+
+  /* 1px divider on the split seam — same border color as the other glass
+     elements so all borders stay aligned. */
+  .split-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--split-x, 50vw);
+    width: 1px;
+    margin-left: -0.5px;
+    background: var(--glass-border);
+  }
+}
