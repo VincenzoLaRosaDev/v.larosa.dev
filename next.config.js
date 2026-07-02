@@ -9,6 +9,8 @@ const nextConfig = {
     version,
   },
 
+  transpilePackages: ['three', '@react-three/fiber', '@react-three/drei'],
+
   images: {
     remotePatterns: [
       {

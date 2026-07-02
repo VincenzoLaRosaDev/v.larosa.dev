@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { defaultLocale, locales } from './i18n/routing';
 
 export const config = {
-  matcher: ['/((?!_next/|api/|favicon.ico|.*\\.(?:jpg|jpeg|png|svg|webp|ico)$).*)'],
+  matcher: [
+    '/((?!_next/|api/|favicon.ico|.*\\.(?:jpg|jpeg|png|svg|webp|ico|glb|gltf)$).*)',
+  ],
 };
 
 export function middleware(request: NextRequest) {
