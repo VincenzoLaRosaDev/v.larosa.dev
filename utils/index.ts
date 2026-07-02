@@ -12,3 +12,4 @@ export function getOffset(el?: HTMLElement | null) {
 export * from './glass';
 export * from './useGlassCardFocus';
 export * from './device';
+export * from './useIsLiteExperience';

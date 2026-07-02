@@ -7,7 +7,6 @@ import {
 } from '@/components';
 import { getLinks, getLocalizeHomePage } from '@/sanity/queries';
 import type { Metadata } from 'next';
-import Image from 'next/image';
 
 // Abilita ISR: revalida ogni 60 secondi o quando viene triggerato un webhook
 export const revalidate = 60;
@@ -62,16 +61,9 @@ export default async function Home({ params }: { params: Promise<any> }) {
         />
         <div
           data-split-col="right"
-          className="w-full relative lg:max-w-[780px] pt-10 pb-20 lg:pb-40 lg:pt-32"
+          className="w-full relative lg:max-w-[780px] pt-4 pb-20 lg:pb-40 lg:pt-32"
         >
-          <div className="flex items-center gap-4 px-3 lg:px-0 lg:justify-end">
-            <Image
-              src="/vincenzo-la-rosa.jpg"
-              alt="Vincenzo La Rosa"
-              width={80}
-              height={80}
-              className="lg:hidden h-20 w-20 min-h-20 min-w-20 rounded-full overflow-hidden shrink-0"
-            />
+          <div className="flex items-center px-3 lg:px-0">
             <HelloSwiper />
           </div>
           <RenderBlocks layout={data[0].pageBlocks} />

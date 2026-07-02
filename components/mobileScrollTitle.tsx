@@ -1,6 +1,6 @@
 'use client';
 
-import { isLiteExperience } from '@/utils';
+import { useIsLiteExperience } from '@/utils';
 import {
   createContext,
   useCallback,
@@ -108,11 +108,7 @@ export function MobileScrollTitleProvider({ children }: { children: ReactNode })
   const sectionsRef = useRef<Map<string, Section>>(new Map());
   const [pinned, setPinned] = useState<Section | null>(null);
   const [firstSectionId, setFirstSectionId] = useState<string | null>(null);
-  const [enabled, setEnabled] = useState(false);
-
-  useEffect(() => {
-    setEnabled(isLiteExperience());
-  }, []);
+  const enabled = useIsLiteExperience();
 
   const updatePinned = useCallback(() => {
     const sorted = sortSectionsByDocumentOrder(

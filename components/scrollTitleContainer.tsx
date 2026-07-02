@@ -57,12 +57,12 @@ export const ScrollTitleContainer = ({
         <h2
           data-cursor-interactive
           id={'transitionTitle'}
-          className={`h-fit !min-h-[56px] z-50 w-auto text-nowrap pb-3 text-xs text-text hover:!opacity-100 archivo-black uppercase !opacity-30 transition-[opacity,font-size] duration-300 ease-in-out`}
+          className={`h-fit !min-h-[56px] z-50 w-auto text-nowrap pb-3 text-xs text-text-light hover:text-text archivo-black uppercase transition-[font-size,color] duration-300 ease-in-out`}
           onClick={scrollToTitle}
         >
           <TextReveal
             text={title}
-            className={`px-1 py-2 relative text-text ${labelClass}`}
+            className={`px-1 py-2 relative ${labelClass ?? ''}`}
           />
         </h2>
       </div>

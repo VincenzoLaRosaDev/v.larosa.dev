@@ -29,10 +29,10 @@ export const HelloSwiper = ({ className }: HelloSwiperProps) => {
   return (
     <div
       ref={containerRef}
-      className="w-full flex items-center justify-end"
+      className="w-full flex items-center justify-start lg:justify-end"
     >
       <GlassPanel
-        className={`w-full max-w-[230px] h-20 ${className ?? ''}`}
+        className={`w-full sm:max-w-[230px] h-20 ${className ?? ''}`}
       >
         <Swiper
           className="pointer-events-none h-20 !mb-0 bg-transparent"

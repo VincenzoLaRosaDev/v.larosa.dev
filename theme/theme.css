@@ -4,11 +4,11 @@
   --primary-900: #e0b412dc;
   --accent: #3c9682;
   --accent-100: #3c968220;
-  --bg: #091410;
+  --bg: #07171a;
   --text: #eef4f2;
   --text-light: #789188;
-  --glass-bg: rgba(18, 36, 30, 0.48);
-  --glass-border: rgba(250, 204, 21, 0.6);
+  --glass-bg: rgba(18, 36, 30, 0.24);
+  --glass-border: rgba(250, 204, 21, 0.34);
   --glass-blur: 12px;
   --glass-saturate: 112%;
   --tag-bg: rgba(250, 204, 21, 0.16);

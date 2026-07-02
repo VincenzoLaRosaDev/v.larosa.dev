@@ -5,9 +5,23 @@
   z-index: 0;
   overflow: hidden;
   background-color: var(--bg);
-  --ambient-bleed-x: 20vw;
-  --ambient-bleed-y: 30vh;
+  /* Extra travel room so the enlarged orbs can move without their (removed)
+     collisions — they only bounce off these expanded margins now. */
+  --ambient-bleed-x: 25vw;
+  --ambient-bleed-y: 45vh;
   transform: translateZ(0);
+}
+
+/* Dither noise sits above the orbs (::after paints after child elements) to
+   break up 8-bit banding on the blurred blobs, especially under the glass. */
+.ambient-layer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--ambient-noise);
+  background-repeat: repeat;
+  background-size: 140px 140px;
 }
 
 /* Lite ambient: narrow viewport or touch — sync with utils/device.ts */
@@ -52,16 +66,16 @@
 .ambient-orb--teal {
   background: radial-gradient(
     circle,
-    rgba(60, 150, 130, 0.2) 0%,
-    transparent 70%
+    rgba(60, 150, 130, 0.22) 0%,
+    transparent 76%
   );
 }
 
 .ambient-orb--teal-alt {
   background: radial-gradient(
     circle,
-    rgba(74, 168, 148, 0.17) 0%,
-    transparent 70%
+    rgba(74, 168, 148, 0.19) 0%,
+    transparent 76%
   );
 }
 
@@ -101,9 +115,13 @@ html {
   /* Same primary tint as .ambient-orb--gold (desktop) */
   --ambient-primary-glow: radial-gradient(
     circle,
-    rgba(250, 204, 21, 0.18) 0%,
-    transparent 70%
+    rgba(250, 204, 21, 0.2) 0%,
+    transparent 76%
   );
+  /* Low-frequency dither noise, layered on top of the glow gradients to break
+     up 8-bit color banding. Slightly coarse so it survives the glass backdrop
+     blur; opacity kept low so it reads as dithering, not visible grain. */
+  --ambient-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='d'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23d)' opacity='0.05'/%3E%3C/svg%3E");
 }
 
 @media (max-width: 1023px), (pointer: coarse) {

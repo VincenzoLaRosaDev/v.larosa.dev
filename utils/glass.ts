@@ -17,10 +17,6 @@ export function glassHoverClasses(isActive: boolean) {
     .join(' ');
 }
 
-export function cardDimmedClasses(isDimmed: boolean) {
-  return isDimmed ? 'lg:opacity-50' : '';
-}
-
 export function cardTitleHoverClasses(
   isActive: boolean,
   group: 'group' | 'group/link' = 'group',

@@ -1,6 +1,6 @@
 'use client';
 
-import { isLiteExperience } from '@/utils';
+import { useIsLiteExperience } from '@/utils';
 import { WithChildren } from '@/types';
 import { useInView } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
@@ -31,14 +31,12 @@ export const TextReveal = ({
   const textEl = useRef<HTMLSpanElement>(null);
   const textSpansRef = useRef<HTMLSpanElement[]>([]);
   const [hasAnimated, setHasAnimated] = useState(false);
-  const [isLite, setIsLite] = useState(true);
 
   const textLetters = Array.from(text);
   const inView = useInView(textEl);
 
-  useEffect(() => {
-    setIsLite(isLiteExperience() && !animateOnMobile);
-  }, [animateOnMobile]);
+  const lite = useIsLiteExperience();
+  const isLite = lite && !animateOnMobile;
 
   const InitialAnimatedLetter = () => {
     textSpansRef.current.forEach((span) => {

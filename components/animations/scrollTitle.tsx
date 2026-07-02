@@ -4,8 +4,7 @@ import { useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
-const OPACITY_CLASS = '!opacity-30';
-const ACTIVE_CLASS = '!text-sm';
+const ACTIVE_CLASSES = ['!text-sm', '!text-primary'];
 const STAGGER = 32;
 
 export const ScrollTitleAnimation = () => {
@@ -28,18 +27,16 @@ export const ScrollTitleAnimation = () => {
       const sideHeader = document.querySelector<HTMLElement>('#side-header');
 
       const sideHeaderHeight = () =>
-        sideHeader?.clientHeight ? sideHeader.clientHeight + 228 : 0;
+        sideHeader?.clientHeight ? sideHeader.clientHeight + 180 : 0;
       const offsetFor = (index: number) => index * STAGGER;
       const stackHeight = () =>
         elements.reduce((total, el) => total + el.clientHeight, 0);
 
       const setActive = (item: HTMLElement) => {
-        item.classList.add(ACTIVE_CLASS);
-        item.classList.remove(OPACITY_CLASS);
+        item.classList.add(...ACTIVE_CLASSES);
       };
       const setDimmed = (item: HTMLElement) => {
-        item.classList.remove(ACTIVE_CLASS);
-        item.classList.add(OPACITY_CLASS);
+        item.classList.remove(...ACTIVE_CLASSES);
       };
 
       elements.forEach(setDimmed);
@@ -96,7 +93,7 @@ export const ScrollTitleAnimation = () => {
         window.removeEventListener('resize', onResize);
         if (rafId) window.cancelAnimationFrame(rafId);
         elements.forEach((item) =>
-          item.classList.remove(ACTIVE_CLASS, OPACITY_CLASS),
+          item.classList.remove(...ACTIVE_CLASSES),
         );
       };
     });

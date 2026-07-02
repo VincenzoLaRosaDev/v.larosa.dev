@@ -10,7 +10,6 @@ import { ScrollTitleContainer } from './scrollTitleContainer';
 import { FadeInOnView } from './animations';
 import {
   glassHoverClasses,
-  cardDimmedClasses,
   cardTitleHoverClasses,
   cardArrowHoverClasses,
   cardArrowRotationClasses,
@@ -44,7 +43,6 @@ export const Blogs = ({
       <ScrollTitleContainer title={title ?? ''}>
         <div className="flex flex-col gap-8">
           {items?.map((item, key) => {
-            const isDimmed = activeIndex !== null && activeIndex !== key;
             const isActive = activeIndex === key;
 
             return (
@@ -52,7 +50,6 @@ export const Blogs = ({
                 <div
                   ref={itemRef(key)}
                   {...getCardHoverHandlers(key)}
-                  className={`transition-all ${cardDimmedClasses(isDimmed)}`}
                 >
                   <CmsLink
                     link={item.link}

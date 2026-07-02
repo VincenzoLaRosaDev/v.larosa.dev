@@ -158,7 +158,7 @@ export const MouseCursor = () => {
           <motion.div
             className="rounded-full border border-white"
             style={{
-              backgroundColor: 'rgba(0, 0, 0, 0.4)',
+              backgroundColor: 'color-mix(in srgb, var(--bg) 55%, transparent)',
             }}
             animate={{
               width: isHovering ? 16 : 24,

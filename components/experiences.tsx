@@ -11,7 +11,6 @@ import { ScrollTitleContainer } from './scrollTitleContainer';
 import { FadeInOnView } from './animations';
 import {
   glassHoverClasses,
-  cardDimmedClasses,
   cardTitleHoverClasses,
   cardArrowHoverClasses,
   cardArrowRotationClasses,
@@ -46,7 +45,6 @@ export const Experiences = ({
       <ScrollTitleContainer title={title ?? ''}>
         <div className="flex flex-col gap-16">
           {items?.map((item, key) => {
-            const isDimmed = activeIndex !== null && activeIndex !== key;
             const isActive = activeIndex === key;
 
             return (
@@ -54,7 +52,7 @@ export const Experiences = ({
                 <div
                   ref={itemRef(key)}
                   {...getCardHoverHandlers(key)}
-                  className={`flex flex-col lg:flex-row gap-6 p-6 ${glassHoverClasses(isActive)} ${cardDimmedClasses(isDimmed)}`}
+                  className={`flex flex-col lg:flex-row gap-6 p-6 ${glassHoverClasses(isActive)}`}
                 >
                   <div className="uppercase archivo-black text-text-light min-w-40">
                     {`${item.startDate ? new Date(item.startDate).getFullYear() : ''} — ${

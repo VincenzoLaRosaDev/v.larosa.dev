@@ -1,8 +1,8 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { isLiteExperience } from './device';
 import { cardHoverHandlers } from './glass';
+import { useIsLiteExperience } from './useIsLiteExperience';
 
 /** Half-height of the viewport center band where a card can become glass-active. */
 const CENTER_BAND_RATIO = 0.30;
@@ -10,12 +10,8 @@ const CENTER_BAND_RATIO = 0.30;
 export function useGlassCardFocus(itemCount: number) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [centerIndex, setCenterIndex] = useState<number | null>(null);
-  const [useCenterFocus, setUseCenterFocus] = useState(false);
+  const useCenterFocus = useIsLiteExperience();
   const itemRefs = useRef<(HTMLElement | null)[]>([]);
-
-  useEffect(() => {
-    setUseCenterFocus(isLiteExperience());
-  }, []);
 
   const updateCenterIndex = useCallback(() => {
     const viewportCenter = window.innerHeight / 2;
