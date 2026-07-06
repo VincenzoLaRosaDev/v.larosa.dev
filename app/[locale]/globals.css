@@ -2,6 +2,46 @@
 @tailwind components;
 @tailwind utilities;
 
+/* HelloSwiper layout — fuori da @layer per evitare override Tailwind */
+.hello-swiper {
+  display: flex;
+  width: 100%;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.hello-swiper__panel {
+  width: 100%;
+  min-width: 0;
+  height: 5rem;
+  flex: 0 1 auto;
+}
+
+.hello-swiper--responsive {
+  justify-content: flex-start;
+}
+
+.hello-swiper--responsive .hello-swiper__panel {
+  max-width: 230px;
+}
+
+@media (max-width: 424px) {
+  .hello-swiper--responsive .hello-swiper__panel {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hello-swiper--responsive {
+    /* justify-content: flex-end; */
+  }
+}
+
+.hello-swiper--fill .hello-swiper__panel {
+  max-width: none;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -56,10 +96,10 @@ button,
 @media (min-width: 1024px) {
   .split-bg {
     /* Default that already matches the stable seam (sidebar-right + gap/2),
-       derived from max-w-7xl=1280, px-9=36, sidebar=384, gap-16=64. The
+       derived from max-w-7xl=1280, px-10=40, sidebar=320, gap-20=80. The
        SplitBackground component overrides this with the exact measured value,
        but starting here avoids a pre-JS jump. */
-    --split-x: max(452px, 50vw - 188px);
+    --split-x: max(400px, 50vw - 240px);
   }
 
   /* Frosted-glass surface on the sidebar (left) side. Reuses the global glass

@@ -3,7 +3,7 @@
 import { useIsLiteExperience } from '@/utils';
 import { WithChildren } from '@/types';
 import { useInView } from 'motion/react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 export interface TextRevealProps
   extends WithChildren,
@@ -14,6 +14,21 @@ export interface TextRevealProps
   animateOnMobile?: boolean;
 }
 
+const ANIMATION_CHARS =
+  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789§$%&';
+const MIN_INTERVAL = 100;
+const MAX_INTERVAL = 200;
+const MAX_STEPS = 10;
+const MIN_STEPS = 5;
+
+function randomChar() {
+  return ANIMATION_CHARS[Math.floor(Math.random() * ANIMATION_CHARS.length)];
+}
+
+function scrambledLetters(value: string) {
+  return Array.from(value, () => randomChar());
+}
+
 export const TextReveal = ({
   className,
   text,
@@ -21,94 +36,83 @@ export const TextReveal = ({
   animateOnMobile = false,
   ...rest
 }: TextRevealProps) => {
-  const animationChars =
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789§$%&';
-  const minInterval = 100;
-  const maxInterval = 200;
-  const maxSteps = 10;
-  const minSteps = 5;
-
   const textEl = useRef<HTMLSpanElement>(null);
-  const textSpansRef = useRef<HTMLSpanElement[]>([]);
-  const [hasAnimated, setHasAnimated] = useState(false);
+  const hasAnimatedRef = useRef(false);
+  const [scrambleGen, setScrambleGen] = useState(0);
 
-  const textLetters = Array.from(text);
   const inView = useInView(textEl);
 
   const lite = useIsLiteExperience();
   const isLite = lite && !animateOnMobile;
 
-  const InitialAnimatedLetter = () => {
-    textSpansRef.current.forEach((span) => {
-      span.textContent =
-        animationChars[Math.floor(Math.random() * animationChars.length)];
-    });
-  };
+  const [ready, setReady] = useState(false);
+  const [letters, setLetters] = useState<string[]>([]);
 
-  const AnimatedLetter = () => {
-    textSpansRef.current.forEach((span, i) => {
+  useLayoutEffect(() => {
+    setReady(true);
+    hasAnimatedRef.current = false;
+    if (isLite) {
+      setLetters([]);
+      return;
+    }
+    setLetters(scrambledLetters(text));
+    setScrambleGen((n) => n + 1);
+  }, [isLite, text]);
+
+  useEffect(() => {
+    if (isLite || !ready) return;
+
+    if (!inView) {
+      hasAnimatedRef.current = false;
+      return;
+    }
+
+    const shouldAnimate = !hasAnimatedRef.current || renew;
+    if (!shouldAnimate) return;
+
+    hasAnimatedRef.current = true;
+    const timeoutIds: ReturnType<typeof setTimeout>[] = [];
+    const targets = Array.from(text);
+
+    targets.forEach((target, i) => {
       const animationSteps = Math.floor(
-        Math.random() * (maxSteps - minSteps) + minSteps,
+        Math.random() * (MAX_STEPS - MIN_STEPS) + MIN_STEPS,
       );
       const animationInterval = Math.floor(
-        Math.random() * (maxInterval - minInterval) + minInterval,
+        Math.random() * (MAX_INTERVAL - MIN_INTERVAL) + MIN_INTERVAL,
       );
       let stepsCount = 0;
 
-      const _toggleChar = () => {
-        if (stepsCount < animationSteps) {
-          span.textContent =
-            animationChars[Math.floor(Math.random() * animationChars.length)];
-        } else {
-          span.textContent = textLetters[i];
-        }
-      };
-
       const animate = () => {
         if (stepsCount <= animationSteps) {
-          _toggleChar();
+          setLetters((prev) => {
+            const next = [...prev];
+            next[i] =
+              stepsCount < animationSteps ? randomChar() : target;
+            return next;
+          });
           stepsCount++;
-          setTimeout(animate, animationInterval);
+          timeoutIds.push(setTimeout(animate, animationInterval));
         }
       };
 
       animate();
     });
-  };
 
-  useEffect(() => {
-    if (isLite || !textEl.current) return;
-
-    textEl.current.innerHTML = '';
-    textSpansRef.current = [];
-
-    textLetters.forEach((letter) => {
-      const span = document.createElement('span');
-      span.classList.add('letter');
-      span.textContent = letter;
-      textEl.current?.appendChild(span);
-      textSpansRef.current.push(span);
-    });
-
-    InitialAnimatedLetter();
-  }, [isLite, text]);
-
-  useEffect(() => {
-    if (isLite) return;
-
-    if (inView && !hasAnimated) {
-      AnimatedLetter();
-      setHasAnimated(true);
-    }
-    if (inView && renew) {
-      AnimatedLetter();
-      setHasAnimated(true);
-    }
-  }, [inView, hasAnimated, isLite, renew]);
+    return () => {
+      timeoutIds.forEach(clearTimeout);
+    };
+  }, [inView, isLite, ready, renew, text, scrambleGen]);
 
   return (
     <span {...rest} ref={textEl} className={`inline-block ${className ?? ''}`}>
-      {text}
+      {isLite || !ready
+        ? text
+        : letters.map((letter, i) => (
+            <span key={`${text}-${i}`} className="letter">
+              {letter}
+            </span>
+          ))}
     </span>
   );
 };

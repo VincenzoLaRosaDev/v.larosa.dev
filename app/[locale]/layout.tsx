@@ -112,7 +112,7 @@ export default async function HomeLayout({
               <SplitBackground />
               <main className="relative z-[1]">
                 <div className="relative z-[1] text-text archivo max-w-7xl mx-auto">
-                  <div className="relative z-[1] lg:px-9">{children}</div>
+                  <div className="relative z-[1] lg:px-10">{children}</div>
                 </div>
                 <MouseCursor />
               </main>

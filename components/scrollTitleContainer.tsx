@@ -53,7 +53,7 @@ export const ScrollTitleContainer = ({
       ref={container}
       className={`inline-flex w-full ${className}`}
     >
-      <div className="justify-end absolute left-[-448px] hidden lg:flex">
+      <div className="justify-end absolute left-[-400px] hidden lg:flex">
         <h2
           data-cursor-interactive
           id={'transitionTitle'}
@@ -61,6 +61,7 @@ export const ScrollTitleContainer = ({
           onClick={scrollToTitle}
         >
           <TextReveal
+            animateOnMobile
             text={title}
             className={`px-1 py-2 relative ${labelClass ?? ''}`}
           />

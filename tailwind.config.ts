@@ -9,6 +9,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        tablet: { min: '425px', max: '1023px' },
+      },
       fontSize: {
         sm: ['14px', '21px'],
         base: ['16px', '24px'],

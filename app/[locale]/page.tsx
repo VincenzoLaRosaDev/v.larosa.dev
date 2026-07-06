@@ -52,19 +52,24 @@ export default async function Home({ params }: { params: Promise<any> }) {
 
   return (
     <>
-      <section className="lg:flex lg:justify-between lg:gap-16 gap-4">
+      <section className="lg:flex lg:justify-between lg:gap-20 gap-4">
         <ScrollTitleAnimation />
-        <SideNav
-          className="w-full relative lg:max-w-96 pb-10 pt-20 lg:pb-40 lg:pt-32 px-3 lg:px-0"
-          homeBanner={data[0].homeBanner}
-          links={socialLinks}
-        />
+        <div className="w-full md:flex md:items-start md:gap-6 md:px-3 md:pt-20 md:pb-10 lg:contents">
+          <SideNav
+            className="w-full relative pb-10 pt-20 px-3 md:flex-1 md:min-w-0 md:pt-0 md:pb-0 md:px-0 lg:w-80 lg:min-w-80 lg:max-w-80 lg:flex-none lg:shrink-0 lg:pb-40 lg:pt-32 lg:px-0"
+            homeBanner={data[0].homeBanner}
+            links={socialLinks}
+          />
+          <div className="hidden md:block lg:hidden w-[230px] min-w-[230px] shrink-0 self-start">
+            <HelloSwiper layout="fill" />
+          </div>
+        </div>
         <div
           data-split-col="right"
-          className="w-full relative lg:max-w-[780px] pt-4 pb-20 lg:pb-40 lg:pt-32"
+          className="w-full relative lg:max-w-[844px] pt-4 pb-20 lg:pb-40 lg:pt-32"
         >
-          <div className="flex items-center px-3 lg:px-0">
-            <HelloSwiper />
+          <div className="w-full md:hidden lg:block px-3 lg:px-0">
+            <HelloSwiper layout="responsive" />
           </div>
           <RenderBlocks layout={data[0].pageBlocks} />
           <RichText

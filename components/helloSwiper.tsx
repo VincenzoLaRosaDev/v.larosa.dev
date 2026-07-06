@@ -9,9 +9,15 @@ import { Cursor, GlassPanel, TextReveal } from './atoms';
 import { useRef, useEffect } from 'react';
 import { useInView } from 'framer-motion';
 
-export interface HelloSwiperProps extends TailwindProps {}
+export interface HelloSwiperProps extends TailwindProps {
+  /** responsive: 230px (full-width sotto 425px). fill: 100% del parent. */
+  layout?: 'responsive' | 'fill';
+}
 
-export const HelloSwiper = ({ className }: HelloSwiperProps) => {
+export const HelloSwiper = ({
+  className,
+  layout = 'responsive',
+}: HelloSwiperProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const inView = useInView(containerRef, { amount: 0.3 });
   const swiperRef = useRef<any>(null);
@@ -29,11 +35,9 @@ export const HelloSwiper = ({ className }: HelloSwiperProps) => {
   return (
     <div
       ref={containerRef}
-      className="w-full flex items-center justify-start lg:justify-end"
+      className={`mt-[7px] hello-swiper hello-swiper--${layout} ${className ?? ''}`}
     >
-      <GlassPanel
-        className={`w-full sm:max-w-[230px] h-20 ${className ?? ''}`}
-      >
+      <GlassPanel className="hello-swiper__panel">
         <Swiper
           className="pointer-events-none h-20 !mb-0 bg-transparent"
           style={{ margin: 0, padding: '0 10px 0 20px' }}
