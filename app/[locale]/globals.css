@@ -95,11 +95,10 @@ button,
 
 @media (min-width: 1024px) {
   .split-bg {
-    /* Default that already matches the stable seam (sidebar-right + gap/2),
-       derived from max-w-7xl=1280, px-10=40, sidebar=320, gap-20=80. The
-       SplitBackground component overrides this with the exact measured value,
-       but starting here avoids a pre-JS jump. */
-    --split-x: max(400px, 50vw - 240px);
+    /* Default seam: sidebar-right + gap/2.
+       Derived from pl-10=40, sidebar=320, gap-20=80 → 40+320+40=400.
+       SplitBackground overrides with the measured value; this avoids a pre-JS jump. */
+    --split-x: 400px;
   }
 
   /* Frosted-glass surface on the sidebar (left) side. Reuses the global glass

@@ -24,10 +24,48 @@ export const ScrollTitleContainer = ({
 
   const container = useRef<HTMLDivElement>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
+  const desktopTitleRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setInitialPosition((getOffset(container.current)?.top ?? 0) - 80);
   }, [container]);
+
+  // Keep desktop scroll-title menu aligned with the left edge of the sidebar,
+  // even when the content column is centered in the remaining viewport space.
+  useEffect(() => {
+    const titleEl = desktopTitleRef.current;
+    const sectionEl = container.current;
+    if (!titleEl || !sectionEl) return;
+
+    const alignToSidebar = () => {
+      if (!window.matchMedia('(min-width: 1024px)').matches) {
+        titleEl.style.removeProperty('left');
+        return;
+      }
+
+      const sidebar = document.querySelector<HTMLElement>(
+        '[data-split-col="left"]',
+      );
+      if (!sidebar) return;
+
+      const left =
+        sidebar.getBoundingClientRect().left -
+        sectionEl.getBoundingClientRect().left;
+      titleEl.style.left = `${Math.round(left)}px`;
+    };
+
+    alignToSidebar();
+
+    const observer = new ResizeObserver(alignToSidebar);
+    observer.observe(document.body);
+    window.addEventListener('resize', alignToSidebar);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', alignToSidebar);
+      titleEl.style.removeProperty('left');
+    };
+  }, []);
 
   const scrollToTitle = useCallback(() => {
     scrollTo({
@@ -53,7 +91,10 @@ export const ScrollTitleContainer = ({
       ref={container}
       className={`inline-flex w-full ${className}`}
     >
-      <div className="justify-end absolute left-[-400px] hidden lg:flex">
+      <div
+        ref={desktopTitleRef}
+        className="justify-end absolute left-[-400px] hidden lg:flex"
+      >
         <h2
           data-cursor-interactive
           id={'transitionTitle'}

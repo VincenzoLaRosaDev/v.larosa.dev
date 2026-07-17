@@ -52,7 +52,7 @@ export default async function Home({ params }: { params: Promise<any> }) {
 
   return (
     <>
-      <section className="lg:flex lg:justify-between lg:gap-20 gap-4">
+      <section className="lg:flex lg:gap-20 gap-4 lg:px-10">
         <ScrollTitleAnimation />
         <div className="w-full md:flex md:items-start md:gap-6 md:px-3 md:pt-20 md:pb-10 lg:contents">
           <SideNav
@@ -66,32 +66,34 @@ export default async function Home({ params }: { params: Promise<any> }) {
         </div>
         <div
           data-split-col="right"
-          className="w-full relative lg:max-w-[844px] pt-4 pb-20 lg:pb-40 lg:pt-32"
+          className="w-full relative lg:flex-1 lg:min-w-0 pt-4 pb-20 lg:pb-40 lg:pt-32"
         >
-          <div className="w-full md:hidden lg:block px-3 lg:px-0">
-            <HelloSwiper layout="responsive" />
-          </div>
-          <RenderBlocks layout={data[0].pageBlocks} />
-          <RichText
-            value={data[0].richText}
-            paragraphSpace={false}
-            className="text-xs text-center text-balance"
-          />
-          <div className="flex justify-center gap-4 mt-[50px]">
-            <a
-              href="https://www.iubenda.com/privacy-policy/96600430"
-              className="text-xs text-text-light"
-              title="Privacy Policy "
-            >
-              Privacy Policy
-            </a>
-            <a
-              href="https://www.iubenda.com/privacy-policy/96600430/cookie-policy"
-              className="text-xs text-text-light"
-              title="Cookie Policy "
-            >
-              Cookie Policy
-            </a>
+          <div className="relative w-full lg:max-w-[844px] lg:mx-auto">
+            <div className="w-full md:hidden lg:block px-3 lg:px-0">
+              <HelloSwiper layout="responsive" />
+            </div>
+            <RenderBlocks layout={data[0].pageBlocks} />
+            <RichText
+              value={data[0].richText}
+              paragraphSpace={false}
+              className="text-xs text-center text-balance"
+            />
+            <div className="flex justify-center gap-4 mt-[50px]">
+              <a
+                href="https://www.iubenda.com/privacy-policy/96600430"
+                className="text-xs text-text-light"
+                title="Privacy Policy "
+              >
+                Privacy Policy
+              </a>
+              <a
+                href="https://www.iubenda.com/privacy-policy/96600430/cookie-policy"
+                className="text-xs text-text-light"
+                title="Cookie Policy "
+              >
+                Cookie Policy
+              </a>
+            </div>
           </div>
         </div>
       </section>
