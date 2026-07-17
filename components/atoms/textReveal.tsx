@@ -12,6 +12,11 @@ export interface TextRevealProps
   renew?: boolean;
   /** Run scramble animation on mobile (e.g. section scroll titles). */
   animateOnMobile?: boolean;
+  /**
+   * If true, animate at most once per mount/text (desktop scroll titles).
+   * When false (default), leaving the viewport allows a replay on re-enter.
+   */
+  once?: boolean;
 }
 
 const ANIMATION_CHARS =
@@ -34,6 +39,7 @@ export const TextReveal = ({
   text,
   renew = false,
   animateOnMobile = false,
+  once = false,
   ...rest
 }: TextRevealProps) => {
   const textEl = useRef<HTMLSpanElement>(null);
@@ -63,7 +69,14 @@ export const TextReveal = ({
     if (isLite || !ready) return;
 
     if (!inView) {
-      hasAnimatedRef.current = false;
+      if (once) {
+        // Keep the final string if we already played once this session.
+        if (hasAnimatedRef.current) {
+          setLetters(Array.from(text));
+        }
+      } else {
+        hasAnimatedRef.current = false;
+      }
       return;
     }
 
@@ -102,7 +115,7 @@ export const TextReveal = ({
     return () => {
       timeoutIds.forEach(clearTimeout);
     };
-  }, [inView, isLite, ready, renew, text, scrambleGen]);
+  }, [inView, isLite, ready, renew, once, text, scrambleGen]);
 
   return (
     <span {...rest} ref={textEl} className={`inline-block ${className ?? ''}`}>

@@ -102,7 +102,7 @@ export const ScrollTitleContainer = ({
           onClick={scrollToTitle}
         >
           <TextReveal
-            animateOnMobile
+            once
             text={title}
             className={`px-1 py-2 relative ${labelClass ?? ''}`}
           />
