@@ -11,6 +11,8 @@ export interface ScrollTitleContainerProps
     React.HTMLAttributes<HTMLDivElement> {
   title: string;
   labelClass?: ComponentProps<any>['className'];
+  /** Injected by PaddingContainer — padding + block classNames on the content box. */
+  sectionClassName?: string;
 }
 
 export const ScrollTitleContainer = ({
@@ -18,13 +20,15 @@ export const ScrollTitleContainer = ({
   className,
   labelClass,
   title,
+  sectionClassName,
   ...rest
 }: ScrollTitleContainerProps) => {
   const [initialPosition, setInitialPosition] = useState<number>(0);
 
   const container = useRef<HTMLDivElement>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
-  const desktopTitleRef = useRef<HTMLDivElement>(null);
+  const desktopTitleRef = useRef<HTMLHeadingElement>(null);
+  const desktopLabelRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     setInitialPosition((getOffset(container.current)?.top ?? 0) - 80);
@@ -33,13 +37,13 @@ export const ScrollTitleContainer = ({
   // Keep desktop scroll-title menu aligned with the left edge of the sidebar,
   // even when the content column is centered in the remaining viewport space.
   useEffect(() => {
-    const titleEl = desktopTitleRef.current;
+    const labelEl = desktopLabelRef.current;
     const sectionEl = container.current;
-    if (!titleEl || !sectionEl) return;
+    if (!labelEl || !sectionEl) return;
 
     const alignToSidebar = () => {
       if (!window.matchMedia('(min-width: 1024px)').matches) {
-        titleEl.style.removeProperty('left');
+        labelEl.style.removeProperty('left');
         return;
       }
 
@@ -51,7 +55,7 @@ export const ScrollTitleContainer = ({
       const left =
         sidebar.getBoundingClientRect().left -
         sectionEl.getBoundingClientRect().left;
-      titleEl.style.left = `${Math.round(left)}px`;
+      labelEl.style.left = `${Math.round(left)}px`;
     };
 
     alignToSidebar();
@@ -63,7 +67,7 @@ export const ScrollTitleContainer = ({
     return () => {
       observer.disconnect();
       window.removeEventListener('resize', alignToSidebar);
-      titleEl.style.removeProperty('left');
+      labelEl.style.removeProperty('left');
     };
   }, []);
 
@@ -85,49 +89,67 @@ export const ScrollTitleContainer = ({
   const mobileTitleClass = `text-text archivo-black uppercase leading-8 block ${labelClass ?? ''}`;
 
   return (
-    <div
-      {...rest}
-      id={'transitionContainer'}
-      ref={container}
-      className={`inline-flex w-full ${className}`}
-    >
-      <div
+    <>
+      {/* Desktop: sticky slot (h-0) so titles bounce with overscroll; label is
+          absolutely positioned into the sidebar column. Sticky containing block
+          is #scroll-title-stack via lg:contents ancestors. */}
+      <h2
         ref={desktopTitleRef}
-        className="justify-end absolute left-[-400px] hidden lg:flex"
+        id="transitionTitle"
+        className="hidden lg:block sticky z-50 h-0 m-0 p-0 w-full overflow-visible pointer-events-none"
+        style={{ top: 'var(--scroll-title-top, 0px)' }}
       >
-        <h2
+        <span
+          ref={desktopLabelRef}
           data-cursor-interactive
-          id={'transitionTitle'}
-          className={`h-fit !min-h-[56px] z-50 w-auto text-nowrap pb-3 text-xs text-text-light hover:text-text archivo-black uppercase transition-[font-size,color] duration-300 ease-in-out`}
+          role="button"
+          tabIndex={0}
           onClick={scrollToTitle}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              scrollToTitle();
+            }
+          }}
+          className={`absolute top-0 h-fit !min-h-[56px] w-auto text-nowrap pb-3 text-xs text-text-light hover:text-text archivo-black uppercase transition-[font-size,color] duration-300 ease-in-out pointer-events-auto ${labelClass ?? ''}`}
         >
           <TextReveal
             once
             text={title}
             className={`px-1 py-2 relative ${labelClass ?? ''}`}
           />
-        </h2>
+        </span>
+      </h2>
+
+      <div
+        {...rest}
+        id="transitionContainer"
+        ref={container}
+        className={`w-full ${sectionClassName ?? ''} ${className ?? ''}`}
+      >
+        <div className="w-full relative">
+          <div ref={sentinelRef} className="lg:hidden h-px w-full" aria-hidden />
+          {isFirstSection ? (
+            <h2
+              className={`lg:hidden w-full bg-transparent ${hideInFlowTitle ? 'invisible' : ''}`}
+              onClick={scrollToTitle}
+              aria-hidden={hideInFlowTitle}
+            >
+              <div className="relative px-6 py-3">
+                <span className={mobileTitleClass}>{title}</span>
+              </div>
+            </h2>
+          ) : (
+            <>
+              <div className="lg:hidden min-h-[3.5rem]" aria-hidden />
+              <h2 className="sr-only text-text archivo-black uppercase leading-8">
+                {title}
+              </h2>
+            </>
+          )}
+          <div className="px-6 lg:px-0 mt-6 lg:mt-0">{children}</div>
+        </div>
       </div>
-      <div className="w-full relative">
-        <div ref={sentinelRef} className="lg:hidden h-px w-full" aria-hidden />
-        {isFirstSection ? (
-          <h2
-            className={`lg:hidden w-full bg-transparent ${hideInFlowTitle ? 'invisible' : ''}`}
-            onClick={scrollToTitle}
-            aria-hidden={hideInFlowTitle}
-          >
-            <div className="relative px-6 py-3">
-              <span className={mobileTitleClass}>{title}</span>
-            </div>
-          </h2>
-        ) : (
-          <>
-            <div className="lg:hidden min-h-[3.5rem]" aria-hidden />
-            <h2 className="sr-only text-text archivo-black uppercase leading-8">{title}</h2>
-          </>
-        )}
-        <div className="px-6 lg:px-0 mt-6 lg:mt-0">{children}</div>
-      </div>
-    </div>
+    </>
   );
 };

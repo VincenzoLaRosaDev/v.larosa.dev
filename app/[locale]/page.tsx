@@ -72,12 +72,14 @@ export default async function Home({ params }: { params: Promise<any> }) {
             <div className="w-full md:hidden lg:block px-6 lg:px-0">
               <HelloSwiper layout="responsive" />
             </div>
-            <RenderBlocks layout={data[0].pageBlocks} />
-            <RichText
-              value={data[0].richText}
-              paragraphSpace={false}
-              className="text-xs text-center text-balance"
-            />
+            <div id="scroll-title-stack">
+              <RenderBlocks layout={data[0].pageBlocks} />
+              <RichText
+                value={data[0].richText}
+                paragraphSpace={false}
+                className="text-xs text-center text-balance"
+              />
+            </div>
             <div className="flex justify-center gap-4 mt-[50px] px-6 lg:px-0">
               <a
                 href="https://www.iubenda.com/privacy-policy/96600430"

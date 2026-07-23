@@ -30,27 +30,41 @@ export const ScrollTitleAnimation = () => {
         sideHeader?.clientHeight ? sideHeader.clientHeight + 180 : 0;
       const offsetFor = (index: number) => index * STAGGER;
       const stackHeight = () =>
-        elements.reduce((total, el) => total + el.clientHeight, 0);
+        elements.reduce((total, el) => {
+          const label = el.querySelector<HTMLElement>(':scope > span');
+          return total + (label?.offsetHeight || el.scrollHeight || 56);
+        }, 0);
+
+      const applyStickyTops = () => {
+        elements.forEach((item, i) => {
+          item.style.setProperty(
+            '--scroll-title-top',
+            `${sideHeaderHeight() + offsetFor(i)}px`,
+          );
+        });
+      };
 
       const setActive = (item: HTMLElement) => {
-        item.classList.add(...ACTIVE_CLASSES);
+        const label = item.querySelector<HTMLElement>(':scope > span') ?? item;
+        label.classList.add(...ACTIVE_CLASSES);
       };
       const setDimmed = (item: HTMLElement) => {
-        item.classList.remove(...ACTIVE_CLASSES);
+        const label = item.querySelector<HTMLElement>(':scope > span') ?? item;
+        label.classList.remove(...ACTIVE_CLASSES);
       };
 
+      applyStickyTops();
       elements.forEach(setDimmed);
       if (elements[0]) setActive(elements[0]);
 
       elements.forEach((item, i) => {
+        // Active while this title's section is the current one — no GSAP pin
+        // (CSS sticky handles stacking and participates in native overscroll).
         ScrollTrigger.create({
-          trigger: item,
+          trigger: containers[i] ?? item,
           endTrigger: lastContainer,
           start: () => `top top+=${sideHeaderHeight() + offsetFor(i)}px`,
           end: 'bottom top',
-          pin: true,
-          pinSpacing: false,
-          scrub: true,
           onEnter: () => setActive(item),
           onLeave: () => setDimmed(item),
           onEnterBack: () => setActive(item),
@@ -59,7 +73,7 @@ export const ScrollTitleAnimation = () => {
 
         if (i < elements.length - 1) {
           ScrollTrigger.create({
-            trigger: elements[i + 1],
+            trigger: containers[i + 1] ?? elements[i + 1],
             endTrigger: lastContainer,
             start: () =>
               `top top+=${sideHeaderHeight() + offsetFor(i + 1)}px`,
@@ -70,7 +84,7 @@ export const ScrollTitleAnimation = () => {
           });
         } else if (elements.length > 1) {
           ScrollTrigger.create({
-            trigger: item,
+            trigger: containers[i] ?? item,
             endTrigger: lastContainer,
             start: () => `top top+=${sideHeaderHeight() + offsetFor(i)}px`,
             end: 'bottom top',
@@ -84,6 +98,7 @@ export const ScrollTitleAnimation = () => {
         if (rafId) return;
         rafId = window.requestAnimationFrame(() => {
           rafId = 0;
+          applyStickyTops();
           ScrollTrigger.refresh();
         });
       };
@@ -92,9 +107,10 @@ export const ScrollTitleAnimation = () => {
       return () => {
         window.removeEventListener('resize', onResize);
         if (rafId) window.cancelAnimationFrame(rafId);
-        elements.forEach((item) =>
-          item.classList.remove(...ACTIVE_CLASSES),
-        );
+        elements.forEach((item) => {
+          item.style.removeProperty('--scroll-title-top');
+          setDimmed(item);
+        });
       };
     });
 

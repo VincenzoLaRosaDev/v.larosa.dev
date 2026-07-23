@@ -109,8 +109,8 @@ export default async function HomeLayout({
           <MobileScrollTitleProvider>
             <MouseCursorProvider>
               <AmbientLayer />
-              <SplitBackground />
               <main className="relative z-[1]">
+                <SplitBackground />
                 <div className="relative z-[1] text-text archivo">
                   {children}
                 </div>

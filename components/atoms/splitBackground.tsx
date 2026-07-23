@@ -23,11 +23,15 @@ export const SplitBackground = () => {
         return;
       }
 
+      const layerRect = layer.getBoundingClientRect();
       const leftRect = left.getBoundingClientRect();
       const rightRect = right.getBoundingClientRect();
       const midpoint = (leftRect.right + rightRect.left) / 2;
 
-      layer.style.setProperty('--split-x', `${Math.round(midpoint)}px`);
+      layer.style.setProperty(
+        '--split-x',
+        `${Math.round(midpoint - layerRect.left)}px`,
+      );
     };
 
     compute();
@@ -42,5 +46,9 @@ export const SplitBackground = () => {
     };
   }, []);
 
-  return <div ref={layerRef} className="split-bg" aria-hidden />;
+  return (
+    <div className="split-bg-shell" aria-hidden>
+      <div ref={layerRef} className="split-bg" />
+    </div>
+  );
 };

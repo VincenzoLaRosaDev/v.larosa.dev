@@ -5,7 +5,7 @@ import { Page } from '@/sanity/types';
 
 export const RenderBlocks = ({ layout }: { layout: Page['pageBlocks'] }) => {
   return (
-    <div>
+    <>
       {layout?.map((block, key) => {
         const Block = blocks[block._type as any];
         if (Block) {
@@ -13,6 +13,6 @@ export const RenderBlocks = ({ layout }: { layout: Page['pageBlocks'] }) => {
         }
         return null;
       })}
-    </div>
+    </>
   );
 };
