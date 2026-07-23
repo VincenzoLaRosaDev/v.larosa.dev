@@ -54,9 +54,9 @@ export default async function Home({ params }: { params: Promise<any> }) {
     <>
       <section className="lg:flex lg:gap-20 gap-4 lg:px-10">
         <ScrollTitleAnimation />
-        <div className="w-full md:flex md:items-start md:gap-6 md:px-3 md:pt-20 md:pb-10 lg:contents">
+        <div className="w-full md:flex md:items-start md:gap-6 md:px-6 md:pt-20 md:pb-10 lg:contents">
           <SideNav
-            className="w-full relative pb-10 pt-20 px-3 md:flex-1 md:min-w-0 md:pt-0 md:pb-0 md:px-0 lg:w-80 lg:min-w-80 lg:max-w-80 lg:flex-none lg:shrink-0 lg:pb-40 lg:pt-32 lg:px-0"
+            className="w-full relative pb-10 pt-20 px-6 md:flex-1 md:min-w-0 md:pt-0 md:pb-0 md:px-0 lg:w-80 lg:min-w-80 lg:max-w-80 lg:flex-none lg:shrink-0 lg:pb-40 lg:pt-32 lg:px-0"
             homeBanner={data[0].homeBanner}
             links={socialLinks}
           />
@@ -69,7 +69,7 @@ export default async function Home({ params }: { params: Promise<any> }) {
           className="w-full relative lg:flex-1 lg:min-w-0 pt-4 pb-20 lg:pb-40 lg:pt-32"
         >
           <div className="relative w-full lg:max-w-[844px] lg:mx-auto">
-            <div className="w-full md:hidden lg:block px-3 lg:px-0">
+            <div className="w-full md:hidden lg:block px-6 lg:px-0">
               <HelloSwiper layout="responsive" />
             </div>
             <RenderBlocks layout={data[0].pageBlocks} />
@@ -78,7 +78,7 @@ export default async function Home({ params }: { params: Promise<any> }) {
               paragraphSpace={false}
               className="text-xs text-center text-balance"
             />
-            <div className="flex justify-center gap-4 mt-[50px]">
+            <div className="flex justify-center gap-4 mt-[50px] px-6 lg:px-0">
               <a
                 href="https://www.iubenda.com/privacy-policy/96600430"
                 className="text-xs text-text-light"

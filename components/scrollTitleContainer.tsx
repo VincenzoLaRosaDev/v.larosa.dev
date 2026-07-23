@@ -116,7 +116,7 @@ export const ScrollTitleContainer = ({
             onClick={scrollToTitle}
             aria-hidden={hideInFlowTitle}
           >
-            <div className="relative px-3 py-3">
+            <div className="relative px-6 py-3">
               <span className={mobileTitleClass}>{title}</span>
             </div>
           </h2>
@@ -126,7 +126,7 @@ export const ScrollTitleContainer = ({
             <h2 className="sr-only text-text archivo-black uppercase leading-8">{title}</h2>
           </>
         )}
-        <div className="px-3 lg:px-0 mt-6 lg:mt-0">{children}</div>
+        <div className="px-6 lg:px-0 mt-6 lg:mt-0">{children}</div>
       </div>
     </div>
   );

@@ -89,7 +89,7 @@ function FixedScrollTitle({ section }: { section: Section }) {
   const titleClass = `text-text archivo-black uppercase leading-8 block ${section.labelClass ?? ''}`;
 
   return (
-    <div className="relative px-3 py-3">
+    <div className="relative px-6 py-3">
       {showReveal ? (
         <TextReveal
           key={section.id}
