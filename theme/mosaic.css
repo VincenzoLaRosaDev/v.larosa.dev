@@ -1,0 +1,60 @@
+/* Mosaic tiles: flush, squared surfaces whose tone is set per-tile through
+   --tile-bg. Active / hover states are desktop-only (fine pointer with hover). */
+.tile {
+  position: relative;
+  background-color: var(--tile-bg, var(--surface-2));
+  color: var(--text);
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    filter 0.25s ease;
+}
+
+/* Named light / signal bands (legacy API) — dark ink foreground */
+.tile[data-scheme='light'] {
+  color: var(--text-on-paper);
+}
+
+.tile[data-scheme='light'] .text-ink {
+  color: var(--text-on-paper);
+}
+
+.tile[data-scheme='light'] .text-ink-muted {
+  color: var(--text-on-paper-muted);
+}
+
+/* Content tiles follow local --text (paper band or .mosaic-ink). */
+[data-split-col='right'] .tile {
+  color: var(--text);
+}
+
+/* Interactive cards (projects / blogs): darken the whole tile — image + copy —
+   instead of recoloring text while the media stays untouched. */
+@media (hover: hover) and (pointer: fine) {
+  .tile[data-interactive='true']:hover,
+  .tile[data-interactive='true'][data-active='true'] {
+    filter: brightness(0.86);
+  }
+}
+
+/* Profile photo: cool smoke cast to match the ink / mist palette */
+.profile-photo {
+  filter: grayscale(0.35) contrast(1.06) brightness(0.92) sepia(0.28)
+    hue-rotate(190deg) saturate(0.20);
+}
+
+/* Text measure inside full-bleed tiles — long lines are unreadable otherwise.
+   Driven by a variable so components can widen it (e.g. multi-column copy on
+   very large screens) without fighting stylesheet order. */
+.tile-measure {
+  max-width: var(--tile-measure, 62ch);
+}
+
+/* Foreground helpers for light surfaces */
+.text-ink {
+  color: var(--text-on-paper);
+}
+
+.text-ink-muted {
+  color: var(--text-on-paper-muted);
+}

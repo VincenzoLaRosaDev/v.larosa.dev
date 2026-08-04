@@ -5,13 +5,19 @@ import 'swiper/css';
 import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { TailwindProps } from '@/types';
-import { Cursor, GlassPanel, TextReveal } from './atoms';
+import { Cursor, TextReveal, Tile } from './atoms';
 import { useRef, useEffect } from 'react';
 import { useInView } from 'framer-motion';
 
-export interface HelloSwiperProps extends TailwindProps {}
+export interface HelloSwiperProps extends TailwindProps {
+  /** responsive: 230px (full-width sotto 425px). fill: 100% del parent. */
+  layout?: 'responsive' | 'fill';
+}
 
-export const HelloSwiper = ({ className }: HelloSwiperProps) => {
+export const HelloSwiper = ({
+  className,
+  layout = 'responsive',
+}: HelloSwiperProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const inView = useInView(containerRef, { amount: 0.3 });
   const swiperRef = useRef<any>(null);
@@ -29,53 +35,54 @@ export const HelloSwiper = ({ className }: HelloSwiperProps) => {
   return (
     <div
       ref={containerRef}
-      className="w-full flex items-center justify-end"
+      className={`hello-swiper hello-swiper--${layout} ${className ?? ''}`}
     >
-      <GlassPanel
-        className={`w-full max-w-[230px] h-20 ${className ?? ''}`}
-      >
-        <Swiper
-          className="pointer-events-none h-20 !mb-0 bg-transparent"
-          style={{ margin: 0, padding: '0 10px 0 20px' }}
-          spaceBetween={0}
-          slidesPerView={1}
-          direction="vertical"
-          autoplay={{
-            delay: 2500,
-            disableOnInteraction: false,
-          }}
-          loop
-          modules={[Autoplay]}
-          onSwiper={(swiper) => {
-            swiperRef.current = swiper;
-          }}
-        >
-          <div className="absolute left-4 top-1/2 translate-y-[-50%] font-bold text-3xl text-text">
+      <Tile tone={2} className="hello-swiper__panel overflow-hidden">
+        {/* CLI row: `> greeting█` — left-aligned, caret after the word */}
+        <div className="flex h-full w-full items-center gap-3 px-6 lg:px-8 font-bold text-3xl">
+          <span
+            className="shrink-0 text-text-light select-none leading-none"
+            aria-hidden
+          >
             {'>'}
-          </div>
-          <Cursor className="absolute right-4 top-1/2 translate-y-[-50%]" />
+          </span>
 
-          {HELLO_ARRAY.map((item) => (
-            <SwiperSlide
-              key={item.label}
-              className="font-bold text-3xl"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
+          <div className="flex h-full min-w-0 items-center gap-2">
+            <Swiper
+              className="pointer-events-none h-full w-[8ch] !m-0 !mb-0 bg-transparent"
+              spaceBetween={0}
+              slidesPerView={1}
+              direction="vertical"
+              autoplay={{
+                delay: 2500,
+                disableOnInteraction: false,
+              }}
+              loop
+              modules={[Autoplay]}
+              onSwiper={(swiper) => {
+                swiperRef.current = swiper;
               }}
             >
-              {({ isActive }) => (
-                <TextReveal
-                  animateOnMobile
-                  text={`${item.label}!`}
-                  renew={isActive && inView}
-                />
-              )}
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </GlassPanel>
+              {HELLO_ARRAY.map((item) => (
+                <SwiperSlide
+                  key={item.label}
+                  className="!flex items-center justify-start leading-none"
+                >
+                  {({ isActive }) => (
+                    <TextReveal
+                      animateOnMobile
+                      text={`${item.label}!`}
+                      renew={isActive && inView}
+                    />
+                  )}
+                </SwiperSlide>
+              ))}
+            </Swiper>
+
+            <Cursor className="shrink-0" />
+          </div>
+        </div>
+      </Tile>
     </div>
   );
 };

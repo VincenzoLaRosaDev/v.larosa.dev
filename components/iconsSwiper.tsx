@@ -2,7 +2,7 @@
 
 import { IconsSwiper as IconsSwiperSanity } from '@/sanity/types';
 import { TailwindProps } from '@/types';
-import { PaddingContainer } from './atoms';
+import { PaddingContainer, Tile } from './atoms';
 import { useMemo, useRef } from 'react';
 import { useAnimationFrame } from 'motion/react';
 import { ScrollTitleContainer } from './scrollTitleContainer';
@@ -20,7 +20,6 @@ export const IconsSwiper = ({
   className,
   id,
   title,
-  paddingBlock,
   icons,
   speed = 50,
 }: IconsSwiperProps) => {
@@ -28,16 +27,17 @@ export const IconsSwiper = ({
     icons && (
       <PaddingContainer
         id={id}
-        padding={{ _type: 'paddingBlock', ...paddingBlock }}
-        className={`relative w-full py-8 ${className}`}
+        className={`relative w-full mosaic-ink ${className ?? ''}`}
       >
         <ScrollTitleContainer title={title ?? ''}>
           <FadeInOnView>
-            <div className="overflow-hidden h-full relative [mask-image:linear-gradient(to_right,transparent,black_48px,black_calc(100%-48px),transparent)]">
-              <SwiperRow icons={icons} speed={speed} reverse={false} />
-              <div className="h-4 lg:h-8" />
-              <SwiperRow icons={icons} speed={speed} reverse={true} />
-            </div>
+            <Tile tone={2} className="w-full py-12 lg:py-14">
+              <div className="overflow-hidden h-full relative [mask-image:linear-gradient(to_right,transparent,black_48px,black_calc(100%-48px),transparent)]">
+                <SwiperRow icons={icons} speed={speed} reverse={false} />
+                <div className="h-4 lg:h-8" />
+                <SwiperRow icons={icons} speed={speed} reverse={true} />
+              </div>
+            </Tile>
           </FadeInOnView>
         </ScrollTitleContainer>
       </PaddingContainer>

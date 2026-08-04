@@ -2,21 +2,14 @@
 
 import { Experiences as ExperiencesSanity } from '@/sanity/types';
 import { TailwindProps } from '@/types';
-import { PaddingContainer, Tag } from './atoms';
+import { MosaicGrid, PaddingContainer, Tag, Tile } from './atoms';
 import { useTranslations } from 'next-intl';
 import { PortableText } from 'next-sanity';
 import ArrowIcon from '@/public/arrow_outward.svg';
 import LinkIcon from '@/public/link.svg';
 import { ScrollTitleContainer } from './scrollTitleContainer';
 import { FadeInOnView } from './animations';
-import {
-  glassHoverClasses,
-  cardDimmedClasses,
-  cardTitleHoverClasses,
-  cardArrowHoverClasses,
-  cardArrowRotationClasses,
-  useGlassCardFocus,
-} from '@/utils';
+import { tileSpanClass } from '@/utils';
 
 export interface ExperiencesProps extends TailwindProps {
   id: ExperiencesSanity['id'];
@@ -29,34 +22,25 @@ export const Experiences = ({
   className,
   id,
   title,
-  paddingBlock,
   items,
 }: ExperiencesProps) => {
   const t = useTranslations('Index');
-  const { activeIndex, itemRef, getCardHoverHandlers } = useGlassCardFocus(
-    items?.length ?? 0,
-  );
 
   return (
     <PaddingContainer
       id={id}
-      padding={{ _type: 'paddingBlock', ...paddingBlock }}
-      className={`relative ${className}`}
+      className={`relative bg-[var(--surface-0)] ${className}`}
     >
       <ScrollTitleContainer title={title ?? ''}>
-        <div className="flex flex-col gap-16">
+        <MosaicGrid>
           {items?.map((item, key) => {
-            const isDimmed = activeIndex !== null && activeIndex !== key;
-            const isActive = activeIndex === key;
-
             return (
-              <FadeInOnView key={key}>
-                <div
-                  ref={itemRef(key)}
-                  {...getCardHoverHandlers(key)}
-                  className={`flex flex-col lg:flex-row gap-6 p-6 ${glassHoverClasses(isActive)} ${cardDimmedClasses(isDimmed)}`}
+              <FadeInOnView key={key} className={tileSpanClass(key, 'row')}>
+                <Tile
+                  tone={key}
+                  className="flex h-full flex-col lg:flex-row gap-5 lg:gap-8 p-8 lg:p-12"
                 >
-                  <div className="uppercase archivo-black text-text-light min-w-40">
+                  <div className="uppercase text-xl leading-tight archivo-black text-text-light lg:min-w-44 lg:max-w-44">
                     {`${item.startDate ? new Date(item.startDate).getFullYear() : ''} — ${
                       item.endDate
                         ? new Date(item.endDate).getFullYear()
@@ -64,86 +48,84 @@ export const Experiences = ({
                     }`}
                   </div>
 
-                  <div className="flex flex-col gap-4 w-full">
-                    <div>
-                      <div className="text-text-light archivo-black">
-                        {item.role}
+                  {/* Above 1440px body and meta split into two inner columns so
+                      the tile fills its row instead of trailing off. */}
+                  <div className="flex flex-col gap-5 w-full wide:flex-row wide:items-start wide:gap-12">
+                    <div className="flex flex-col gap-4 w-full">
+                      <div>
+                        <div className="text-sm text-text-light archivo-black">
+                          {item.role}
+                        </div>
+                        {item.companyLink?.href ? (
+                          <a
+                            href={item.companyLink?.href}
+                            target={`${item.companyLink?.blank ? '_blank' : '_self'}`}
+                            className="group/link flex w-fit items-center gap-3"
+                          >
+                            <span className="text-2xl archivo-black transition-colors group-hover/link:text-primary">
+                              {item.company}
+                            </span>
+                            <ArrowIcon className="h-6 w-6 min-h-6 min-w-6 fill-text rotate-45 transition-all group-hover/link:fill-primary group-hover/link:rotate-0" />
+                          </a>
+                        ) : (
+                          <div className="flex items-center gap-3">
+                            <span className="text-2xl archivo-black">
+                              {item.company}
+                            </span>
+                          </div>
+                        )}
                       </div>
-                      {item.companyLink?.href ? (
-                        <a
-                          href={item.companyLink?.href}
-                          target={`${item.companyLink?.blank ? '_blank' : '_self'}`}
-                          className="group/link flex w-fit items-center gap-3"
-                        >
-                          <span
-                            className={`text-2xl archivo-black transition-all ${cardTitleHoverClasses(isActive, 'group/link')}`}
-                          >
-                            {item.company}
-                          </span>
-                          {item.companyLink?.href && (
-                            <ArrowIcon
-                              className={`h-6 w-6 min-h-6 min-w-6 transition-all ${cardArrowRotationClasses(isActive, 'group/link')} ${cardArrowHoverClasses(isActive, 'group/link')}`}
-                            />
-                          )}
-                        </a>
-                      ) : (
-                        <div className="group/link flex items-center gap-3">
-                          <span
-                            className={`text-2xl archivo-black transition-all ${cardTitleHoverClasses(isActive, 'group/link')}`}
-                          >
-                            {item.company}
-                          </span>
+
+                      {item.richText && (
+                        <div className="tile-measure text-base text-text-light flex flex-col gap-2">
+                          <PortableText
+                            value={item.richText}
+                            components={{
+                              marks: {
+                                link: ({ children, value }) => (
+                                  <a
+                                    href={value?.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="underline"
+                                  >
+                                    {children}
+                                  </a>
+                                ),
+                              },
+                            }}
+                          />
                         </div>
                       )}
                     </div>
 
-                    {item.richText && (
-                      <div className="text-sm lg:text-base text-text-light flex flex-col gap-2">
-                        <PortableText
-                          value={item.richText}
-                          components={{
-                            marks: {
-                              link: ({ children, value }) => (
-                                <a
-                                  href={value?.href}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="underline"
-                                >
-                                  {children}
-                                </a>
-                              ),
-                            },
-                          }}
-                        />
+                    <div className="flex flex-col gap-4 wide:w-72 wide:shrink-0">
+                      <div className="flex flex-wrap items-center gap-3">
+                        {item.tag?.map((tag, key) => (
+                          <a
+                            key={key}
+                            href={tag.href}
+                            target={`${tag?.blank ? '_blank' : '_self'}`}
+                            className="group flex items-center gap-2 text-text-light hover:text-text transition-all"
+                          >
+                            <LinkIcon className="fill-text-light h-4 w-4 min-h-4 min-w-4 group-hover:fill-text transition-all" />
+                            <span className="text-sm">{tag.label}</span>
+                          </a>
+                        ))}
                       </div>
-                    )}
 
-                    <div className="flex flex-wrap items-center gap-3">
-                      {item.tag?.map((tag, key) => (
-                        <a
-                          key={key}
-                          href={tag.href}
-                          target={`${tag?.blank ? '_blank' : '_self'}`}
-                          className="group flex items-center gap-2 text-text-light hover:text-text transition-all"
-                        >
-                          <LinkIcon className="fill-text-light h-4 w-4 min-h-4 min-w-4 group-hover:fill-text transition-all" />
-                          <span className="text-xs leading-3">{tag.label}</span>
-                        </a>
-                      ))}
-                    </div>
-
-                    <div className="flex flex-wrap items-center gap-3">
-                      {item.skills?.map((skill, key) => (
-                        <Tag key={key}>{skill}</Tag>
-                      ))}
+                      <div className="flex flex-wrap items-center gap-3">
+                        {item.skills?.map((skill, key) => (
+                          <Tag key={key}>{skill}</Tag>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
+                </Tile>
               </FadeInOnView>
             );
           })}
-        </div>
+        </MosaicGrid>
       </ScrollTitleContainer>
     </PaddingContainer>
   );

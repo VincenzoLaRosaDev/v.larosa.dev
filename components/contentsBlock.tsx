@@ -3,9 +3,10 @@
 import { ContentsBlock as ContentsBlockSanity } from '@/sanity/types';
 import { TailwindProps } from '@/types';
 import { PortableText } from 'next-sanity';
-import { PaddingContainer } from './atoms';
+import { MosaicGrid, PaddingContainer, Tile } from './atoms';
 import { ScrollTitleContainer } from './scrollTitleContainer';
 import { FadeInOnView } from './animations';
+import { staggerSpanClass } from '@/utils';
 
 export interface ContentsBlockProps extends TailwindProps {
   id: ContentsBlockSanity['id'];
@@ -18,26 +19,24 @@ export const ContentsBlock = ({
   className,
   id,
   title,
-  paddingBlock,
   items,
 }: ContentsBlockProps) => {
   return (
     <PaddingContainer
       id={id}
-      padding={{ _type: 'paddingBlock', ...paddingBlock }}
-      className={`relative ${className}`}
+      className={`relative bg-[var(--surface-0)] ${className}`}
     >
       <ScrollTitleContainer title={title ?? ''}>
-        <FadeInOnView>
-          <div className="band band-static p-6 flex flex-col lg:flex-row flex-wrap gap-9">
-            {items?.map((item, key) => (
-              <div
-                key={key}
-                className={`${item.size === 'half' ? 'xl:w-[calc(50%_-_18px)]' : 'w-full'}`}
-              >
-                <div className="flex items-center gap-6">
+        <MosaicGrid variant="stagger">
+          {items?.map((item, key) => (
+            <FadeInOnView
+              key={key}
+              className={staggerSpanClass(key, items.length)}
+            >
+              <Tile tone={key} className="h-full p-6 lg:p-8">
+                <div className="flex items-center gap-5">
                   <div
-                    className="h-[32px] lg:h-[48px] [&>*]:h-[32px] [&>*]:lg:h-[48px] [&>*]:min-h-[32px] [&>*]:lg:min-h-[48px] w-auto rounded-md overflow-hidden"
+                    className="h-[36px] lg:h-[44px] [&>*]:h-[36px] [&>*]:lg:h-[44px] [&>*]:min-h-[36px] [&>*]:lg:min-h-[44px] w-auto overflow-hidden"
                     dangerouslySetInnerHTML={{
                       __html: item.icon ?? '',
                     }}
@@ -47,12 +46,16 @@ export const ContentsBlock = ({
                       {item.tagTitle}
                     </div>
 
-                    <div className="archivo-black text-2xl">{item.title}</div>
+                    <div
+                      className={`archivo-black ${item.richText ? 'text-2xl' : 'text-3xl'}`}
+                    >
+                      {item.title}
+                    </div>
                   </div>
                 </div>
 
                 {item.richText && (
-                  <div className="text-sm lg:text-base mt-4 text-text-light flex flex-col gap-2">
+                  <div className="text-base mt-4 text-text-light flex flex-col gap-2">
                     <PortableText
                       value={item.richText}
                       components={{
@@ -72,10 +75,10 @@ export const ContentsBlock = ({
                     />
                   </div>
                 )}
-              </div>
-            ))}
-          </div>
-        </FadeInOnView>
+              </Tile>
+            </FadeInOnView>
+          ))}
+        </MosaicGrid>
       </ScrollTitleContainer>
     </PaddingContainer>
   );

@@ -1,47 +1,143 @@
 :root {
-  /* ---- Slate carbon palette (shared design tokens) ---- */
-  --bg-base: #111417;
-  --bg-surface: #1c2127;
-  --bg-card: #262e38;
-  --border: #38434f;
-  --accent-primary: #48d880;
-  --accent-lime: #b8f060;
-  --accent-cyan: #9abbc0;
-  --green-deep: #16a34a;
-  --text-primary: #111417;
-  --text-secondary: #e2ecee;
-  --text-muted: #7a9098;
+  /* ---- Smoke blue — one hue family, dark sidebar / light content ---- */
+  --ink-0: #0b0d11;
+  --ink-1: #12151b;
+  --ink-2: #1a1e26;
+  --ink-3: #262b36;
+  --ink-4: #363c4a;
+  --ink-hover: #454c5c;
 
-  /* ---- Brand primary (kept as-is) ---- */
-  --primary: #facc15;
-  --primary-100: #facc1518;
-  --primary-900: #e0b412;
+  /* Cool mist / slate (light mosaic) */
+  --paper-0: #e6e9ee;
+  --paper-1: #d9dee6;
+  --paper-2: #c8cfd9;
+  --paper-3: #b2bbc8;
+  --paper-4: #9aa5b5;
+  --paper-hover: #8893a4;
+  --paper-ink: #141820;
+  --paper-ink-muted: #4a5363;
 
-  /* ---- App tokens mapped onto the slate carbon palette ---- */
-  --accent: var(--text-muted);
-  --accent-100: #7a909818;
-  --bg: var(--bg-base);
-  --text: var(--text-secondary);
-  --text-light: var(--text-muted);
+  /* Legacy aliases */
+  --bg-base: var(--ink-0);
+  --bg-surface: var(--ink-1);
+  --bg-card: var(--ink-2);
+  --border: var(--ink-4);
+  --accent-primary: #6b7d92;
+  --accent-lime: #8a9bb0;
+  --accent-cyan: #7a8fa3;
+  --green-deep: #4a5a6a;
+  --text-primary: var(--paper-ink);
+  --text-secondary: #e6e9ee;
+  --text-muted: #8b93a0;
 
-  /* Glass surfaces: slate fill, gold (primary) border to keep the brand accent */
-  --glass-bg: rgba(38, 46, 56, 0.5);
-  --glass-border: rgba(250, 204, 21, 0.18);
-  --glass-blur: 0px;
-  --glass-saturate: 124%;
+  /* Ice — cool accent in the smoke family */
+  --primary: #7eb0d4;
+  --primary-100: #7eb0d422;
+  --primary-900: #5a96b8;
+  --signal: var(--primary);
+  /* Pinned for sidebar nav active (labels inherit content-scoped --primary) */
+  --sidebar-primary: #7eb0d4;
 
-  /* Tag keeps the gold (primary) accent */
-  --tag-bg: rgba(250, 204, 21, 0.16);
-  --tag-border: rgba(250, 204, 21, 0.34);
+  /* ---- App tokens (default = content / light mosaic foreground) ---- */
+  --accent: var(--paper-ink-muted);
+  --accent-100: #4a536318;
+  --bg: var(--ink-0);
+  --text: var(--paper-ink);
+  --text-light: var(--paper-ink-muted);
+  --text-on-paper: var(--paper-ink);
+  --text-on-paper-muted: var(--paper-ink-muted);
 
-  /* Content bands: faint gold-tinted surface, distinct from the neutral sidebar */
-  --band-bg: color-mix(in srgb, var(--primary) 9%, var(--bg-card));
+  /* Sidebar text — light-on-ink */
+  --sidebar-text: var(--text-secondary);
+  --sidebar-text-muted: var(--text-muted);
 
-  --divider: rgba(56, 67, 79, 0.4);
-  --mouse-glow-size: 0px;
-  --mouse-glow-opacity: 0;
+  /* Tags — ice wash */
+  --tag-bg: rgba(126, 176, 212, 0.2);
+  --tag-border: rgba(126, 176, 212, 0.4);
 
-  /* Desktop split background: left = sidebar side, right = content side */
-  --split-left-bg: var(--bg-surface);
-  --split-right-bg: var(--bg-base);
+  /* CTA: ice fill + dark label */
+  --cta-bg: var(--primary);
+  --cta-bg-hover: var(--primary-900);
+  --cta-fg: var(--ink-0);
+
+  /* Mosaic surfaces = cool paper ramp. Sidebar uses --side-* / ink. */
+  --surface-0: #d2d8e0;
+  --surface-1: var(--paper-0);
+  --surface-2: var(--paper-1);
+  --surface-3: var(--paper-2);
+  --surface-4: var(--paper-3);
+  --surface-hover: var(--paper-hover);
+  --surface-accent: var(--paper-2);
+  --surface-invert: var(--ink-2);
+  --surface-paper: var(--paper-0);
+  --surface-paper-inset: var(--paper-1);
+  --surface-paper-hover: var(--paper-hover);
+
+  /* Sidebar blocks (ink) */
+  --side-info-bg: var(--ink-3);
+  --side-nav-bg: var(--ink-1);
+
+  --sidebar-w: 100%;
+
+  --divider: rgba(139, 147, 160, 0.28);
+
+  /* Desktop split: left ink / right paper */
+  --split-left-bg: var(--ink-1);
+  --split-right-bg: var(--paper-0);
 }
+
+/* Content column: slightly deeper ice for contrast on mist */
+[data-split-col='right'] {
+  --text: var(--paper-ink);
+  --text-light: var(--paper-ink-muted);
+  --primary: #5a96b8;
+  --primary-100: #5a96b818;
+  --primary-900: #3d7fa3;
+  --tag-bg: rgba(90, 150, 184, 0.18);
+  --tag-border: rgba(90, 150, 184, 0.35);
+  color: var(--paper-ink);
+}
+
+/* Dark mosaic bands inside the light content column (About, Skills, Contact) */
+.mosaic-ink {
+  --surface-0: var(--ink-0);
+  --surface-1: var(--ink-1);
+  --surface-2: var(--ink-2);
+  --surface-3: var(--ink-3);
+  --surface-4: var(--ink-4);
+  --surface-hover: var(--ink-hover);
+  --surface-accent: var(--ink-3);
+  --surface-paper: var(--ink-2);
+  --surface-paper-inset: var(--ink-3);
+  --surface-paper-hover: var(--ink-hover);
+  --text: var(--sidebar-text);
+  --text-light: var(--sidebar-text-muted);
+  --primary: #7eb0d4;
+  --primary-100: #7eb0d422;
+  --primary-900: #5a96b8;
+  --tag-bg: rgba(126, 176, 212, 0.2);
+  --tag-border: rgba(126, 176, 212, 0.4);
+  --cta-bg: var(--primary);
+  --cta-bg-hover: var(--primary-900);
+  --cta-fg: var(--ink-0);
+  color: var(--sidebar-text);
+  background-color: var(--surface-0);
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --sidebar-w: 300px;
+  }
+}
+@media (min-width: 1440px) {
+  :root {
+    --sidebar-w: 340px;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --sidebar-w: 380px;
+  }
+}
+

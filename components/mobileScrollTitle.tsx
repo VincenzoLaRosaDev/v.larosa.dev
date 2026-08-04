@@ -1,6 +1,6 @@
 'use client';
 
-import { isLiteExperience } from '@/utils';
+import { useIsLiteExperience } from '@/utils';
 import {
   createContext,
   useCallback,
@@ -86,10 +86,10 @@ function FixedScrollTitle({ section }: { section: Section }) {
     prevIdRef.current = section.id;
   }, [section.id, isTransitioning]);
 
-  const titleClass = `text-text archivo-black uppercase leading-8 block ${section.labelClass ?? ''}`;
+  const titleClass = `text-text text-lg archivo-black uppercase block ${section.labelClass ?? ''}`;
 
   return (
-    <div className="relative px-3 py-3">
+    <div className="relative px-6 py-3">
       {showReveal ? (
         <TextReveal
           key={section.id}
@@ -108,11 +108,7 @@ export function MobileScrollTitleProvider({ children }: { children: ReactNode })
   const sectionsRef = useRef<Map<string, Section>>(new Map());
   const [pinned, setPinned] = useState<Section | null>(null);
   const [firstSectionId, setFirstSectionId] = useState<string | null>(null);
-  const [enabled, setEnabled] = useState(false);
-
-  useEffect(() => {
-    setEnabled(isLiteExperience());
-  }, []);
+  const enabled = useIsLiteExperience();
 
   const updatePinned = useCallback(() => {
     const sorted = sortSectionsByDocumentOrder(
@@ -180,7 +176,7 @@ export function MobileScrollTitleProvider({ children }: { children: ReactNode })
       {children}
       {enabled && pinned ? (
         <div
-          className="lg:hidden fixed top-0 left-0 right-0 z-10 bg-transparent border-b border-[var(--glass-border)]"
+          className="lg:hidden fixed top-0 left-0 right-0 z-10 bg-[var(--surface-1)] border-b border-[var(--divider)]"
           onClick={pinned.scrollTo}
           onKeyDown={(event) => {
             if (event.key === 'Enter' || event.key === ' ') {
@@ -218,7 +214,7 @@ export function useMobileScrollTitleRegistration({
   useLayoutEffect(() => {
     const sentinel = sentinelRef.current;
     const container = containerRef.current;
-    if (!ctx || !sentinel || !container) return;
+    if (!ctx || !sentinel || !container || !title) return;
 
     ctx.register({ id, title, sentinel, container, labelClass, scrollTo });
     return () => ctx.unregister(id);

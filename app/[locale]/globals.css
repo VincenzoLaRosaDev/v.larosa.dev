@@ -2,6 +2,46 @@
 @tailwind components;
 @tailwind utilities;
 
+/* HelloSwiper layout — fuori da @layer per evitare override Tailwind */
+.hello-swiper {
+  display: flex;
+  width: 100%;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.hello-swiper__panel {
+  width: 100%;
+  min-width: 0;
+  height: 6.5rem;
+  flex: 0 1 auto;
+}
+
+.hello-swiper--responsive {
+  justify-content: flex-start;
+}
+
+.hello-swiper--responsive .hello-swiper__panel {
+  max-width: 230px;
+}
+
+@media (max-width: 424px) {
+  .hello-swiper--responsive .hello-swiper__panel {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hello-swiper--responsive {
+    /* justify-content: flex-end; */
+  }
+}
+
+.hello-swiper--fill .hello-swiper__panel {
+  max-width: none;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -11,13 +51,12 @@
 html,
 body {
   height: 100%;
-  cursor: none;
 }
 
-/* Background lives on the root canvas (see split gradient below); body stays
-   transparent so the two-tone split isn't covered by an opaque body layer. */
+/* Background lives on the root canvas; body stays transparent so the
+   two-tone split isn't covered by an opaque body layer. */
 html {
-  background-color: var(--bg);
+  background-color: var(--split-right-bg, var(--bg));
 }
 
 body {
@@ -31,61 +70,48 @@ body {
   }
 }
 
-a,
-button,
-[data-cursor-interactive] {
-  cursor: none;
-}
-
-.iubenda-cs-content,
-#iubenda-iframe {
-  cursor: auto !important;
-}
-
-.pin-spacer {
-  z-index: -1;
-}
-
-/* Full-viewport two-tone background, split at the column gap (desktop only).
-   Fixed layer with vertical overscan so top/bottom rubber-band overscroll never
-   reveals a bare edge. --split-x is set by the SplitBackground component. */
-.split-bg {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: -50vh;
-  bottom: -50vh;
-  z-index: 0;
+/* Desktop split background — sticky inside main so it rubber-bands with the
+   page (unlike position:fixed). Left = restyling surface tone; right shows
+   through to the root canvas. A 1px primary line marks the seam. */
+.split-bg-shell {
+  display: none;
   pointer-events: none;
-  background-color: var(--bg);
-  transform: translateZ(0);
 }
 
 @media (min-width: 1024px) {
-  .split-bg {
-    /* Default that already matches the stable seam (sidebar-right + gap/2),
-       derived from max-w-7xl=1280, px-9=36, sidebar=384, gap-16=64. The
-       SplitBackground component overrides this with the exact measured value,
-       but starting here avoids the pre-JS 50vw fallback jumping into place. */
-    --split-x: max(452px, 50vw - 188px);
-    background-image: linear-gradient(
-      to right,
-      var(--split-left-bg) 0,
-      var(--split-left-bg) var(--split-x, 50vw),
-      var(--split-right-bg) var(--split-x, 50vw),
-      var(--split-right-bg) 100%
-    );
+  .split-bg-shell {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: visible;
   }
 
-  /* 1px primary divider on the split seam */
-  .split-bg::after {
+  .split-bg {
+    --split-bleed: 50vh;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    overflow: visible;
+    transform: translateZ(0);
+    /* Flush columns: the seam sits exactly on the sidebar's right edge.
+       SplitBackground overrides with the measured value; this avoids a pre-JS jump. */
+    --split-x: var(--sidebar-w);
+  }
+
+  /* Surface + line extend past the viewport so top/bottom overscroll bounce
+     still shows the seam instead of a hard cut. */
+  .split-bg::before {
     content: '';
     position: absolute;
-    top: 0;
-    bottom: 0;
-    left: var(--split-x, 50vw);
-    width: 1px;
-    margin-left: -0.5px;
-    background: var(--primary);
+    top: calc(-1 * var(--split-bleed));
+    bottom: calc(-1 * var(--split-bleed));
+    left: 0;
+    width: var(--split-x, 50vw);
+    background: var(--split-left-bg, var(--bg-surface));
   }
+
+  /* Seam line removed — flush blocks with distinct backgrounds separate the
+     two columns on their own. */
 }

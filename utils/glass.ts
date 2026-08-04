@@ -1,54 +1,24 @@
-const DESKTOP_HOVER_MQ = '(min-width: 1024px)';
-
+/** True only for mouse/trackpad pointers that can hover — never touch. */
 export function isDesktopHover() {
   return (
     typeof window !== 'undefined' &&
-    window.matchMedia(DESKTOP_HOVER_MQ).matches
+    window.matchMedia('(hover: hover) and (pointer: fine)').matches
   );
 }
 
-/** Shared classes for interactive content bands (projects, blogs, experiences). */
-export function glassHoverClasses(isActive: boolean) {
-  return ['band band-hover', isActive && 'band-active']
-    .filter(Boolean)
-    .join(' ');
+/** Title / arrow accent is driven only by JS hover (fine pointer), never by
+ *  sticky CSS :hover on touch. */
+export function cardTitleHoverClasses(isActive: boolean) {
+  return `transition-all ${isActive ? 'text-primary' : ''}`;
 }
 
-export function cardDimmedClasses(isDimmed: boolean) {
-  return isDimmed ? 'lg:opacity-50' : '';
+export function cardArrowHoverClasses(isActive: boolean) {
+  // Default to currentColor so arrows follow the tile foreground.
+  return `transition-all ${isActive ? 'fill-primary' : 'fill-current'}`;
 }
 
-export function cardTitleHoverClasses(
-  isActive: boolean,
-  group: 'group' | 'group/link' = 'group',
-) {
-  const hoverClass =
-    group === 'group/link'
-      ? 'lg:group-hover/link:text-primary'
-      : 'lg:group-hover:text-primary';
-  return `transition-all ${hoverClass} ${isActive ? 'text-primary' : ''}`;
-}
-
-export function cardArrowHoverClasses(
-  isActive: boolean,
-  group: 'group' | 'group/link' = 'group',
-) {
-  const hoverFill =
-    group === 'group/link'
-      ? 'lg:group-hover/link:fill-primary'
-      : 'lg:group-hover:fill-primary';
-  return `transition-all ${isActive ? 'fill-primary' : 'fill-text'} ${hoverFill}`;
-}
-
-export function cardArrowRotationClasses(
-  isActive: boolean,
-  group: 'group' | 'group/link' = 'group',
-) {
-  const hoverClass =
-    group === 'group/link'
-      ? 'lg:group-hover/link:rotate-0'
-      : 'lg:group-hover:rotate-0';
-  return isActive ? 'rotate-0' : `rotate-45 ${hoverClass}`;
+export function cardArrowRotationClasses(isActive: boolean) {
+  return isActive ? 'rotate-0' : 'rotate-45';
 }
 
 export function cardHoverHandlers(

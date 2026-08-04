@@ -1,7 +1,7 @@
 'use client';
 
-import { isLiteExperience } from '@/utils';
-import { useEffect, useRef, useState } from 'react';
+import { useIsLiteExperience } from '@/utils';
+import { useEffect, useRef } from 'react';
 
 interface OrbState {
   x: number;
@@ -13,10 +13,13 @@ interface OrbState {
 
 const ORB_SPEED_SCALE = 1;
 
+// Orbs collide with each other (as well as bouncing off the screen margins) so
+// all three never stack on the same spot and blow out into a single over-bright
+// hotspot. Sizes are kept large; the expanded bleed gives them room to travel.
 const ORB_LAYOUT = [
-  { sizeRatio: 0.45, speed: 36 },
-  { sizeRatio: 0.5, speed: 40 },
-  { sizeRatio: 0.6, speed: 42 },
+  { sizeRatio: 0.6, speed: 34 },
+  { sizeRatio: 0.65, speed: 38 },
+  { sizeRatio: 0.7, speed: 40 },
 ];
 
 const START_POSITIONS = [
@@ -274,13 +277,9 @@ const AmbientOrbsAnimated = () => {
 };
 
 export const AmbientOrbs = () => {
-  const [enabled, setEnabled] = useState(false);
+  const isLite = useIsLiteExperience();
 
-  useEffect(() => {
-    setEnabled(!isLiteExperience());
-  }, []);
-
-  if (!enabled) return null;
+  if (isLite) return null;
 
   return <AmbientOrbsAnimated />;
 };

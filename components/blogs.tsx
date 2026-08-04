@@ -2,20 +2,13 @@
 
 import { Blogs as BlogsSanity } from '@/sanity/types';
 import { TailwindProps } from '@/types';
-import { CmsLink, PaddingContainer, Tag } from './atoms';
+import { CmsLink, MosaicGrid, PaddingContainer, Tag, Tile } from './atoms';
 import { PortableText } from 'next-sanity';
 import ArrowIcon from '@/public/arrow_outward.svg';
 import { urlFor } from '@/sanity/client';
 import { ScrollTitleContainer } from './scrollTitleContainer';
 import { FadeInOnView } from './animations';
-import {
-  glassHoverClasses,
-  cardDimmedClasses,
-  cardTitleHoverClasses,
-  cardArrowHoverClasses,
-  cardArrowRotationClasses,
-  useGlassCardFocus,
-} from '@/utils';
+import { cardArrowRotationClasses, tileSpanClass, useGlassCardFocus } from '@/utils';
 
 export interface BlogsProps extends TailwindProps {
   id: BlogsSanity['id'];
@@ -24,13 +17,7 @@ export interface BlogsProps extends TailwindProps {
   items: BlogsSanity['items'];
 }
 
-export const Blogs = ({
-  className,
-  id,
-  title,
-  paddingBlock,
-  items,
-}: BlogsProps) => {
+export const Blogs = ({ className, id, title, items }: BlogsProps) => {
   const { activeIndex, itemRef, getCardHoverHandlers } = useGlassCardFocus(
     items?.length ?? 0,
   );
@@ -38,47 +25,46 @@ export const Blogs = ({
   return (
     <PaddingContainer
       id={id}
-      padding={{ _type: 'paddingBlock', ...paddingBlock }}
-      className={`relative ${className}`}
+      className={`relative bg-[var(--surface-0)] ${className}`}
     >
       <ScrollTitleContainer title={title ?? ''}>
-        <div className="flex flex-col gap-8">
+        <MosaicGrid>
           {items?.map((item, key) => {
-            const isDimmed = activeIndex !== null && activeIndex !== key;
             const isActive = activeIndex === key;
 
             return (
-              <FadeInOnView key={key}>
-                <div
+              <FadeInOnView key={key} className={tileSpanClass(key, 'half')}>
+                <Tile
                   ref={itemRef(key)}
+                  tone={key}
+                  interactive
+                  active={isActive}
+                  className="h-full"
                   {...getCardHoverHandlers(key)}
-                  className={`transition-all ${cardDimmedClasses(isDimmed)}`}
                 >
                   <CmsLink
                     link={item.link}
-                    className={`group flex items-start flex-col md:flex-row gap-6 p-6 ${glassHoverClasses(isActive)}`}
+                    className="group flex h-full items-stretch flex-col"
                   >
                     <img
                       src={urlFor(item.image).url()}
                       alt={item.image?.alt ?? ''}
-                      className="w-full h-auto md:max-w-[164px] rounded-xl overflow-hidden"
+                      className="block w-full h-auto"
                     />
-                    <div className="flex flex-col gap-4 w-full">
+                    <div className="flex flex-col gap-4 w-full p-6 lg:p-8">
                       <div className="flex items-start gap-3">
-                        <span
-                          className={`archivo-black transition-all ${cardTitleHoverClasses(isActive)}`}
-                        >
+                        <span className="text-lg archivo-black">
                           {item.title}
                         </span>
                         {item?.link && (
                           <ArrowIcon
-                            className={`h-6 w-6 min-h-6 min-w-6 transition-all ${cardArrowRotationClasses(isActive)} ${cardArrowHoverClasses(isActive)}`}
+                            className={`h-6 w-6 min-h-6 min-w-6 fill-current transition-transform ${cardArrowRotationClasses(isActive)}`}
                           />
                         )}
                       </div>
 
                       {item.richText && (
-                        <div className="text-sm text-text-light flex flex-col gap-8">
+                        <div className="tile-measure text-base text-text-light flex flex-col gap-6">
                           <PortableText
                             value={item.richText}
                             components={{
@@ -106,11 +92,11 @@ export const Blogs = ({
                       </div>
                     </div>
                   </CmsLink>
-                </div>
+                </Tile>
               </FadeInOnView>
             );
           })}
-        </div>
+        </MosaicGrid>
       </ScrollTitleContainer>
     </PaddingContainer>
   );

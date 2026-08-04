@@ -9,14 +9,25 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        tablet: { min: '425px', max: '1023px' },
+        /* Third mosaic column: only past this width, otherwise laptop screens end
+           up with columns too narrow to hold a comfortable text measure. */
+        wide: '1600px',
+      },
+      /* Fluid scale: sizes grow with the viewport so tiles stay filled on
+         screens wider than a laptop without needing per-breakpoint classes. */
       fontSize: {
-        sm: ['14px', '21px'],
-        base: ['16px', '24px'],
-        lg: ['18px', '27px'],
-        xl: ['20px', '30px'],
-        '2xl': ['24px', '36px'],
-        '3xl': ['32px', '48px'],
-        '4xl': ['36px', '54px'],
+        xs: ['13px', '20px'],
+        sm: ['15px', '23px'],
+        base: ['clamp(16px, 0.95rem + 0.15vw, 18px)', '1.6'],
+        lg: ['clamp(18px, 1.05rem + 0.2vw, 20px)', '1.5'],
+        xl: ['clamp(20px, 1.15rem + 0.35vw, 24px)', '1.4'],
+        '2xl': ['clamp(24px, 1.3rem + 0.55vw, 31px)', '1.25'],
+        '3xl': ['clamp(30px, 1.5rem + 0.9vw, 42px)', '1.15'],
+        '4xl': ['clamp(36px, 1.7rem + 1.3vw, 54px)', '1.08'],
+        '5xl': ['clamp(44px, 2rem + 2vw, 72px)', '1.04'],
+        '6xl': ['clamp(54px, 2.4rem + 3vw, 96px)', '1'],
       },
       colors: {
         primary: 'var(--primary)',

@@ -1,19 +1,19 @@
 'use client';
 
-import { WithChildren } from '@/types';
+import { TailwindProps, WithChildren } from '@/types';
 import { motion, useInView } from 'framer-motion';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
-interface FadeInOnViewProps extends WithChildren {}
+interface FadeInOnViewProps extends WithChildren, TailwindProps {}
 
 function isInViewport(el: HTMLElement) {
   const rect = el.getBoundingClientRect();
   return rect.top < window.innerHeight && rect.bottom > 0;
 }
 
-export const FadeInOnView = ({ children }: FadeInOnViewProps) => {
+export const FadeInOnView = ({ children, className }: FadeInOnViewProps) => {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.05 });
+  const isInView = useInView(ref, { once: true, amount: 0 });
   const [revealed, setRevealed] = useState(false);
 
   useLayoutEffect(() => {
@@ -32,6 +32,7 @@ export const FadeInOnView = ({ children }: FadeInOnViewProps) => {
   return (
     <motion.div
       ref={ref}
+      className={className}
       initial={{ opacity: 0, y: 24 }}
       animate={
         revealed
