@@ -11,6 +11,7 @@
   --glass-border: rgba(250, 204, 21, 0.34);
   --glass-blur: 12px;
   --glass-saturate: 112%;
+  --glass-hover-dim: rgba(0, 0, 0, 0.22);
   --tag-bg: rgba(250, 204, 21, 0.16);
   --tag-border: rgba(250, 204, 21, 0.34);
   --mouse-glow-size: 900px;

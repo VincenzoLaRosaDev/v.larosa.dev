@@ -50,7 +50,7 @@ export default async function Home({ params }: { params: Promise<any> }) {
     <section className="w-full lg:px-10">
       {/* Centered shell — lg:contents on the tablet wrapper makes SideNav a
           direct flex child so sticky spans the full content height. */}
-      <div className="mx-auto w-full max-w-[1244px] lg:flex lg:items-start lg:gap-20">
+      <div className="mx-auto w-full max-w-[1244px] lg:flex lg:items-start lg:gap-40">
         <div className="w-full md:flex md:items-start md:gap-6 md:px-6 md:pt-20 md:pb-10 lg:contents">
           <SideNav
             className="w-full relative pb-10 pt-20 px-6 md:flex-1 md:min-w-0 md:pt-0 md:pb-0 md:px-0 lg:w-80 lg:min-w-80 lg:max-w-80 lg:flex-none lg:shrink-0 lg:pb-20 2xl:pb-40 lg:pt-32 lg:px-0"
@@ -58,7 +58,7 @@ export default async function Home({ params }: { params: Promise<any> }) {
             links={socialLinks}
             navItems={navItems}
           />
-          <div className="hidden md:block lg:hidden w-[230px] min-w-[230px] shrink-0 self-start">
+          <div className="hidden md:block lg:hidden min-w-0 flex-1 self-start">
             <HelloSwiper layout="fill" />
           </div>
         </div>

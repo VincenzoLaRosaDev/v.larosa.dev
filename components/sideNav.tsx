@@ -21,13 +21,16 @@ export const SideNav = ({
   navItems = [],
 }: SideNavProps) => {
   const profileImage = (
-    <GlassPanel rounded="rounded-full" className="p-1.5 shrink-0">
+    <GlassPanel
+      rounded="rounded-full"
+      className="box-border flex h-20 w-20 shrink-0 items-center justify-center p-1.5"
+    >
       <Image
         src="/vincenzo-la-rosa.jpg"
         alt="Vincenzo La Rosa"
         width={80}
         height={80}
-        className="h-20 w-20 min-h-20 min-w-20 rounded-full overflow-hidden"
+        className="h-full w-full rounded-full object-cover overflow-hidden"
       />
     </GlassPanel>
   );
@@ -101,7 +104,7 @@ export const SideNav = ({
 
           <FitText
             as="h1"
-            className="tablet:hidden lg:block archivo-black text-text"
+            className="tablet:hidden lg:block archivo-black text-text text-[35px] lg:text-[33px]"
             minSize={24}
             maxSize={56}
           >

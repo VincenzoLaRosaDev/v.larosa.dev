@@ -52,7 +52,7 @@ export const Experiences = ({
                 <div
                   ref={itemRef(key)}
                   {...getCardHoverHandlers(key)}
-                  className={`flex flex-col lg:flex-row gap-6 p-6 ${glassHoverClasses(isActive)}`}
+                  className={`flex flex-col lg:flex-row gap-6 p-6 ${glassHoverClasses()}`}
                 >
                   <div className="uppercase archivo-black text-text-light min-w-40">
                     {`${item.startDate ? new Date(item.startDate).getFullYear() : ''} — ${

@@ -50,7 +50,7 @@ export const Blogs = ({
                 <div ref={itemRef(key)} {...getCardHoverHandlers(key)}>
                   <CmsLink
                     link={item.link}
-                    className={`group flex items-start flex-col md:flex-row gap-6 p-6 ${glassHoverClasses(isActive)}`}
+                    className={`group flex items-start flex-col md:flex-row gap-6 p-6 ${glassHoverClasses()}`}
                   >
                     <img
                       src={urlFor(item.image).url()}

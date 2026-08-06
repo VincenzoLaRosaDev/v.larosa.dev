@@ -19,7 +19,7 @@ export function useGlassCardFocus(_itemCount: number) {
     [],
   );
 
-  /** Mobile/lite: always active (no hover). Desktop: hover only. */
+  /** Drives title/arrow accent. Mobile/lite: always on. Desktop: hover only. */
   const isCardActive = useCallback(
     (key: number) => (isLite ? true : hoveredIndex === key),
     [isLite, hoveredIndex],

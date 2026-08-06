@@ -10,7 +10,7 @@ import { useRef, useEffect } from 'react';
 import { useInView } from 'framer-motion';
 
 export interface HelloSwiperProps extends TailwindProps {
-  /** responsive: 230px (full-width sotto 425px). fill: 100% del parent. */
+  /** responsive | fill: entrambi full-width del parent. */
   layout?: 'responsive' | 'fill';
 }
 
@@ -35,11 +35,11 @@ export const HelloSwiper = ({
   return (
     <div
       ref={containerRef}
-      className={`mt-[7px] hello-swiper hello-swiper--${layout} ${className ?? ''}`}
+      className={`hello-swiper hello-swiper--${layout} ${className ?? ''}`}
     >
       <GlassPanel className="hello-swiper__panel">
         <Swiper
-          className="pointer-events-none h-20 !mb-0 bg-transparent"
+          className="pointer-events-none h-full !mb-0 bg-transparent"
           style={{ margin: 0, padding: '0 10px 0 20px' }}
           spaceBetween={0}
           slidesPerView={1}

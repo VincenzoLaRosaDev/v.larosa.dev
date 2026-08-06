@@ -6,14 +6,10 @@ export function isDesktopHover() {
   );
 }
 
-/** Shared classes for interactive glass cards (projects, blogs, experiences). */
-export function glassHoverClasses(isActive: boolean) {
-  return [
-    'rounded-2xl overflow-hidden glass-hover',
-    isActive && 'glass-hover-active',
-  ]
-    .filter(Boolean)
-    .join(' ');
+/** Shared classes for interactive glass cards (projects, blogs, experiences).
+ *  Glass border/bg is always on; desktop hover darkens via CSS. */
+export function glassHoverClasses() {
+  return 'rounded-2xl overflow-hidden glass-hover';
 }
 
 export function cardTitleHoverClasses(

@@ -11,33 +11,16 @@
 }
 
 .hello-swiper__panel {
+  box-sizing: border-box;
   width: 100%;
   min-width: 0;
   height: 5rem;
   flex: 0 1 auto;
+  display: flex;
+  flex-direction: column;
 }
 
-.hello-swiper--responsive {
-  justify-content: flex-start;
-}
-
-.hello-swiper--responsive .hello-swiper__panel {
-  max-width: 230px;
-}
-
-@media (max-width: 424px) {
-  .hello-swiper--responsive .hello-swiper__panel {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-@media (min-width: 1024px) {
-  .hello-swiper--responsive {
-    /* justify-content: flex-end; */
-  }
-}
-
+.hello-swiper--responsive .hello-swiper__panel,
 .hello-swiper--fill .hello-swiper__panel {
   max-width: none;
 }
