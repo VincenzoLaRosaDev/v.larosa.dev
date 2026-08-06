@@ -21,7 +21,7 @@ export interface PaddingContainerProps extends TailwindProps, WithChildren {
 function paddingClasses(padding?: PaddingBlock) {
   const top =
     padding?.paddingTop?.value === 'S'
-      ? 'pt-8 lg:pt-16'
+      ? 'pt-7 lg:pt-14'
       : padding?.paddingTop?.value === 'M'
         ? 'pt-14 lg:pt-28'
         : padding?.paddingTop?.value === 'L'
@@ -29,7 +29,7 @@ function paddingClasses(padding?: PaddingBlock) {
           : '';
   const bottom =
     padding?.paddingBottom?.value === 'S'
-      ? 'pb-8 lg:pb-16'
+      ? 'pb-7 lg:pb-14'
       : padding?.paddingBottom?.value === 'M'
         ? 'pb-14 lg:pb-28'
         : padding?.paddingBottom?.value === 'L'
@@ -46,7 +46,8 @@ export const PaddingContainer = ({
   style,
   ref,
 }: PaddingContainerProps) => {
-  const sectionClassName = `${paddingClasses(padding)} ${className ?? ''}`.trim();
+  const sectionClassName =
+    `${paddingClasses(padding)} ${className ?? ''}`.trim();
 
   const child = Children.map(children, (node) => {
     if (!isValidElement(node)) return node;
@@ -59,11 +60,9 @@ export const PaddingContainer = ({
     );
   });
 
-  // `lg:contents` promotes sticky titles to the shared #scroll-title-stack parent
-  // so they remain stuck until the end of all sections (matches former GSAP pin end).
-  // Section `id` is forwarded onto ScrollTitleContainer (real box) for anchors.
+  // Section `id` + padding classes are forwarded onto SectionBlock.
   return (
-    <div ref={ref} style={style} className="lg:contents">
+    <div ref={ref} style={style}>
       {child}
     </div>
   );

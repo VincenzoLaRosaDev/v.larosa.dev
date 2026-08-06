@@ -33,11 +33,7 @@ export const FadeInOnView = ({ children }: FadeInOnViewProps) => {
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 24 }}
-      animate={
-        revealed
-          ? { opacity: 1, y: 0 }
-          : { opacity: 0, y: 24 }
-      }
+      animate={revealed ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
     >
       {children}

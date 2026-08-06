@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 import { PortableText } from 'next-sanity';
 import ArrowIcon from '@/public/arrow_outward.svg';
 import LinkIcon from '@/public/link.svg';
-import { ScrollTitleContainer } from './scrollTitleContainer';
+import { SectionBlock } from './sectionBlock';
 import { FadeInOnView } from './animations';
 import {
   glassHoverClasses,
@@ -32,7 +32,7 @@ export const Experiences = ({
   items,
 }: ExperiencesProps) => {
   const t = useTranslations('Index');
-  const { activeIndex, itemRef, getCardHoverHandlers } = useGlassCardFocus(
+  const { isCardActive, itemRef, getCardHoverHandlers } = useGlassCardFocus(
     items?.length ?? 0,
   );
 
@@ -42,10 +42,10 @@ export const Experiences = ({
       padding={{ _type: 'paddingBlock', ...paddingBlock }}
       className={`relative ${className}`}
     >
-      <ScrollTitleContainer title={title ?? ''}>
+      <SectionBlock title={title ?? ''}>
         <div className="flex flex-col gap-16">
           {items?.map((item, key) => {
-            const isActive = activeIndex === key;
+            const isActive = isCardActive(key);
 
             return (
               <FadeInOnView key={key}>
@@ -74,21 +74,19 @@ export const Experiences = ({
                           className="group/link flex w-fit items-center gap-3"
                         >
                           <span
-                            className={`text-2xl archivo-black transition-all ${cardTitleHoverClasses(isActive, 'group/link')}`}
+                            className={`text-2xl archivo-black transition-all ${cardTitleHoverClasses(false, 'group/link')}`}
                           >
                             {item.company}
                           </span>
                           {item.companyLink?.href && (
                             <ArrowIcon
-                              className={`h-6 w-6 min-h-6 min-w-6 transition-all ${cardArrowRotationClasses(isActive, 'group/link')} ${cardArrowHoverClasses(isActive, 'group/link')}`}
+                              className={`h-6 w-6 min-h-6 min-w-6 transition-all ${cardArrowRotationClasses(false, 'group/link')} ${cardArrowHoverClasses(false, 'group/link')}`}
                             />
                           )}
                         </a>
                       ) : (
-                        <div className="group/link flex items-center gap-3">
-                          <span
-                            className={`text-2xl archivo-black transition-all ${cardTitleHoverClasses(isActive, 'group/link')}`}
-                          >
+                        <div className="flex items-center gap-3">
+                          <span className="text-2xl archivo-black">
                             {item.company}
                           </span>
                         </div>
@@ -142,7 +140,7 @@ export const Experiences = ({
             );
           })}
         </div>
-      </ScrollTitleContainer>
+      </SectionBlock>
     </PaddingContainer>
   );
 };

@@ -2,8 +2,7 @@ const DESKTOP_HOVER_MQ = '(min-width: 1024px)';
 
 export function isDesktopHover() {
   return (
-    typeof window !== 'undefined' &&
-    window.matchMedia(DESKTOP_HOVER_MQ).matches
+    typeof window !== 'undefined' && window.matchMedia(DESKTOP_HOVER_MQ).matches
   );
 }
 

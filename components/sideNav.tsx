@@ -1,17 +1,25 @@
 'use client';
 
 import { Page, Link } from '@/sanity/types';
+import { NavItem } from '@/constants/nav';
 import { TailwindProps } from '@/types';
 import { PortableText } from 'next-sanity';
 import Image from 'next/image';
 import { CmsLink, FitText, GlassPanel } from './atoms';
+import { SideNavMenu } from './sideNavMenu';
 
 export interface SideNavProps extends TailwindProps {
   homeBanner: Page['homeBanner'];
   links: Link[];
+  navItems?: NavItem[];
 }
 
-export const SideNav = ({ className, homeBanner, links }: SideNavProps) => {
+export const SideNav = ({
+  className,
+  homeBanner,
+  links,
+  navItems = [],
+}: SideNavProps) => {
   const profileImage = (
     <GlassPanel rounded="rounded-full" className="p-1.5 shrink-0">
       <Image
@@ -58,11 +66,10 @@ export const SideNav = ({ className, homeBanner, links }: SideNavProps) => {
   );
 
   return (
-    <div
-      data-split-col="left"
-      className={`lg:sticky lg:h-screen lg:top-0 lg:w-80 lg:min-w-80 lg:shrink-0 ${className}`}
+    <aside
+      className={`lg:sticky lg:top-0 lg:h-screen lg:self-start ${className}`}
     >
-      <div className="h-full flex flex-col gap-8 w-full lg:min-w-80 min-w-0">
+      <div className="flex h-full flex-col gap-8 w-full min-w-0">
         <div id="side-header" className="w-full min-w-0">
           {/* Mobile + desktop: full-width spread */}
           <div className="flex tablet:hidden lg:flex w-full flex-wrap items-center justify-between gap-y-4 mb-10">
@@ -145,8 +152,10 @@ export const SideNav = ({ className, homeBanner, links }: SideNavProps) => {
               />
             </div>
           )}
+
+          <SideNavMenu items={navItems} />
         </div>
       </div>
-    </div>
+    </aside>
   );
 };

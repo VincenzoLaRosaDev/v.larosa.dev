@@ -8,10 +8,9 @@ export const RenderBlocks = ({ layout }: { layout: Page['pageBlocks'] }) => {
     <>
       {layout?.map((block, key) => {
         const Block = blocks[block._type as any];
-        if (Block) {
-          return <Block key={key} {...block} />;
-        }
-        return null;
+        if (!Block) return null;
+
+        return <Block key={block._key ?? key} {...block} />;
       })}
     </>
   );

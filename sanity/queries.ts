@@ -1,5 +1,6 @@
 import { defineQuery } from 'groq';
 import { client } from './client';
+import { getClient, isLocalDraftPreview } from './preview';
 import { Link, Page } from './types';
 import { localesType } from '@/i18n/routing';
 import { unstable_cache } from 'next/cache';
@@ -9,7 +10,7 @@ import { unstable_cache } from 'next/cache';
 const pagesQuery = defineQuery(`*[_type == "page"]`);
 
 export const getPages = (): Promise<Page[]> => {
-  return client.fetch(pagesQuery);
+  return getClient().fetch(pagesQuery);
 };
 
 const localizeHomePageQuery = (locale: localesType) => {
@@ -38,6 +39,10 @@ const localizeHomePageQuery = (locale: localesType) => {
 };
 
 export const getLocalizeHomePage = (locale: localesType): Promise<Page[]> => {
+  if (isLocalDraftPreview) {
+    return getClient().fetch(localizeHomePageQuery(locale));
+  }
+
   return unstable_cache(
     async () => {
       return client.fetch(localizeHomePageQuery(locale));
@@ -46,13 +51,17 @@ export const getLocalizeHomePage = (locale: localesType): Promise<Page[]> => {
     {
       tags: [`homepage-${locale}`, 'pages'],
       revalidate: 60,
-    }
+    },
   )();
 };
 
 const linksQuery = defineQuery(`*[_type == "link"]`);
 
 export const getLinks = (): Promise<Link[]> => {
+  if (isLocalDraftPreview) {
+    return getClient().fetch(linksQuery);
+  }
+
   return unstable_cache(
     async () => {
       return client.fetch(linksQuery);
@@ -61,6 +70,6 @@ export const getLinks = (): Promise<Link[]> => {
     {
       tags: ['links'],
       revalidate: 60,
-    }
+    },
   )();
 };

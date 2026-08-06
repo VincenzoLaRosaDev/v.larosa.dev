@@ -12,7 +12,6 @@ export const ChangeLang = ({ className }: TailwindProps) => {
     <div className={`flex items-center gap-2 ${className}`}>
       {navLang.map((item) => (
         <Link
-          data-cursor-interactive
           key={item.id}
           href={pathname}
           locale={item.id}

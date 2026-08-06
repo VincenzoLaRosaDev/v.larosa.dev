@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { defaultLocale, locales } from './i18n/routing';
 
 export const config = {
-  matcher: ['/((?!_next/|api/|favicon.ico|.*\\.(?:jpg|jpeg|png|svg|webp|ico)$).*)'],
+  matcher: [
+    '/((?!_next/|api/|favicon.ico|.*\\.(?:jpg|jpeg|png|svg|webp|ico)$).*)',
+  ],
 };
 
 export function middleware(request: NextRequest) {
@@ -13,7 +15,8 @@ export function middleware(request: NextRequest) {
 
   // If the path already includes a locale, do nothing
   const pathnameIsMissingLocale = locales.every(
-    (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
+    (locale) =>
+      !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`,
   );
 
   if (pathname === '/') {
@@ -23,7 +26,9 @@ export function middleware(request: NextRequest) {
 
   if (pathnameIsMissingLocale) {
     // Optional: redirect all locale-less paths (e.g. /about → /it/about)
-    return NextResponse.rewrite(new URL(`/${defaultLocale}${pathname}`, request.url));
+    return NextResponse.rewrite(
+      new URL(`/${defaultLocale}${pathname}`, request.url),
+    );
   }
 
   return;
