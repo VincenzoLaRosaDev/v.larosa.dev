@@ -4,51 +4,39 @@
   isolation: isolate;
 }
 
-.glass-panel::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-}
-
-.glass-panel {
-  overflow: hidden;
-  background: transparent;
-  border: 1px solid var(--glass-border);
-}
-
-.glass-hover {
-  overflow: hidden;
-  background: transparent;
-  border: 1px solid transparent;
-  transition: border-color 0.2s ease;
-}
-
+.glass-panel::before,
 .glass-hover::before {
   content: '';
   position: absolute;
   inset: 0;
   z-index: -1;
   border-radius: inherit;
-  background: transparent;
-  backdrop-filter: blur(0px);
-  -webkit-backdrop-filter: blur(0px);
-  transition:
-    background-color 0.2s ease,
-    backdrop-filter 0.2s ease,
-    -webkit-backdrop-filter 0.2s ease;
-}
-
-.glass-hover-active {
-  border-color: var(--glass-border);
-}
-
-.glass-hover-active::before {
   background: var(--glass-bg);
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+}
+
+.glass-panel,
+.glass-hover {
+  overflow: hidden;
+  background: transparent;
+  border: 1px solid var(--glass-border);
+}
+
+/* Hover feedback: darken overlay (desktop only) */
+.glass-hover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: transparent;
+  pointer-events: none;
+  transition: background-color 0.2s ease;
+}
+
+@media (min-width: 1024px) {
+  .glass-hover:hover::after {
+    background: var(--glass-hover-dim);
+  }
 }

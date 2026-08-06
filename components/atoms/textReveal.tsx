@@ -10,10 +10,10 @@ export interface TextRevealProps
     React.HTMLAttributes<HTMLDivElement> {
   text: string;
   renew?: boolean;
-  /** Run scramble animation on mobile (e.g. section scroll titles). */
+  /** Run scramble animation on mobile (e.g. pinned section titles). */
   animateOnMobile?: boolean;
   /**
-   * If true, animate at most once per mount/text (desktop scroll titles).
+   * If true, animate at most once per mount/text.
    * When false (default), leaving the viewport allows a replay on re-enter.
    */
   once?: boolean;
@@ -100,8 +100,7 @@ export const TextReveal = ({
         if (stepsCount <= animationSteps) {
           setLetters((prev) => {
             const next = [...prev];
-            next[i] =
-              stepsCount < animationSteps ? randomChar() : target;
+            next[i] = stepsCount < animationSteps ? randomChar() : target;
             return next;
           });
           stepsCount++;

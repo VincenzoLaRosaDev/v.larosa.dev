@@ -5,7 +5,7 @@ import { TailwindProps } from '@/types';
 import { PaddingContainer } from './atoms';
 import { useMemo, useRef } from 'react';
 import { useAnimationFrame } from 'motion/react';
-import { ScrollTitleContainer } from './scrollTitleContainer';
+import { SectionBlock } from './sectionBlock';
 import { FadeInOnView } from './animations';
 
 export interface IconsSwiperProps extends TailwindProps {
@@ -31,7 +31,7 @@ export const IconsSwiper = ({
         padding={{ _type: 'paddingBlock', ...paddingBlock }}
         className={`relative w-full py-8 ${className}`}
       >
-        <ScrollTitleContainer title={title ?? ''}>
+        <SectionBlock title={title ?? ''} includeInNav={false}>
           <FadeInOnView>
             <div className="overflow-hidden h-full relative [mask-image:linear-gradient(to_right,transparent,black_48px,black_calc(100%-48px),transparent)]">
               <SwiperRow icons={icons} speed={speed} reverse={false} />
@@ -39,7 +39,7 @@ export const IconsSwiper = ({
               <SwiperRow icons={icons} speed={speed} reverse={true} />
             </div>
           </FadeInOnView>
-        </ScrollTitleContainer>
+        </SectionBlock>
       </PaddingContainer>
     )
   );

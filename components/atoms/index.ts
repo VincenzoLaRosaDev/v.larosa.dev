@@ -3,8 +3,6 @@ export * from './containers';
 export * from './textReveal';
 export * from './cursor';
 export * from './tag';
-export * from './mouseCursor';
 export * from './glassPanel';
 export * from './fitText';
 export * from './ambientLayer';
-export * from './splitBackground';

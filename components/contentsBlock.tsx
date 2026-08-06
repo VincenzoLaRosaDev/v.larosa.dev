@@ -4,7 +4,7 @@ import { ContentsBlock as ContentsBlockSanity } from '@/sanity/types';
 import { TailwindProps } from '@/types';
 import { PortableText } from 'next-sanity';
 import { GlassPanel, PaddingContainer } from './atoms';
-import { ScrollTitleContainer } from './scrollTitleContainer';
+import { SectionBlock } from './sectionBlock';
 import { FadeInOnView } from './animations';
 
 export interface ContentsBlockProps extends TailwindProps {
@@ -27,7 +27,7 @@ export const ContentsBlock = ({
       padding={{ _type: 'paddingBlock', ...paddingBlock }}
       className={`relative ${className}`}
     >
-      <ScrollTitleContainer title={title ?? ''}>
+      <SectionBlock title={title ?? ''}>
         <FadeInOnView>
           <GlassPanel className="p-6 flex flex-col lg:flex-row flex-wrap gap-9">
             {items?.map((item, key) => (
@@ -76,7 +76,7 @@ export const ContentsBlock = ({
             ))}
           </GlassPanel>
         </FadeInOnView>
-      </ScrollTitleContainer>
+      </SectionBlock>
     </PaddingContainer>
   );
 };

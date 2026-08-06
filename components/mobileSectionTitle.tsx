@@ -34,7 +34,7 @@ type RegisterOptions = {
   scrollTo: () => void;
 };
 
-const MobileScrollTitleContext = createContext<{
+const MobileSectionTitleContext = createContext<{
   register: (opts: RegisterOptions) => void;
   unregister: (id: string) => void;
   pinnedId: string | null;
@@ -72,7 +72,7 @@ function resolvePinnedSection(sections: Section[]): Section | null {
   return null;
 }
 
-function FixedScrollTitle({ section }: { section: Section }) {
+function FixedMobileSectionTitle({ section }: { section: Section }) {
   const prevIdRef = useRef<string | null>(null);
   const [useReveal, setUseReveal] = useState(false);
   const isTransitioning =
@@ -104,7 +104,11 @@ function FixedScrollTitle({ section }: { section: Section }) {
   );
 }
 
-export function MobileScrollTitleProvider({ children }: { children: ReactNode }) {
+export function MobileSectionTitleProvider({
+  children,
+}: {
+  children: ReactNode;
+}) {
   const sectionsRef = useRef<Map<string, Section>>(new Map());
   const [pinned, setPinned] = useState<Section | null>(null);
   const [firstSectionId, setFirstSectionId] = useState<string | null>(null);
@@ -120,7 +124,9 @@ export function MobileScrollTitleProvider({ children }: { children: ReactNode })
     const next = resolvePinnedSection(sorted);
 
     setPinned((current) =>
-      current?.id === next?.id && current?.title === next?.title ? current : next,
+      current?.id === next?.id && current?.title === next?.title
+        ? current
+        : next,
     );
   }, []);
 
@@ -172,7 +178,7 @@ export function MobileScrollTitleProvider({ children }: { children: ReactNode })
   );
 
   return (
-    <MobileScrollTitleContext.Provider value={value}>
+    <MobileSectionTitleContext.Provider value={value}>
       {children}
       {enabled && pinned ? (
         <div
@@ -188,40 +194,53 @@ export function MobileScrollTitleProvider({ children }: { children: ReactNode })
           tabIndex={0}
           aria-label={pinned.title}
         >
-          <FixedScrollTitle section={pinned} />
+          <FixedMobileSectionTitle section={pinned} />
         </div>
       ) : null}
-    </MobileScrollTitleContext.Provider>
+    </MobileSectionTitleContext.Provider>
   );
 }
 
-export function useMobileScrollTitleRegistration({
+export function useMobileSectionTitleRegistration({
   title,
   sentinelRef,
   containerRef,
   labelClass,
   scrollTo,
+  enabled = true,
 }: {
   title: string;
   sentinelRef: RefObject<HTMLElement | null>;
   containerRef: RefObject<HTMLElement | null>;
   labelClass?: string;
   scrollTo: () => void;
+  enabled?: boolean;
 }) {
-  const ctx = useContext(MobileScrollTitleContext);
+  const ctx = useContext(MobileSectionTitleContext);
   const id = useId();
 
   useLayoutEffect(() => {
+    if (!enabled) return;
+
     const sentinel = sentinelRef.current;
     const container = containerRef.current;
     if (!ctx || !sentinel || !container) return;
 
     ctx.register({ id, title, sentinel, container, labelClass, scrollTo });
     return () => ctx.unregister(id);
-  }, [ctx, id, title, labelClass, scrollTo, sentinelRef, containerRef]);
+  }, [
+    ctx,
+    id,
+    title,
+    labelClass,
+    scrollTo,
+    sentinelRef,
+    containerRef,
+    enabled,
+  ]);
 
-  const isFirstSection = ctx?.firstSectionId === id;
-  const hideInFlowTitle = isFirstSection && ctx?.pinnedId !== null;
+  const isFirstSection = enabled && ctx?.firstSectionId === id;
+  const hideInFlowTitle = Boolean(isFirstSection && ctx?.pinnedId !== null);
 
   return { isFirstSection, hideInFlowTitle };
 }

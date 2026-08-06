@@ -3,7 +3,7 @@
 import { TailwindProps } from '@/types';
 import { CmsLink, GlassPanel, PaddingContainer } from './atoms';
 import { ContactForm as ContactFormSanity } from '@/sanity/types';
-import { ScrollTitleContainer } from './scrollTitleContainer';
+import { SectionBlock } from './sectionBlock';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { FadeInOnView } from './animations';
@@ -31,7 +31,7 @@ export const ContactForm = ({
       padding={{ _type: 'paddingBlock', ...paddingBlock }}
       className={`relative ${className}`}
     >
-      <ScrollTitleContainer title={title ?? ''}>
+      <SectionBlock title={title ?? ''}>
         <FadeInOnView>
           <form noValidate className="w-full flex flex-col gap-6">
             <GlassPanel className="w-full">
@@ -62,7 +62,7 @@ export const ContactForm = ({
             </CmsLink>
           </form>
         </FadeInOnView>
-      </ScrollTitleContainer>
+      </SectionBlock>
     </PaddingContainer>
   );
 };

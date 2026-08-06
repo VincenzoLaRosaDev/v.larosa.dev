@@ -3,6 +3,7 @@
 import {
   useLayoutEffect,
   useRef,
+  useState,
   type ElementType,
   type HTMLAttributes,
   type ReactNode,
@@ -25,13 +26,19 @@ export const FitText = ({
 }: FitTextProps) => {
   const containerRef = useRef<HTMLElement>(null);
   const textRef = useRef<HTMLSpanElement>(null);
+  // null = use CSS first-paint size (no inline override) until measured
+  const [fontSize, setFontSize] = useState<number | null>(null);
 
   useLayoutEffect(() => {
     const container = containerRef.current;
     const text = textRef.current;
     if (!container || !text) return;
 
+    let cancelled = false;
+
     const fit = () => {
+      if (cancelled) return;
+
       const availableWidth = container.clientWidth;
       if (!availableWidth) return;
 
@@ -41,6 +48,7 @@ export const FitText = ({
 
       text.style.fontSize = `${high}px`;
       if (text.scrollWidth <= availableWidth) {
+        setFontSize(high);
         return;
       }
 
@@ -57,6 +65,7 @@ export const FitText = ({
       }
 
       text.style.fontSize = `${best}px`;
+      setFontSize(best);
     };
 
     fit();
@@ -64,20 +73,26 @@ export const FitText = ({
     const observer = new ResizeObserver(fit);
     observer.observe(container);
 
-    document.fonts?.ready.then(fit).catch(() => undefined);
+    document.fonts?.ready.then(() => {
+      if (!cancelled) fit();
+    }).catch(() => undefined);
 
-    return () => observer.disconnect();
+    return () => {
+      cancelled = true;
+      observer.disconnect();
+    };
   }, [children, minSize, maxSize]);
 
   return (
     <Tag
       {...rest}
       ref={containerRef}
-      className={`block w-full min-w-0 ${className ?? ''}`}
+      className={`block w-full min-w-0 overflow-hidden ${className ?? ''}`}
     >
       <span
         ref={textRef}
         className="inline-block max-w-full whitespace-nowrap leading-none"
+        style={fontSize != null ? { fontSize } : undefined}
       >
         {children}
       </span>

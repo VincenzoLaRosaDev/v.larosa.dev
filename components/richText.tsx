@@ -4,7 +4,7 @@ import { RichTextObj } from '@/sanity/types';
 import { TailwindProps } from '@/types';
 import { PortableText } from 'next-sanity';
 import { PaddingContainer } from './atoms';
-import { ScrollTitleContainer } from './scrollTitleContainer';
+import { SectionBlock } from './sectionBlock';
 import { FadeInOnView } from './animations';
 
 export interface RichTextProps extends TailwindProps {
@@ -30,7 +30,7 @@ export const RichText = ({
         padding={{ _type: 'paddingBlock', ...paddingBlock }}
         className={`relative text-text-light flex flex-col gap-4 ${className}`}
       >
-        <ScrollTitleContainer title={title ?? ''}>
+        <SectionBlock title={title ?? ''}>
           <FadeInOnView>
             <div className={`${paragraphSpace && 'flex flex-col gap-8'}`}>
               <PortableText
@@ -52,7 +52,7 @@ export const RichText = ({
               />
             </div>
           </FadeInOnView>
-        </ScrollTitleContainer>
+        </SectionBlock>
       </PaddingContainer>
     )
   );

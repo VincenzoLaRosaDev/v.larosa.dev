@@ -54296,18 +54296,14 @@ const o6e = {zIndex: 2},
     displayName: 'InputRoot',
     componentId: 'sc-h62wco-1',
   })`flex:1;min-width:0;display:block;position:relative;`,
-  s6e = me(Yt)
-    .attrs({forwardedAs: 'span'})
-    .withConfig({
-      displayName: 'Prefix',
-      componentId: 'sc-h62wco-2',
-    })`border-top-right-radius:0;border-bottom-right-radius:0;& > span{display:block;margin:-1px;}`,
-  l6e = me(Yt)
-    .attrs({forwardedAs: 'span'})
-    .withConfig({
-      displayName: 'Suffix',
-      componentId: 'sc-h62wco-3',
-    })`border-top-left-radius:0;border-bottom-left-radius:0;& > span{display:block;margin:-1px;}`,
+  s6e = me(Yt).attrs({forwardedAs: 'span'}).withConfig({
+    displayName: 'Prefix',
+    componentId: 'sc-h62wco-2',
+  })`border-top-right-radius:0;border-bottom-right-radius:0;& > span{display:block;margin:-1px;}`,
+  l6e = me(Yt).attrs({forwardedAs: 'span'}).withConfig({
+    displayName: 'Suffix',
+    componentId: 'sc-h62wco-3',
+  })`border-top-left-radius:0;border-bottom-left-radius:0;& > span{display:block;margin:-1px;}`,
   c6e = me.input.withConfig({displayName: 'Input', componentId: 'sc-h62wco-4'})(V3, oz, iz),
   u6e = me.span.withConfig({displayName: 'Presentation', componentId: 'sc-h62wco-5'})(Ea, az),
   d6e = me(ae).withConfig({

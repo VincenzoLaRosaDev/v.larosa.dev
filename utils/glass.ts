@@ -2,19 +2,14 @@ const DESKTOP_HOVER_MQ = '(min-width: 1024px)';
 
 export function isDesktopHover() {
   return (
-    typeof window !== 'undefined' &&
-    window.matchMedia(DESKTOP_HOVER_MQ).matches
+    typeof window !== 'undefined' && window.matchMedia(DESKTOP_HOVER_MQ).matches
   );
 }
 
-/** Shared classes for interactive glass cards (projects, blogs, experiences). */
-export function glassHoverClasses(isActive: boolean) {
-  return [
-    'rounded-2xl overflow-hidden glass-hover',
-    isActive && 'glass-hover-active',
-  ]
-    .filter(Boolean)
-    .join(' ');
+/** Shared classes for interactive glass cards (projects, blogs, experiences).
+ *  Glass border/bg is always on; desktop hover darkens via CSS. */
+export function glassHoverClasses() {
+  return 'rounded-2xl overflow-hidden glass-hover';
 }
 
 export function cardTitleHoverClasses(

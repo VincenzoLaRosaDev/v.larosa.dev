@@ -6,7 +6,7 @@ import { CmsLink, PaddingContainer, Tag } from './atoms';
 import { PortableText } from 'next-sanity';
 import ArrowIcon from '@/public/arrow_outward.svg';
 import { urlFor } from '@/sanity/client';
-import { ScrollTitleContainer } from './scrollTitleContainer';
+import { SectionBlock } from './sectionBlock';
 import { FadeInOnView } from './animations';
 import {
   glassHoverClasses,
@@ -30,7 +30,7 @@ export const Blogs = ({
   paddingBlock,
   items,
 }: BlogsProps) => {
-  const { activeIndex, itemRef, getCardHoverHandlers } = useGlassCardFocus(
+  const { isCardActive, itemRef, getCardHoverHandlers } = useGlassCardFocus(
     items?.length ?? 0,
   );
 
@@ -40,20 +40,17 @@ export const Blogs = ({
       padding={{ _type: 'paddingBlock', ...paddingBlock }}
       className={`relative ${className}`}
     >
-      <ScrollTitleContainer title={title ?? ''}>
+      <SectionBlock title={title ?? ''}>
         <div className="flex flex-col gap-8">
           {items?.map((item, key) => {
-            const isActive = activeIndex === key;
+            const isActive = isCardActive(key);
 
             return (
               <FadeInOnView key={key}>
-                <div
-                  ref={itemRef(key)}
-                  {...getCardHoverHandlers(key)}
-                >
+                <div ref={itemRef(key)} {...getCardHoverHandlers(key)}>
                   <CmsLink
                     link={item.link}
-                    className={`group flex items-start flex-col md:flex-row gap-6 p-6 ${glassHoverClasses(isActive)}`}
+                    className={`group flex items-start flex-col md:flex-row gap-6 p-6 ${glassHoverClasses()}`}
                   >
                     <img
                       src={urlFor(item.image).url()}
@@ -108,7 +105,7 @@ export const Blogs = ({
             );
           })}
         </div>
-      </ScrollTitleContainer>
+      </SectionBlock>
     </PaddingContainer>
   );
 };
