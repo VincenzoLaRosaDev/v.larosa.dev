@@ -55,7 +55,7 @@ export const Blogs = ({
                     <img
                       src={urlFor(item.image).url()}
                       alt={item.image?.alt ?? ''}
-                      className="w-full h-auto md:max-w-[164px] rounded-xl overflow-hidden"
+                      className="w-full h-auto md:max-w-[348px] rounded-xl overflow-hidden"
                     />
                     <div className="flex flex-col gap-4 w-full">
                       <div className="flex items-start gap-3">
